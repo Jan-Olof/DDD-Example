@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using ApplicationLayer.Interfaces;
 using ApplicationLayer.Services;
-using DomainLayer.Models;
+using DomainLayer.Interfaces;
+using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+
+// ReSharper disable UnusedMember.Global
 
 namespace ApplicationLayerTests.Services
 {
     [TestClass]
     public class InstructionServiceTests
     {
-        private IRepository<Instruction> _repository;
+        private IInstructionModel _model;
+        private IRepository<IInstruction> _repository;
 
         [TestInitialize]
         public void SetUp()
         {
-            _repository = Substitute.For<IRepository<Instruction>>();
+            _repository = Substitute.For<IRepository<IInstruction>>();
+            _model = Substitute.For<IInstructionModel>();
         }
 
         [TestCleanup]
@@ -24,23 +29,78 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
-        public void TestShouldGetAllInstructions()
+        public void TestShouldCreateInstruction()
         {
             // Arrange
-            _repository.Get().Returns(new List<Instruction>());
+            _repository.Insert(SampleInstructions.CreateInstruction())
+                .ReturnsForAnyArgs(SampleInstructions.CreateInstruction(1));
 
             var sut = CreateInstructionService();
 
             // Act
-            var result = sut.GetInstructions();
+            var result = sut.Create(SampleInstructions.CreateInstruction());
 
             // Assert
-            Assert.AreEqual(0, result.Count);
+            Assert.AreEqual(1, result.Id);
         }
 
-        private InstructionService<Instruction> CreateInstructionService()
+        [TestMethod]
+        public void TestShouldGetAllInstructions()
         {
-            return new InstructionService<Instruction>(_repository);
+            // Arrange
+            _repository.Get()
+                .Returns(SampleInstructions.CreateInstructions());
+
+            var sut = CreateInstructionService();
+
+            // Act
+            var result = sut.Get();
+
+            // Assert
+            Assert.AreEqual(3, result.Count);
+        }
+
+        [TestMethod]
+        public void TestShouldGetInstructionFromId()
+        {
+            // Arrange
+            _model.Get(3)
+                .Returns(i => i.Id == 3);
+
+            _repository.Get(i => i.Id == 3)
+                .ReturnsForAnyArgs(SampleInstructions.CreateInstructions3());
+
+            var sut = CreateInstructionService();
+
+            // Act
+            var result = sut.Get(3);
+
+            // Assert
+            Assert.AreEqual("ThirdInstruction", result.Name);
+        }
+
+        [TestMethod]
+        public void TestShouldGetInstructionFromName()
+        {
+            // Arrange
+            _model.Get("ThirdInstruction")
+                .Returns(i => i.Name == "ThirdInstruction");
+
+            _repository.Get(i => i.Name == "ThirdInstruction")
+                .ReturnsForAnyArgs(SampleInstructions.CreateInstructions3());
+
+            var sut = CreateInstructionService();
+
+            // Act
+            var result = sut.Get("ThirdInstruction");
+
+            // Assert
+            Assert.AreEqual(3, result.Single().Id);
+        }
+
+        private InstructionService CreateInstructionService()
+        {
+            return new InstructionService(_repository, _model);
         }
     }
 }

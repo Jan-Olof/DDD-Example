@@ -2,26 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
+using DomainLayer.Interfaces;
 
 namespace ApplicationLayer.Services
 {
-    public class InstructionService<T>
+    public class InstructionService : BaseService<IInstruction, IInstructionModel>
     {
-        private readonly IRepository<T> _repository;
-
-        public InstructionService(IRepository<T> repository)
+        public InstructionService(IRepository<IInstruction> repository, IInstructionModel model)
+            : base(repository, model)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-
-            _repository = repository;
         }
 
-        public IList<T> GetInstructions()
+        public IEnumerable<IInstruction> Get(string name)
         {
-            return _repository.Get().ToList();
+            return Repository.Get(Model.Get(name));
         }
     }
 }
