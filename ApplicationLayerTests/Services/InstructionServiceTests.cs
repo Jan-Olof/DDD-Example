@@ -5,6 +5,7 @@ using DomainLayer.Interfaces;
 using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using Utilities.Exceptions;
 
 // ReSharper disable UnusedMember.Global
 
@@ -77,6 +78,22 @@ namespace ApplicationLayerTests.Services
 
             // Assert
             Assert.AreEqual("ThirdInstruction", result.Name);
+        }
+
+        [TestMethod]
+        public void TestShouldGetInstructionFromIdAndFindsDuplicates()
+        {
+            // Arrange
+            _model.Get(3)
+                .Returns(i => i.Id == 3);
+
+            _repository.Get(i => i.Id == 3)
+                .ReturnsForAnyArgs(SampleInstructions.CreateInstructionsDuplicate());
+
+            var sut = CreateInstructionService();
+
+            // Act and assert
+            Assert.ThrowsException<TooManyFoundException>(() => sut.Get(3));
         }
 
         [TestMethod]

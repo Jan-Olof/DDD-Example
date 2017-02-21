@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
-using DomainLayer.Interfaces;
+using Utilities.Exceptions;
+using Utilities.Interfaces;
 
 namespace ApplicationLayer.Services
 {
-    public abstract class BaseService<T, TModel> where TModel : IModel<T>
+    public abstract class BaseService<T, TModel> where T : IDto where TModel : IModel<T>
     {
         protected readonly TModel Model;
         protected readonly IRepository<T> Repository;
@@ -39,7 +40,14 @@ namespace ApplicationLayer.Services
 
         public T Get(int id)
         {
-            return Repository.Get(Model.Get(id)).SingleOrDefault();
+            try
+            {
+                return Repository.Get(Model.Get(id)).SingleOrDefault();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new TooManyFoundException(e.Message, e);
+            }
         }
     }
 }

@@ -34,5 +34,14 @@ namespace DomainLayerTests.TestObjects
                 (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
             };
         }
+
+        public static IEnumerable<IInstruction> CreateInstructionsDuplicate()
+        {
+            return new List<IInstruction>
+            {
+                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction."),
+                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
+            };
+        }
     }
 }

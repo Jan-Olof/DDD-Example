@@ -1,9 +1,10 @@
-﻿namespace DomainLayer.Interfaces
+﻿using Utilities.Interfaces;
+
+namespace DomainLayer.Interfaces
 {
-    public interface IInstruction
+    public interface IInstruction : IDto
     {
         string Description { get; set; }
-        int Id { get; set; }
         string Name { get; set; }
     }
 }
