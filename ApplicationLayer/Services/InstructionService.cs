@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ApplicationLayer.Interfaces;
 using DomainLayer.Interfaces;
 
 namespace ApplicationLayer.Services
 {
-    public class InstructionService : BaseService<IInstruction, IInstructionModel>
+    public class InstructionService : BaseService<IInstruction, IInstructionModel>, IInstructionService
     {
         public InstructionService(IRepository<IInstruction> repository, IInstructionModel model)
             : base(repository, model)

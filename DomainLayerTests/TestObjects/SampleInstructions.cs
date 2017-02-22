@@ -17,7 +17,7 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IEnumerable<IInstruction> CreateInstructions()
+        public static IList<IInstruction> CreateInstructions()
         {
             return new List<IInstruction>
             {
@@ -27,7 +27,7 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IEnumerable<IInstruction> CreateInstructions3()
+        public static IList<IInstruction> CreateInstructions3()
         {
             return new List<IInstruction>
             {
@@ -35,7 +35,7 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IEnumerable<IInstruction> CreateInstructionsDuplicate()
+        public static IList<IInstruction> CreateInstructionsDuplicate()
         {
             return new List<IInstruction>
             {

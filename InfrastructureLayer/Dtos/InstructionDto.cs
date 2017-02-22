@@ -1,10 +1,10 @@
 ﻿using DomainLayer.Interfaces;
 
-namespace InfrastructureLayer.DataAccess
+namespace InfrastructureLayer.Dtos
 {
-    public class Instruction : IInstruction
+    public class InstructionDto : IInstruction
     {
-        public Instruction()
+        public InstructionDto()
         {
             Description = string.Empty;
             Name = string.Empty;
