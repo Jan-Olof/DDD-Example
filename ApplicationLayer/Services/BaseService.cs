@@ -6,7 +6,7 @@ using Utilities.Exceptions;
 
 namespace ApplicationLayer.Services
 {
-    public abstract class BaseService<T, TModel> : IBaseService<T> where T : IDto where TModel : IModel<T>
+    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IDto where TModel : IModel<T>
     {
         protected readonly TModel Model;
         protected readonly IRepository<T> Repository;

@@ -8,7 +8,7 @@ using InfrastructureLayer.DataAccess.SqlServer;
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    [Migration("20170223143412_Initial")]
+    [Migration("20170224101202_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

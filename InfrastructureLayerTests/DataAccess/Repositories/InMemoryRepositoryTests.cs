@@ -66,12 +66,12 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("FirstInstruction", result.Name);
         }
 
-        private static InMemoryRepository<IInstruction> CreateInMemoryRepository()
+        private static IRepository<IInstruction> CreateInMemoryRepository()
         {
             return new InMemoryRepository<IInstruction>();
         }
 
-        private static InMemoryRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
+        private static IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
             return new InMemoryRepository<IInstruction>(instructions);
         }

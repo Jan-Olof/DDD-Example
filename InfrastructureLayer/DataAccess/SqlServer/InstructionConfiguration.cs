@@ -1,15 +1,22 @@
-﻿//using DomainLayer.Models;
-//using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using DomainLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
-//namespace InfrastructureLayer.DataAccess.SqlServer
-//{
-//    public class InstructionConfiguration
-//    {
-//        public InstructionConfiguration(EntityTypeBuilder<Instruction> entityBuilder)
-//        {
-//            entityBuilder.HasKey(instruction => instruction.Id);
-//            entityBuilder.Property(i => i.Name).HasMaxLength(50);
-//            entityBuilder.Property(i => i.Description).HasMaxLength(200);
-//        }
-//    }
-//}
+namespace InfrastructureLayer.DataAccess.SqlServer
+{
+    public static class InstructionConfiguration
+    {
+        public static void Configure(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Instruction>()
+                .HasKey(instruction => instruction.Id);
+
+            modelBuilder.Entity<Instruction>()
+                .Property(instruction => instruction.Name)
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<Instruction>()
+                .Property(instruction => instruction.Description)
+                .HasMaxLength(200);
+        }
+    }
+}
