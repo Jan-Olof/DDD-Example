@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Utilities.Interfaces
+namespace ApplicationLayer.Interfaces
 {
     public interface IModel<T> where T : IDto
     {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ApplicationLayer.Interfaces;
-using DomainLayer.Interfaces;
 
 namespace ApplicationLayer.Services
 {

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using ApplicationLayer.Interfaces;
 using ApplicationLayer.Services;
-using DomainLayer.Interfaces;
 using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;

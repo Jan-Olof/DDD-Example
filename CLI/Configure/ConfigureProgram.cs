@@ -1,9 +1,10 @@
 ﻿using System;
 using ApplicationLayer.Interfaces;
 using ApplicationLayer.Services;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
+using InfrastructureLayer.DataAccess.SqlServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,9 @@ namespace CLI.Configure
             serviceCollection.AddTransient<IInstruction, Instruction>();
             serviceCollection.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
             serviceCollection.AddTransient<IInstructionService, InstructionService>();
+
+            //var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
+            //serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
             return serviceCollection;
         }

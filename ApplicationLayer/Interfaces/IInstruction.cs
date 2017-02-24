@@ -1,6 +1,4 @@
-﻿using Utilities.Interfaces;
-
-namespace DomainLayer.Interfaces
+﻿namespace ApplicationLayer.Interfaces
 {
     public interface IInstruction : IDto
     {

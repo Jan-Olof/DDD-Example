@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ApplicationLayer.Interfaces;
-using Utilities.Interfaces;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

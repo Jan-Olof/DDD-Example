@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Utilities.Interfaces;
 
-namespace DomainLayer.Interfaces
+namespace ApplicationLayer.Interfaces
 {
     public interface IInstructionModel : IModel<IInstruction>
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using DomainLayer.Interfaces;
+using ApplicationLayer.Interfaces;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

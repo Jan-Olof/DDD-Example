@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
 using Utilities.Exceptions;
-using Utilities.Interfaces;
 
 namespace ApplicationLayer.Services
 {

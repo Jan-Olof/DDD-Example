@@ -1,4 +1,4 @@
-﻿namespace Utilities.Interfaces
+﻿namespace ApplicationLayer.Interfaces
 {
     public interface IDto
     {

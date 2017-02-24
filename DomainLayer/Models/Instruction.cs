@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using DomainLayer.Interfaces;
+using ApplicationLayer.Interfaces;
 
 namespace DomainLayer.Models
 {
