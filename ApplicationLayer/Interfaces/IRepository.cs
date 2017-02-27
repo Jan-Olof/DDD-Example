@@ -6,6 +6,8 @@ namespace ApplicationLayer.Interfaces
 {
     public interface IRepository<T>
     {
+        void Delete(T entity);
+
         IEnumerable<T> Get();
 
         IEnumerable<T> Get(Expression<Func<T, bool>> condition);

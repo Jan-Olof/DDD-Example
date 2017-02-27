@@ -6,35 +6,21 @@ using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
-namespace InfrastructureLayerTests.DataAccess.Repositories
+namespace InfrastructureLayerTestsXunit
 {
-    [TestClass]
-    public class EfRepositoryTests
+    public class EfRepositoryTestsXunit
     {
-        private DbContextOptions<ExampleContext> _options;
-
-        [TestInitialize]
-        public void SetUp()
-        {
-            _options = new DbContextOptionsBuilder<ExampleContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-        }
-
-        [TestCleanup]
-        public void TearDown()
-        {
-        }
-
-        [TestMethod]
+        [Fact]
         public void TestShouldGetAllEntities()
         {
             // Arrange
-            SeedDatabase(_options);
+            var options = SetDbContextOptions();
 
-            using (var context = new ExampleContext(_options))
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
             {
                 var sut = CreateEfRepository(context);
 
@@ -42,18 +28,19 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var result = sut.Get().ToList();
 
                 // Assert
-                Assert.AreEqual(3, result.Count);
-                Assert.AreEqual("No1", result.Single(n => n.Description == "Desc1").Name);
+                Assert.Equal(3, result.Count);
+                Assert.Equal("No1", result.Single(n => n.Description == "Desc1").Name);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShouldGetEntities()
         {
             // Arrange
-            SeedDatabase(_options);
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
 
-            using (var context = new ExampleContext(_options))
+            using (var context = new ExampleContext(options))
             {
                 var sut = CreateEfRepository(context);
 
@@ -61,16 +48,17 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var result = sut.Get(n => n.Name == "No2").ToList();
 
                 // Assert
-                Assert.AreEqual(1, result.Count);
-                Assert.AreEqual("No2", result.Single().Name);
+                Assert.Equal(1, result.Count);
+                Assert.Equal("No2", result.Single().Name);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShouldInsertEntityWhenThereAreNone()
         {
             // Arrange
-            using (var context = new ExampleContext(_options))
+            var options = SetDbContextOptions();
+            using (var context = new ExampleContext(options))
             {
                 var sut = CreateEfRepository(context);
 
@@ -78,26 +66,27 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var result = sut.Insert(SampleInstructions.CreateInstruction());
 
                 // Assert
-                Assert.IsTrue(result.Id > 0);
-                Assert.AreEqual("FirstInstruction", result.Name);
+                Assert.True(result.Id > 0);
+                Assert.Equal("FirstInstruction", result.Name);
             }
 
-            using (var context = new ExampleContext(_options))
+            using (var context = new ExampleContext(options))
             {
                 var result = context.Instructions.ToList();
 
-                Assert.AreEqual(1, result.Count);
-                Assert.AreEqual("FirstInstruction", result.Single().Name);
+                Assert.Equal(1, result.Count);
+                Assert.Equal("FirstInstruction", result.Single().Name);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestShouldInsertEntityWhenThereAreSomeAlready()
         {
             // Arrange
-            SeedDatabase(_options);
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
 
-            using (var context = new ExampleContext(_options))
+            using (var context = new ExampleContext(options))
             {
                 var sut = CreateEfRepository(context);
 
@@ -105,16 +94,16 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var result = sut.Insert(SampleInstructions.CreateInstruction());
 
                 // Assert
-                Assert.IsTrue(result.Id > 0);
-                Assert.AreEqual("FirstInstruction", result.Name);
+                Assert.True(result.Id > 0);
+                Assert.Equal("FirstInstruction", result.Name);
             }
 
-            using (var context = new ExampleContext(_options))
+            using (var context = new ExampleContext(options))
             {
                 var result = context.Instructions.ToList();
 
-                Assert.AreEqual(4, result.Count);
-                Assert.AreEqual("This is the first instruction.", result.Single(i => i.Name == "FirstInstruction").Description);
+                Assert.Equal(4, result.Count);
+                Assert.Equal("This is the first instruction.", result.Single(i => i.Name == "FirstInstruction").Description);
             }
         }
 
@@ -133,6 +122,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 context.Instructions.Add((Instruction)SampleInstructions.CreateInstruction(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
+        }
+
+        private static DbContextOptions<ExampleContext> SetDbContextOptions()
+        {
+            return new DbContextOptionsBuilder<ExampleContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
         }
     }
 }

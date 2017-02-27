@@ -22,6 +22,12 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _context = dataContext;
         }
 
+        public void Delete(T entity)
+        {
+            _context.Remove(entity);
+            _context.SaveChanges();
+        }
+
         public void Dispose()
         {
             _context?.Dispose();

@@ -20,6 +20,12 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _entities = entities;
         }
 
+        public void Delete(T entity)
+        {
+            int index = _entities.IndexOf(entity);
+            _entities.RemoveAt(index);
+        }
+
         public IEnumerable<T> Get()
         {
             return _entities;
