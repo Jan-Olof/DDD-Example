@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using ApplicationLayer.Interfaces.Models;
 
-namespace ApplicationLayer.Interfaces
+namespace ApplicationLayer.Interfaces.Services
 {
     public interface IInstructionService
     {

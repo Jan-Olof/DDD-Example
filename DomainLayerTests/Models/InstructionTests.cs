@@ -1,5 +1,5 @@
 using System.Linq;
-using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

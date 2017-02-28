@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 
 namespace DomainLayerTests.TestObjects

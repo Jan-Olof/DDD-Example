@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Services;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 

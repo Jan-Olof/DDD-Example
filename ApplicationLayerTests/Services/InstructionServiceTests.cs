@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Services;
 using DomainLayerTests.TestObjects;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using Utilities.Exceptions;
@@ -13,6 +15,7 @@ namespace ApplicationLayerTests.Services
     [TestClass]
     public class InstructionServiceTests
     {
+        private ILogger<InstructionService> _logger;
         private IInstructionModel _model;
         private IRepository<IInstruction> _repository;
 
@@ -21,6 +24,7 @@ namespace ApplicationLayerTests.Services
         {
             _repository = Substitute.For<IRepository<IInstruction>>();
             _model = Substitute.For<IInstructionModel>();
+            _logger = Substitute.For<ILogger<InstructionService>>();
         }
 
         [TestCleanup]
@@ -116,7 +120,7 @@ namespace ApplicationLayerTests.Services
 
         private InstructionService CreateInstructionService()
         {
-            return new InstructionService(_repository, _model);
+            return new InstructionService(_repository, _model, _logger);
         }
     }
 }

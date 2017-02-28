@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -26,6 +26,33 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         [TestCleanup]
         public void TearDown()
         {
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteEntityWhenThereAreSomeAlready()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var instruction = sut.Get(i => i.Name == "No2").Single();
+
+                // Act
+                sut.Delete(instruction);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var result = context.Instructions.ToList();
+
+                Assert.AreEqual(2, result.Count);
+                Assert.AreEqual("Desc1", result.Single(i => i.Name == "No1").Description);
+                Assert.AreEqual("Desc3", result.Single(i => i.Name == "No3").Description);
+            }
         }
 
         [TestMethod]

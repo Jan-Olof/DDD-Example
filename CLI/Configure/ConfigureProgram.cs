@@ -1,10 +1,11 @@
 ﻿using System;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
+using ApplicationLayer.Interfaces.Services;
 using ApplicationLayer.Services;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
-using InfrastructureLayer.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -19,9 +20,12 @@ namespace CLI.Configure
 
             serviceCollection.AddLogging();
 
-            serviceCollection.AddDbContext<ExampleContext>();
+            var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
+            serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
+            // IoC container
             serviceCollection.AddTransient<DbContext, ExampleContext>();
+            serviceCollection.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
             serviceCollection.AddTransient<IInstructionModel, Instruction>();
             serviceCollection.AddTransient<IInstruction, Instruction>();
             //serviceCollection.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
-    public class InMemoryRepository<T> : IRepository<T> where T : class, IDto
+    public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
     {
         private readonly IList<T> _entities;
 
@@ -22,7 +23,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
         public void Delete(T entity)
         {
-            int index = _entities.IndexOf(entity);
+            var item = _entities.SingleOrDefault(e => e.Id == entity.Id);
+
+            int index = _entities.IndexOf(item);
             _entities.RemoveAt(index);
         }
 

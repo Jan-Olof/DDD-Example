@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ApplicationLayer.Interfaces
+namespace ApplicationLayer.Interfaces.Services
 {
     public interface IBaseService<T>
     {

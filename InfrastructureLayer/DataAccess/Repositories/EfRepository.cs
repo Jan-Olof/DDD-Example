@@ -42,7 +42,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var expression = ChangeType.ChangeInputType<T, TModel, bool>(condition);
 
-            //return _context.Set<T>().Where(condition);
             return _context.Set<TModel>().Where(expression);
         }
 

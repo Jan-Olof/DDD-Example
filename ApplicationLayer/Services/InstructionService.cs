@@ -1,18 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
+using ApplicationLayer.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ApplicationLayer.Services
 {
     public class InstructionService : BaseService<IInstruction, IInstructionModel>, IInstructionService
     {
-        public InstructionService(IRepository<IInstruction> repository, IInstructionModel model)
-            : base(repository, model)
+        public InstructionService(IRepository<IInstruction> repository, IInstructionModel model, ILogger<InstructionService> logger)
+            : base(repository, model, logger)
         {
         }
 
         public IEnumerable<IInstruction> Get(string name)
         {
-            return Repository.Get(Model.Get(name));
+            try
+            {
+                return Repository.Get(Model.Get(name));
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message);
+                throw;
+            }
         }
     }
 }

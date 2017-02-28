@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
+using ApplicationLayer.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 using Utilities.Exceptions;
 
 namespace ApplicationLayer.Services
 {
-    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IDto where TModel : IModel<T>
+    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IIdentifier where TModel : IModel<T>
     {
+        protected readonly ILogger Logger;
         protected readonly TModel Model;
         protected readonly IRepository<T> Repository;
 
-        protected BaseService(IRepository<T> repository, TModel model)
+        protected BaseService(IRepository<T> repository, TModel model, ILogger<BaseService<T, TModel>> logger)
         {
             if (repository == null)
             {
@@ -23,18 +27,40 @@ namespace ApplicationLayer.Services
                 throw new ArgumentNullException(nameof(model));
             }
 
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
+            Logger = logger;
             Repository = repository;
             Model = model;
         }
 
         public T Create(T entity)
         {
-            return Repository.Insert(entity);
+            try
+            {
+                return Repository.Insert(entity);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message);
+                throw;
+            }
         }
 
         public IList<T> Get()
         {
-            return Repository.Get().ToList();
+            try
+            {
+                return Repository.Get().ToList();
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e.Message);
+                throw;
+            }
         }
 
         public T Get(int id)
@@ -45,6 +71,7 @@ namespace ApplicationLayer.Services
             }
             catch (InvalidOperationException e)
             {
+                Logger.LogError(e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }

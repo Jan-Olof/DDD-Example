@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,6 +11,19 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
     [TestClass]
     public class InMemoryRepositoryTests
     {
+        [TestMethod]
+        public void TestShouldDeleteEntityWhenThereAreSomeAlready()
+        {
+            // Arrange
+            var sut = CreateInMemoryRepository(SampleInstructions.CreateInstructions());
+
+            // Act
+            sut.Delete(SampleInstructions.CreateInstruction(1));
+
+            // Assert
+            Assert.AreEqual(2, sut.Get().Count());
+        }
+
         [TestMethod]
         public void TestShouldGetAllEntities()
         {
