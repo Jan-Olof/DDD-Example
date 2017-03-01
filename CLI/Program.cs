@@ -3,7 +3,7 @@ using CLI.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using static CLI.Configure.ConfigureProgram;
+using static InfrastructureLayer.Configure.ConfigureProgram;
 
 namespace CLI
 {
@@ -36,7 +36,11 @@ namespace CLI
         // ReSharper disable once UnusedMember.Local
         private static void Main()
         {
-            var serviceProvider = ConfigureServiceProvider(ConfigureDependencyInjection());
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection = ConfigureServices(serviceCollection);
+            serviceCollection = ConfigureDependencyInjection(serviceCollection);
+
+            var serviceProvider = ConfigureServiceProvider(serviceCollection);
 
             var logger = serviceProvider
                 .GetService<ILoggerFactory>()

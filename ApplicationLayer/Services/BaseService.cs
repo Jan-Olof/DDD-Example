@@ -5,6 +5,7 @@ using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using Microsoft.Extensions.Logging;
+using Utilities.Enums;
 using Utilities.Exceptions;
 
 namespace ApplicationLayer.Services
@@ -45,7 +46,7 @@ namespace ApplicationLayer.Services
             }
             catch (Exception e)
             {
-                Logger.LogError(e.Message);
+                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
                 throw;
             }
         }
@@ -58,7 +59,7 @@ namespace ApplicationLayer.Services
             }
             catch (Exception e)
             {
-                Logger.LogError(e.Message);
+                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
                 throw;
             }
         }
@@ -71,7 +72,7 @@ namespace ApplicationLayer.Services
             }
             catch (InvalidOperationException e)
             {
-                Logger.LogError(e.Message);
+                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }

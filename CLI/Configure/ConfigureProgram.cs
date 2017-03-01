@@ -1,51 +1,54 @@
-﻿using System;
-using ApplicationLayer.Interfaces;
-using ApplicationLayer.Interfaces.Models;
-using ApplicationLayer.Interfaces.Services;
-using ApplicationLayer.Services;
-using DomainLayer.Models;
-using InfrastructureLayer.DataAccess.Repositories;
-using InfrastructureLayer.DataAccess.SqlServer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿//using System;
+//using ApplicationLayer.Interfaces;
+//using ApplicationLayer.Interfaces.Models;
+//using ApplicationLayer.Interfaces.Services;
+//using ApplicationLayer.Services;
+//using DomainLayer.Models;
+//using InfrastructureLayer.DataAccess.Repositories;
+//using InfrastructureLayer.DataAccess.SqlServer;
+//using Microsoft.EntityFrameworkCore;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Logging;
 
-namespace CLI.Configure
-{
-    public static class ConfigureProgram
-    {
-        public static IServiceCollection ConfigureDependencyInjection()
-        {
-            var serviceCollection = new ServiceCollection();
+//namespace CLI.Configure
+//{
+//    public static class ConfigureProgram
+//    {
+//        public static IServiceCollection ConfigureDependencyInjection(IServiceCollection serviceCollection)
+//        {
+//            // IoC container
+//            serviceCollection.AddTransient<DbContext, ExampleContext>();
+//            serviceCollection.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
+//            serviceCollection.AddTransient<IInstructionModel, Instruction>();
+//            serviceCollection.AddTransient<IInstruction, Instruction>();
+//            //serviceCollection.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
+//            serviceCollection.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
+//            serviceCollection.AddTransient<IInstructionService, InstructionService>();
 
-            serviceCollection.AddLogging();
+//            return serviceCollection;
+//        }
 
-            var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
-            serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
+//        public static IServiceProvider ConfigureServiceProvider(IServiceCollection serviceCollection)
+//        {
+//            var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            // IoC container
-            serviceCollection.AddTransient<DbContext, ExampleContext>();
-            serviceCollection.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
-            serviceCollection.AddTransient<IInstructionModel, Instruction>();
-            serviceCollection.AddTransient<IInstruction, Instruction>();
-            //serviceCollection.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
-            serviceCollection.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
-            serviceCollection.AddTransient<IInstructionService, InstructionService>();
+//            //configure console logging
+//            serviceProvider
+//                .GetService<ILoggerFactory>()
+//                .AddConsole()
+//                .AddDebug(LogLevel.Trace);
 
-            return serviceCollection;
-        }
+//            return serviceProvider;
+//        }
 
-        public static IServiceProvider ConfigureServiceProvider(IServiceCollection serviceCollection)
-        {
-            var serviceProvider = serviceCollection.BuildServiceProvider();
+//        public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
+//        {
+//            serviceCollection.AddLogging();
 
-            //configure console logging
-            serviceProvider
-                .GetService<ILoggerFactory>()
-                .AddConsole()
-                .AddDebug(LogLevel.Trace);
+//            var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
+//            serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
-            return serviceProvider;
-        }
-    }
-}
+//            return serviceCollection;
+//        }
+//    }
+//}
