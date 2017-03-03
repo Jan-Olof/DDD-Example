@@ -1,56 +1,31 @@
-﻿using System;
+﻿// ReSharper disable  ClassNeverInstantiated.Global
+// ReSharper disable  UnusedMember.Local
+// ReSharper disable  UnusedParameter.Local
+
+using System;
+using CLI.Configure;
 using CLI.Controllers;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using static InfrastructureLayer.Configure.ConfigureProgram;
+using static CLI.ConsoleCommands;
 
 namespace CLI
 {
     internal class Program
     {
-        private static bool ConsoleCommand(string displayText)
+        private static void Main(string[] args)
         {
-            Console.WriteLine();
-            Console.WriteLine(displayText);
-            var readKey = Console.ReadKey();
-            Console.WriteLine();
-            return readKey.Key == ConsoleKey.Y;
-        }
+            var dependencyScope = new DependencyScope();
 
-        private static void InstructionHandling(IServiceProvider serviceProvider)
-        {
-            var instructionController = new InstructionController(serviceProvider);
-
-            if (ConsoleCommand("Add instruction? (y/n)"))
-            {
-                instructionController.CreateInstruction();
-            }
-
-            if (ConsoleCommand("View instructions? (y/n)"))
-            {
-                instructionController.ViewInstructions();
-            }
-        }
-
-        // ReSharper disable once UnusedMember.Local
-        private static void Main()
-        {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection = ConfigureServices(serviceCollection);
-            serviceCollection = ConfigureDependencyInjection(serviceCollection);
-
-            var serviceProvider = ConfigureServiceProvider(serviceCollection);
-
-            var logger = serviceProvider
-                .GetService<ILoggerFactory>()
-                .CreateLogger<Program>();
+            var logger = dependencyScope.CreateLogger();
 
             logger.LogInformation("Starting application");
 
-            if (ConsoleCommand("Start instruction service (y/n)?"))
+            if (YesNoCommand("Start instruction service (y/n)?"))
             {
-                InstructionHandling(serviceProvider);
+                var instructionController = (InstructionController)dependencyScope.GetService(typeof(InstructionController));
+
+                instructionController.InstructionFlow();
             }
 
             logger.LogInformation("All done!");

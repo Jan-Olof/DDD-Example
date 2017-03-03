@@ -6,17 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI.Controllers
 {
-    public class InstructionController
+    public class InstructionController : BaseController
     {
         private readonly IInstructionService _instructionService;
 
-        public InstructionController(IServiceProvider serviceProvider)
+        public InstructionController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            if (serviceProvider == null)
-            {
-                throw new ArgumentNullException(nameof(serviceProvider));
-            }
-
             _instructionService = serviceProvider.GetService<IInstructionService>();
         }
 
@@ -33,6 +28,19 @@ namespace CLI.Controllers
             var createdInstruction = _instructionService.Create(instruction);
 
             Console.WriteLine($"Instruction created with id {createdInstruction.Id}.");
+        }
+
+        public void InstructionFlow()
+        {
+            if (ConsoleCommands.YesNoCommand("Add instruction? (y/n)"))
+            {
+                CreateInstruction();
+            }
+
+            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            {
+                ViewInstructions();
+            }
         }
 
         public void ViewInstructions()
