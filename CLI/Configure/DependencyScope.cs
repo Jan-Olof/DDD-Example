@@ -40,7 +40,9 @@ namespace CLI.Configure
             serviceCollection = ConfigureServices(serviceCollection);
             serviceCollection = ConfigureDependencyInjection(serviceCollection);
 
-            var serviceProvider = ConfigureServiceProvider(serviceCollection);
+            var serviceProvider = CreateServiceProvider(serviceCollection);
+            ConfigureLogging(serviceProvider);
+
             return serviceProvider;
         }
     }

@@ -9,6 +9,7 @@ using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace InfrastructureLayer.Configure
 {
@@ -28,17 +29,14 @@ namespace InfrastructureLayer.Configure
             return serviceCollection;
         }
 
-        public static IServiceProvider ConfigureServiceProvider(IServiceCollection serviceCollection)
+        public static void ConfigureLogging(IServiceProvider serviceProvider)
         {
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-
-            //configure console logging
             serviceProvider
                 .GetService<ILoggerFactory>()
                 .AddConsole()
-                .AddDebug(LogLevel.Trace);
-
-            return serviceProvider;
+                .AddDebug(LogLevel.Trace)
+                .AddNLog()
+                .ConfigureNLog("nlog.config");
         }
 
         public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
@@ -49,6 +47,11 @@ namespace InfrastructureLayer.Configure
             serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
             return serviceCollection;
+        }
+
+        public static IServiceProvider CreateServiceProvider(IServiceCollection serviceCollection)
+        {
+            return serviceCollection.BuildServiceProvider();
         }
     }
 }
