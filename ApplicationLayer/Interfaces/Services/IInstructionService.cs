@@ -12,5 +12,7 @@ namespace ApplicationLayer.Interfaces.Services
         IList<IInstruction> Get();
 
         IInstruction Get(int id);
+
+        void Update(IInstruction entity, int id);
     }
 }

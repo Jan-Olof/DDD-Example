@@ -1,7 +1,10 @@
+// ReSharper disable UnusedMember.Global
+
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
+using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -80,14 +83,28 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("FirstInstruction", result.Name);
         }
 
+        [TestMethod]
+        public void TestShouldUpdateEntity()
+        {
+            // Arrange
+            var sut = CreateInMemoryRepository(SampleInstructions.CreateInstructions());
+
+            // Act
+            sut.Update(SampleInstructions.CreateInstruction(2, "Updated name", "Updated description."), i => i.Id == 2);
+
+            // Assert
+            Assert.AreEqual("Updated name", sut.Get(e => e.Id == 2).Single().Name);
+            Assert.AreEqual("Updated description.", sut.Get(e => e.Id == 2).Single().Description);
+        }
+
         private static IRepository<IInstruction> CreateInMemoryRepository()
         {
-            return new InMemoryRepository<IInstruction>();
+            return new InMemoryRepository<IInstruction>(new Instruction());
         }
 
         private static IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
-            return new InMemoryRepository<IInstruction>(instructions);
+            return new InMemoryRepository<IInstruction>(new Instruction(), instructions);
         }
     }
 }

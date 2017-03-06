@@ -1,3 +1,5 @@
+// ReSharper disable UnusedMember.Global
+
 using System;
 using System.Linq;
 using ApplicationLayer.Interfaces.Models;
@@ -6,13 +8,16 @@ using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {
     [TestClass]
     public class EfRepositoryTests
     {
+        private ILogger<EfRepository<IInstruction, Instruction>> _logger;
         private DbContextOptions<ExampleContext> _options;
 
         [TestInitialize]
@@ -21,6 +26,8 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             _options = new DbContextOptionsBuilder<ExampleContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
+
+            _logger = Substitute.For<ILogger<EfRepository<IInstruction, Instruction>>>();
         }
 
         [TestCleanup]
@@ -145,9 +152,28 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             }
         }
 
-        private static EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        [TestMethod]
+        public void TestShouldUpdateEntity()
         {
-            return new EfRepository<IInstruction, Instruction>(context);
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                sut.Update(SampleInstructions.CreateInstruction(2, "No2", "Updated description."), i => i.Name == "No2");
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var result = context.Instructions.ToList();
+
+                Assert.AreEqual(3, result.Count);
+                Assert.AreEqual("Updated description.", result.Single(i => i.Name == "No2").Description);
+            }
         }
 
         private static void SeedDatabase(DbContextOptions<ExampleContext> options)
@@ -160,6 +186,11 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 context.Instructions.Add((Instruction)SampleInstructions.CreateInstruction(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
+        }
+
+        private EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        {
+            return new EfRepository<IInstruction, Instruction>(context, new Instruction(), _logger);
         }
     }
 }

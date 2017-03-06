@@ -10,14 +10,22 @@ namespace InfrastructureLayer.DataAccess.Repositories
     public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
     {
         private readonly IList<T> _entities;
+        private readonly IUpdateMapper<T> _updateMapper;
 
-        public InMemoryRepository()
+        public InMemoryRepository(IUpdateMapper<T> updateMapper)
         {
+            if (updateMapper == null)
+            {
+                throw new ArgumentNullException(nameof(updateMapper));
+            }
+
             _entities = new List<T>();
+            _updateMapper = updateMapper;
         }
 
-        public InMemoryRepository(IList<T> entities)
+        public InMemoryRepository(IUpdateMapper<T> updateMapper, IList<T> entities)
         {
+            _updateMapper = updateMapper;
             _entities = entities;
         }
 
@@ -44,6 +52,13 @@ namespace InfrastructureLayer.DataAccess.Repositories
             entity.Id = GetNextId();
             _entities.Add(entity);
             return entity;
+        }
+
+        public void Update(T entity, Expression<Func<T, bool>> condition)
+        {
+            var toUpdate = _entities.SingleOrDefault(condition.Compile());
+
+            _updateMapper.MapUpdate(entity, toUpdate);
         }
 
         private int GetNextId()

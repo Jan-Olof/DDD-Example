@@ -15,7 +15,30 @@ namespace CLI.Controllers
             _instructionService = serviceProvider.GetService<IInstructionService>();
         }
 
-        public void CreateInstruction()
+        public void InstructionFlow()
+        {
+            if (ConsoleCommands.YesNoCommand("Add instruction? (y/n)"))
+            {
+                CreateInstruction();
+            }
+
+            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            {
+                ViewInstructions();
+            }
+
+            if (ConsoleCommands.YesNoCommand("Update instruction description? (y/n)"))
+            {
+                UpdateInstructions();
+            }
+
+            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            {
+                ViewInstructions();
+            }
+        }
+
+        private void CreateInstruction()
         {
             var instruction = new Instruction();
 
@@ -30,20 +53,39 @@ namespace CLI.Controllers
             Console.WriteLine($"Instruction created with id {createdInstruction.Id}.");
         }
 
-        public void InstructionFlow()
+        private void UpdateInstructions()
         {
-            if (ConsoleCommands.YesNoCommand("Add instruction? (y/n)"))
+            Console.WriteLine("Id of instruction to update?");
+            string idEntered = Console.ReadLine();
+
+            int id;
+            bool ok = int.TryParse(idEntered, out id);
+
+            if (!ok)
             {
-                CreateInstruction();
+                Console.WriteLine("Failed to parse entered id.");
+                return;
             }
 
-            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            var instruction = _instructionService.Get(id);
+
+            if (instruction == null)
             {
-                ViewInstructions();
+                Console.WriteLine("Failed to get instruction from id.");
+                return;
             }
+
+            Console.WriteLine($"Old description: {instruction.Description}");
+            Console.WriteLine("Enter new description:");
+            string description = Console.ReadLine();
+
+            instruction.Description = description;
+            _instructionService.Update(instruction, id);
+
+            Console.WriteLine("New description entered.");
         }
 
-        public void ViewInstructions()
+        private void ViewInstructions()
         {
             var instructions = _instructionService.Get();
 

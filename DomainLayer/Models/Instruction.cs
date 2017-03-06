@@ -25,5 +25,13 @@ namespace DomainLayer.Models
         {
             return instruction => instruction.Name == name;
         }
+
+        public IInstruction MapUpdate(IInstruction from, IInstruction to)
+        {
+            to.Name = from.Name;
+            to.Description = from.Description;
+
+            return to;
+        }
     }
 }

@@ -23,7 +23,20 @@ namespace ApplicationLayer.Services
             }
             catch (Exception e)
             {
-                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
+                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                throw;
+            }
+        }
+
+        public void Update(IInstruction entity, int id)
+        {
+            try
+            {
+                Repository.Update(entity, Model.Get(id));
+            }
+            catch (Exception e)
+            {
+                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw;
             }
         }

@@ -46,7 +46,7 @@ namespace ApplicationLayer.Services
             }
             catch (Exception e)
             {
-                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
+                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw;
             }
         }
@@ -59,7 +59,7 @@ namespace ApplicationLayer.Services
             }
             catch (Exception e)
             {
-                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
+                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw;
             }
         }
@@ -72,7 +72,7 @@ namespace ApplicationLayer.Services
             }
             catch (InvalidOperationException e)
             {
-                Logger.LogError((int)LoggingEvents.Exception, e, e.Message);
+                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }

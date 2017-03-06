@@ -6,12 +6,21 @@ using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
 using Xunit;
 
 namespace InfrastructureLayerTestsXunit
 {
     public class EfRepositoryTestsXunit
     {
+        private ILogger<EfRepository<IInstruction, Instruction>> _logger;
+
+        public EfRepositoryTestsXunit()
+        {
+            _logger = Substitute.For<ILogger<EfRepository<IInstruction, Instruction>>>();
+        }
+
         [Fact]
         public void TestShouldDeleteEntityWhenThereAreSomeAlready()
         {
@@ -135,9 +144,29 @@ namespace InfrastructureLayerTestsXunit
             }
         }
 
-        private static EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        [Fact]
+        public void TestShouldUpdateEntity()
         {
-            return new EfRepository<IInstruction, Instruction>(context);
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                sut.Update(SampleInstructions.CreateInstruction(2, "No2", "Updated description."), i => i.Name == "No2");
+            }
+
+            // Assert
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Instructions.ToList();
+
+                Assert.Equal(3, result.Count);
+                Assert.Equal("Updated description.", result.Single(i => i.Name == "No2").Description);
+            }
         }
 
         private static void SeedDatabase(DbContextOptions<ExampleContext> options)
@@ -157,6 +186,11 @@ namespace InfrastructureLayerTestsXunit
             return new DbContextOptionsBuilder<ExampleContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
+        }
+
+        private EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        {
+            return new EfRepository<IInstruction, Instruction>(context, new Instruction(), _logger);
         }
     }
 }

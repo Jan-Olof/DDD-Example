@@ -118,6 +118,23 @@ namespace ApplicationLayerTests.Services
             Assert.AreEqual(3, result.Single().Id);
         }
 
+        [TestMethod]
+        public void TestShouldUpdateInstructionFromId()
+        {
+            // Arrange
+            _model.Get(3).Returns(i => i.Id == 3);
+
+            _repository.Update(SampleInstructions.CreateInstruction(), i => i.Id == 3);
+
+            var sut = CreateInstructionService();
+
+            // Act
+            sut.Update(SampleInstructions.CreateInstruction(3), 3);
+
+            // Assert
+            Assert.IsTrue(true);
+        }
+
         private InstructionService CreateInstructionService()
         {
             return new InstructionService(_repository, _model, _logger);

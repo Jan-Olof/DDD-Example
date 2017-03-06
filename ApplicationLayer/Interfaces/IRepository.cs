@@ -13,5 +13,7 @@ namespace ApplicationLayer.Interfaces
         IEnumerable<T> Get(Expression<Func<T, bool>> condition);
 
         T Insert(T entity);
+
+        void Update(T entity, Expression<Func<T, bool>> findWhatToUpdate);
     }
 }
