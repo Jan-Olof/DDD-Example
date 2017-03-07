@@ -12,12 +12,18 @@ using Utilities.Exceptions;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
-    public class EfRepository<T, TModel> : IRepository<T>, IDisposable where T : class where TModel : class, T
+    /// <summary>
+    /// The entity framwork implementation of the generic repository.
+    /// </summary>
+    public class EfRepository<T, TModel> : IRepository<T> where T : class where TModel : class, T
     {
         private readonly DbContext _context;
         private readonly ILogger _logger;
         private readonly IUpdateMapper<T> _updateMapper;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EfRepository{T, TModel}"/> class.
+        /// </summary>
         public EfRepository(DbContext dataContext, IUpdateMapper<T> updateMapper, ILogger<EfRepository<T, TModel>> logger)
         {
             if (dataContext == null)
@@ -40,22 +46,34 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _logger = logger;
         }
 
+        /// <summary>
+        /// Delete an entity object.
+        /// </summary>
         public void Delete(T entity)
         {
             _context.Remove(entity);
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             _context?.Dispose();
         }
 
+        /// <summary>
+        /// Get all entity objects.
+        /// </summary>
         public IEnumerable<T> Get()
         {
             return _context.Set<TModel>();
         }
 
+        /// <summary>
+        /// Get entity objects based on a condition.
+        /// </summary>
         public IEnumerable<T> Get(Expression<Func<T, bool>> condition)
         {
             var expression = ChangeType.ChangeInputType<T, TModel, bool>(condition);
@@ -63,6 +81,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return _context.Set<TModel>().Where(expression);
         }
 
+        /// <summary>
+        /// Insert an entity object.
+        /// </summary>
         public T Insert(T entity)
         {
             _context.Add(entity);
@@ -71,6 +92,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return entity;
         }
 
+        /// <summary>
+        /// Update an entity object. This is based on a condition defining how to find the object.
+        /// </summary>
         public void Update(T entity, Expression<Func<T, bool>> condition)
         {
             try

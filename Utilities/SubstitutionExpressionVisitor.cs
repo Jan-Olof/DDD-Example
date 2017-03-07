@@ -2,6 +2,9 @@
 
 namespace Utilities
 {
+    /// <summary>
+    /// Represents a visitor or rewriter for expression trees.
+    /// </summary>
     public class SubstitutionExpressionVisitor : ExpressionVisitor
     {
         private readonly Expression _after;

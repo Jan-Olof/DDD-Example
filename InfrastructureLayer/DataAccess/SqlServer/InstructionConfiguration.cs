@@ -3,8 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.SqlServer
 {
+    /// <summary>
+    /// Database configuration for Instruction.
+    /// </summary>
     public static class InstructionConfiguration
     {
+        /// <summary>
+        /// Database configuration for Instruction.
+        /// </summary>
         public static void Configure(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Instruction>()

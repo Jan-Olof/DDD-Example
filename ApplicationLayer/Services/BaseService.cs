@@ -10,12 +10,18 @@ using Utilities.Exceptions;
 
 namespace ApplicationLayer.Services
 {
+    /// <summary>
+    /// The base service abstract class.
+    /// </summary>
     public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IIdentifier where TModel : IModel<T>
     {
         protected readonly ILogger Logger;
         protected readonly TModel Model;
         protected readonly IRepository<T> Repository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseService{T, TModel}"/> class.
+        /// </summary>
         protected BaseService(IRepository<T> repository, TModel model, ILogger<BaseService<T, TModel>> logger)
         {
             if (repository == null)
@@ -38,6 +44,9 @@ namespace ApplicationLayer.Services
             Model = model;
         }
 
+        /// <summary>
+        /// Create a new entity object.
+        /// </summary>
         public T Create(T entity)
         {
             try
@@ -51,6 +60,9 @@ namespace ApplicationLayer.Services
             }
         }
 
+        /// <summary>
+        /// Get all entity objects.
+        /// </summary>
         public IList<T> Get()
         {
             try
@@ -64,6 +76,9 @@ namespace ApplicationLayer.Services
             }
         }
 
+        /// <summary>
+        /// Get entity by id.
+        /// </summary>
         public T Get(int id)
         {
             try

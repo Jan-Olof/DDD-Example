@@ -3,16 +3,19 @@ using ApplicationLayer.Interfaces.Models;
 
 namespace ApplicationLayer.Interfaces.Services
 {
-    public interface IInstructionService
+    /// <summary>
+    /// The instruction service interface.
+    /// </summary>
+    public interface IInstructionService : IBaseService<IInstruction>
     {
-        IInstruction Create(IInstruction entity);
+        /// <summary>
+        /// Get instruction by name.
+        /// </summary>
+        IList<IInstruction> Get(string name);
 
-        IEnumerable<IInstruction> Get(string name);
-
-        IList<IInstruction> Get();
-
-        IInstruction Get(int id);
-
+        /// <summary>
+        /// Update an instruction.
+        /// </summary>
         void Update(IInstruction entity, int id);
     }
 }

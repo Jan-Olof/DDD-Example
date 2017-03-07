@@ -13,11 +13,16 @@ using NLog.Extensions.Logging;
 
 namespace InfrastructureLayer.Configure
 {
+    /// <summary>
+    /// Configure a .NET Core application.
+    /// </summary>
     public static class ConfigureProgram
     {
+        /// <summary>
+        /// The IoC container.
+        /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection serviceCollection)
         {
-            // IoC container
             serviceCollection.AddTransient<DbContext, ExampleContext>();
             serviceCollection.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
             serviceCollection.AddTransient<IInstructionModel, Instruction>();
@@ -30,6 +35,9 @@ namespace InfrastructureLayer.Configure
             return serviceCollection;
         }
 
+        /// <summary>
+        /// Configure the logging for the application.
+        /// </summary>
         public static void ConfigureLogging(IServiceProvider serviceProvider)
         {
             serviceProvider
@@ -40,6 +48,9 @@ namespace InfrastructureLayer.Configure
                 .ConfigureNLog("nlog.config");
         }
 
+        /// <summary>
+        /// Add and configure extension services with dependency injection.
+        /// </summary>
         public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddLogging();
@@ -50,6 +61,9 @@ namespace InfrastructureLayer.Configure
             return serviceCollection;
         }
 
+        /// <summary>
+        /// Create the service provider.
+        /// </summary>
         public static IServiceProvider CreateServiceProvider(IServiceCollection serviceCollection)
         {
             return serviceCollection.BuildServiceProvider();
