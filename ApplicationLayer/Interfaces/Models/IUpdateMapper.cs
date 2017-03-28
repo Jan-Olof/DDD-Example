@@ -3,7 +3,7 @@
     /// <summary>
     /// Handles what fields to update in a model.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of model to update</typeparam>
     public interface IUpdateMapper<T>
     {
         /// <summary>
