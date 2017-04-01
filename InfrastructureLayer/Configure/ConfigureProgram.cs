@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace InfrastructureLayer.Configure
 {
@@ -51,14 +52,17 @@ namespace InfrastructureLayer.Configure
         /// <summary>
         /// Add and configure extension services with dependency injection.
         /// </summary>
-        public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, IConfigurationRoot Configuration)
         {
-            serviceCollection.AddLogging();
+            services.AddLogging();
 
             var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
-            serviceCollection.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
-            return serviceCollection;
+            //services.AddOptions();
+            //services.Configure<AppSettings>(Configuration);
+
+            return services;
         }
 
         /// <summary>

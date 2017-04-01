@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="System.Reflection.TypeExtensions">
-      <HintPath>C:\Users\A421449\.nuget\packages\system.reflection.typeextensions\4.3.0\ref\netstandard1.5\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

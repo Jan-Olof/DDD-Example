@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Utilities.Exceptions;
 
 using static InfrastructureLayer.Configure.ConfigureProgram;
+using Microsoft.Extensions.Configuration;
 
 namespace CLI.Configure
 {
@@ -12,9 +13,9 @@ namespace CLI.Configure
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public DependencyScope()
+        public DependencyScope(IConfigurationRoot configurationRoot)
         {
-            _serviceProvider = BasicConfiguration();
+            _serviceProvider = BasicConfiguration(configurationRoot);
         }
 
         public ILogger<Program> CreateLogger()
@@ -34,10 +35,10 @@ namespace CLI.Configure
             throw new WrongTypeException($"GetService method does not support the {serviceType} type.");
         }
 
-        private static IServiceProvider BasicConfiguration()
+        private static IServiceProvider BasicConfiguration(IConfigurationRoot configurationRoot)
         {
             IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection = ConfigureServices(serviceCollection);
+            serviceCollection = ConfigureServices(serviceCollection, configurationRoot);
             serviceCollection = ConfigureDependencyInjection(serviceCollection);
 
             var serviceProvider = CreateServiceProvider(serviceCollection);
