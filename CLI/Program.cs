@@ -17,15 +17,7 @@ namespace CLI
     {
         private static void Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            var configuration = builder.Build();
-
-            Console.WriteLine($"datafile = {configuration["datafile"]}");
-
-            var dependencyScope = new DependencyScope(configuration);
+            var dependencyScope = new DependencyScope();
 
             var logger = dependencyScope.CreateLogger();
 

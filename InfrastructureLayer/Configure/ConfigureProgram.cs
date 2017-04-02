@@ -59,8 +59,8 @@ namespace InfrastructureLayer.Configure
 
             services.Configure<DataFile>(options => Configuration.GetSection("datafile").Bind(options));
 
-            //var connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
-            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(Configuration["database:connectionstring"]));
+            var connection = Configuration["database:connectionstring"];
+            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
             return services;
         }
