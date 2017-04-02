@@ -22,18 +22,18 @@ namespace InfrastructureLayer.Configure
         /// <summary>
         /// The IoC container.
         /// </summary>
-        public static IServiceCollection ConfigureDependencyInjection(IServiceCollection serviceCollection)
+        public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
-            serviceCollection.AddTransient<DbContext, ExampleContext>();
-            serviceCollection.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
-            serviceCollection.AddTransient<IInstructionModel, Instruction>();
-            serviceCollection.AddTransient<IInstruction, Instruction>();
-            serviceCollection.AddTransient<IUpdateMapper<IInstruction>, Instruction>();
-            //serviceCollection.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
-            serviceCollection.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
-            serviceCollection.AddTransient<IInstructionService, InstructionService>();
+            services.AddTransient<DbContext, ExampleContext>();
+            services.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
+            services.AddTransient<IInstructionModel, Instruction>();
+            services.AddTransient<IInstruction, Instruction>();
+            services.AddTransient<IUpdateMapper<IInstruction>, Instruction>();
+            services.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
+            //serviceCollection.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
+            services.AddTransient<IInstructionService, InstructionService>();
 
-            return serviceCollection;
+            return services;
         }
 
         /// <summary>
@@ -57,10 +57,10 @@ namespace InfrastructureLayer.Configure
             services.AddLogging();
             services.AddOptions();
 
-            services.Configure<DataFile>(options => Configuration.GetSection("datafile").Bind(options));
+            services.Configure<Datafile>(options => Configuration.GetSection("datafile").Bind(options));
 
-            var connection = Configuration["database:connectionstring"];
-            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
+            //var connection = Configuration["database:connectionstring"];
+            //services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
             return services;
         }
@@ -68,9 +68,9 @@ namespace InfrastructureLayer.Configure
         /// <summary>
         /// Create the service provider.
         /// </summary>
-        public static IServiceProvider CreateServiceProvider(IServiceCollection serviceCollection)
+        public static IServiceProvider CreateServiceProvider(IServiceCollection services)
         {
-            return serviceCollection.BuildServiceProvider();
+            return services.BuildServiceProvider();
         }
     }
 }

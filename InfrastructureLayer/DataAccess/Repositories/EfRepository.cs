@@ -6,7 +6,7 @@ using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Utilities;
+using Utilities.Expressions;
 using Utilities.Enums;
 using Utilities.Exceptions;
 

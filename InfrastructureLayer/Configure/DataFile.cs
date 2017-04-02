@@ -1,8 +1,8 @@
 ﻿namespace InfrastructureLayer.Configure
 {
-    public class DataFile
+    public class Datafile
     {
-        public DataFile()
+        public Datafile()
         {
             FileName = string.Empty;
         }

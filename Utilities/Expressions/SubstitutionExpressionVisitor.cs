@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Utilities
+namespace Utilities.Expressions
 {
     /// <summary>
     /// Represents a visitor or rewriter for expression trees.

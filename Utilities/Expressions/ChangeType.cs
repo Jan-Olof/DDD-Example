@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Utilities
+namespace Utilities.Expressions
 {
     /// <summary>
     /// Convert from Expression {Func{T1,bool}} to Expression{Func{T2,bool}}.
