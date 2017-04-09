@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Services;
 using DomainLayerTests.TestObjects;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using Utilities.Exceptions;
+using ApplicationLayer.Interfaces.Infrastructure;
 
 // ReSharper disable UnusedMember.Global
 

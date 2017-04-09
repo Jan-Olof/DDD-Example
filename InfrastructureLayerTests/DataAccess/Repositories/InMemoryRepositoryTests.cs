@@ -8,6 +8,7 @@ using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ApplicationLayer.Interfaces.Infrastructure;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {

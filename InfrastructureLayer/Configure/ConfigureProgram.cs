@@ -1,5 +1,4 @@
 ﻿using System;
-using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using ApplicationLayer.Services;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using ApplicationLayer.Interfaces.Infrastructure;
 
 namespace InfrastructureLayer.Configure
 {

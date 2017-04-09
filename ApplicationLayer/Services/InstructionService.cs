@@ -6,6 +6,7 @@ using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Utilities.Enums;
+using ApplicationLayer.Interfaces.Infrastructure;
 
 namespace ApplicationLayer.Services
 {

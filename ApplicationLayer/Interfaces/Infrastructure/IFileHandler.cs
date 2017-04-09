@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ApplicationLayer.Interfaces
+namespace ApplicationLayer.Interfaces.Infrastructure
 {
     /// <summary>
     /// The file handler interface.
@@ -11,10 +11,5 @@ namespace ApplicationLayer.Interfaces
         /// Get the file as an object of type T.
         /// </summary>
         T Get();
-
-        /// <summary>
-        /// Get all objects of this type.
-        /// </summary>
-        IList<T> GetList();
     }
 }

@@ -13,8 +13,4 @@
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Serialization\" />
-  </ItemGroup>
-
 </Project>

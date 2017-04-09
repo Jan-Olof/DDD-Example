@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace ApplicationLayer.Interfaces
+namespace ApplicationLayer.Interfaces.Infrastructure
 {
     /// <summary>
     /// The generic repository interface. Handles CRUD operations.
