@@ -24,7 +24,7 @@ namespace InfrastructureLayer.Configure
         /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
-            services.AddTransient<DbContext, ExampleContext>();
+            //services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
             services.AddTransient<IInstructionModel, Instruction>();
             services.AddTransient<IInstruction, Instruction>();

@@ -54,7 +54,7 @@ namespace AdminWebApiTests
             var sut = CreateFileHandler();
 
             var instructions = sut.Get();
-            instructions.Add((Instruction)SampleInstructions.CreateInstruction(3, "ThirdInstruction", "This is the third instruction."));
+            instructions.Add(SampleInstructions.CreateInstruction(3, "ThirdInstruction", "This is the third instruction."));
 
             // Act
             sut.Write(instructions);

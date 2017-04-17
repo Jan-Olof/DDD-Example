@@ -26,24 +26,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public EfRepository(DbContext dataContext, IUpdateMapper<T> updateMapper, ILogger<EfRepository<T, TModel>> logger)
         {
-            if (dataContext == null)
-            {
-                throw new ArgumentNullException(nameof(dataContext));
-            }
-
-            if (updateMapper == null)
-            {
-                throw new ArgumentNullException(nameof(updateMapper));
-            }
-
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-
-            _context = dataContext;
-            _updateMapper = updateMapper;
-            _logger = logger;
+            _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>

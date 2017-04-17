@@ -8,7 +8,7 @@ using ApplicationLayer.Interfaces.Infrastructure;
 namespace InfrastructureLayer.DataAccess.Repositories
 {
     /// <summary>
-    /// A simple in memory reository for a certain entity.
+    /// A simple in memory repository for a certain entity.
     /// </summary>
     public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
     {
@@ -29,8 +29,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public InMemoryRepository(IUpdateMapper<T> updateMapper, IList<T> entities)
         {
-            _updateMapper = updateMapper;
-            _entities = entities;
+            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
+            _entities = entities ?? throw new ArgumentNullException(nameof(entities));
         }
 
         /// <summary>
