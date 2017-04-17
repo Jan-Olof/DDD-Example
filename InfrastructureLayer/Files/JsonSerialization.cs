@@ -3,8 +3,14 @@ using System.IO;
 
 namespace InfrastructureLayer.Files
 {
+    /// <summary>
+    /// The JsonSerialization class.
+    /// </summary>
     public class JsonSerialization : IJsonSerialization
     {
+        /// <summary>
+        /// Deserialize from JSON.
+        /// </summary>
         public T Deserialize<T>(Stream stream)
         {
             T data;
@@ -19,7 +25,10 @@ namespace InfrastructureLayer.Files
             return data;
         }
 
-        public void Serialize(object value, Stream stream)
+        /// <summary>
+        /// Serialize to JSON.
+        /// </summary>
+        public void Serialize<T>(T value, Stream stream)
         {
             using (StreamWriter writer = new StreamWriter(stream))
             using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))

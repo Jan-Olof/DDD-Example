@@ -12,8 +12,6 @@ namespace InfrastructureLayer.Files
     /// <typeparam name="T">The type to serialize to or from.</typeparam>
     public class FileHandler<T> : IFileHandler<T>
     {
-        // TODO: Try to add write method.
-
         private readonly IOptions<Datafile> _datafile;
         private readonly IJsonSerialization _serialization;
 
@@ -34,6 +32,16 @@ namespace InfrastructureLayer.Files
             FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
 
             return _serialization.Deserialize<T>(fileStream);
+        }
+
+        /// <summary>
+        /// Write an object of type T to a file.
+        /// </summary>
+        public void Write(T obj)
+        {
+            FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
+
+            _serialization.Serialize(obj, fileStream);
         }
     }
 }

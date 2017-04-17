@@ -6,7 +6,7 @@ namespace DomainLayerTests.TestObjects
 {
     public static class SampleInstructions
     {
-        public static IInstruction CreateInstruction(
+        public static Instruction CreateInstruction(
             int id = 0, string name = "FirstInstruction", string description = "This is the first instruction.")
         {
             return new Instruction
@@ -21,26 +21,35 @@ namespace DomainLayerTests.TestObjects
         {
             return new List<IInstruction>
             {
-                (Instruction)CreateInstruction(1),
-                (Instruction)CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
-                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
+                CreateInstruction(1),
+                CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
+                CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
             };
         }
 
-        public static IList<IInstruction> CreateInstructions3()
+        public static List<Instruction> CreateInstructions2()
         {
-            return new List<IInstruction>
+            return new List<Instruction>
             {
-                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
+                CreateInstruction(1),
+                CreateInstruction(2, "SecondInstruction", "This is the second instruction.")
             };
         }
 
-        public static IList<IInstruction> CreateInstructionsDuplicate()
+        public static List<Instruction> CreateInstructions3()
         {
-            return new List<IInstruction>
+            return new List<Instruction>
             {
-                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction."),
-                (Instruction)CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
+                CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
+            };
+        }
+
+        public static List<Instruction> CreateInstructionsDuplicate()
+        {
+            return new List<Instruction>
+            {
+                CreateInstruction(3, "ThirdInstruction", "This is the third instruction."),
+                CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
             };
         }
     }

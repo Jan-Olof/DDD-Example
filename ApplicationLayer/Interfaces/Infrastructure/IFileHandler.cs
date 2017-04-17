@@ -11,5 +11,10 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// Get the file as an object of type T.
         /// </summary>
         T Get();
+
+        /// <summary>
+        /// Write an object of type T to a file.
+        /// </summary>
+        void Write(T obj);
     }
 }

@@ -20,13 +20,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public InMemoryRepository(IUpdateMapper<T> updateMapper)
         {
-            if (updateMapper == null)
-            {
-                throw new ArgumentNullException(nameof(updateMapper));
-            }
-
             _entities = new List<T>();
-            _updateMapper = updateMapper;
+            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
         }
 
         /// <summary>
