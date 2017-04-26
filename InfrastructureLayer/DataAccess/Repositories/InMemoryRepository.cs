@@ -12,6 +12,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// </summary>
     public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
     {
+        // TODO: Add File and file handling to persist the data.
+
         private readonly IUpdateMapper<T> _updateMapper;
         private IList<T> _entities;
 
