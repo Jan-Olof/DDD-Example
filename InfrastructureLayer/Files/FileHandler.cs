@@ -27,7 +27,7 @@ namespace InfrastructureLayer.Files
         /// <summary>
         /// Get the file as an object of type T.
         /// </summary>
-        public T Get()
+        public T Read()
         {
             FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
 
@@ -39,6 +39,8 @@ namespace InfrastructureLayer.Files
         /// </summary>
         public void Write(T obj)
         {
+            File.WriteAllText(_datafile.Value.FileName, string.Empty);
+
             FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
 
             _serialization.Serialize(obj, fileStream);

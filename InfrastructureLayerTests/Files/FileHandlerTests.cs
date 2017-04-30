@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace AdminWebApiTests
@@ -14,6 +15,7 @@ namespace AdminWebApiTests
     [TestClass]
     public class FileHandlerTests
     {
+        private const string _instructionsFileName = @"..\..\..\Instructions.json";
         private IOptions<Datafile> _dataFile;
 
         [TestInitialize]
@@ -30,15 +32,15 @@ namespace AdminWebApiTests
         }
 
         [TestMethod]
-        public void TestShouldGetAllRecipients()
+        public void TestShouldReadAllInstructions()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = @"..\..\..\Instructions.json" });
+            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
 
             var sut = CreateFileHandler();
 
             // Act
-            var result = sut.Get();
+            var result = sut.Read();
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -46,21 +48,21 @@ namespace AdminWebApiTests
         }
 
         [TestMethod]
-        public void TestShouldWriteRecipientsToFile()
+        public void TestShouldWriteInstructionsToFile()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = @"..\..\..\Instructions.json" });
+            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
 
             var sut = CreateFileHandler();
 
-            var instructions = sut.Get();
+            var instructions = sut.Read();
             instructions.Add(SampleInstructions.CreateInstruction(3, "ThirdInstruction", "This is the third instruction."));
 
             // Act
             sut.Write(instructions);
 
             // Assert
-            var result = sut.Get();
+            var result = sut.Read();
 
             Assert.AreEqual(3, result.Count);
             Assert.AreEqual("SecondInstruction", result.Single(r => r.Id == 2).Name);
@@ -74,7 +76,7 @@ namespace AdminWebApiTests
 
         private void RestoreFileContent()
         {
-            _dataFile.Value.Returns(new Datafile { FileName = @"..\..\..\Instructions.json" });
+            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
             var sut = CreateFileHandler();
             sut.Write((SampleInstructions.CreateInstructions2()));
         }
