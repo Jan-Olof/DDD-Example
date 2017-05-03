@@ -15,6 +15,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void Delete(T entity);
 
         /// <summary>
+        /// Fill the data set with data from the data store.
+        /// </summary>
+        void FillDataSet();
+
+        /// <summary>
         /// Get all entity objects.
         /// </summary>
         IEnumerable<T> Get();
@@ -28,6 +33,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// Insert an entity object.
         /// </summary>
         T Insert(T entity);
+
+        /// <summary>
+        /// Persist data to the data store.
+        /// </summary>
+        void PersistData();
 
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.

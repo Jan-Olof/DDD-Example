@@ -49,6 +49,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Fill the data set with data from the data store.
+        /// EF don't support this behaviour.
+        /// </summary>
+        public void FillDataSet()
+        {
+        }
+
+        /// <summary>
         /// Get all entity objects.
         /// </summary>
         public IEnumerable<T> Get()
@@ -75,6 +83,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _context.SaveChanges();
 
             return entity;
+        }
+
+        /// <summary>
+        /// Persist data to the data store.
+        /// EF don't support this behaviour.
+        /// </summary>
+        public void PersistData()
+        {
         }
 
         /// <summary>

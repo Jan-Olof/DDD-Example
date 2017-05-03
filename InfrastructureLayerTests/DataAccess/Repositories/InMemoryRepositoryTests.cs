@@ -9,12 +9,29 @@ using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer.Interfaces.Infrastructure;
+using InfrastructureLayer.Files;
+using Microsoft.Extensions.Options;
+using NSubstitute;
+using InfrastructureLayer.Configure;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {
     [TestClass]
     public class InMemoryRepositoryTests
     {
+        private IOptions<Datafile> _dataFile;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            _dataFile = Substitute.For<IOptions<Datafile>>();
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+        }
+
         [TestMethod]
         public void TestShouldDeleteEntityWhenThereAreSomeAlready()
         {
@@ -98,14 +115,16 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("Updated description.", sut.Get(e => e.Id == 2).Single().Description);
         }
 
-        private static IRepository<IInstruction> CreateInMemoryRepository()
+        // TODO: Add tests for Fill and Persist.
+
+        private IRepository<IInstruction> CreateInMemoryRepository()
         {
-            return new InMemoryRepository<IInstruction>(new Instruction());
+            return new InMemoryRepository<IInstruction>(new Instruction(), new FileHandler<IList<IInstruction>>(_dataFile, new JsonSerialization()));
         }
 
-        private static IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
+        private IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
-            return new InMemoryRepository<IInstruction>(new Instruction(), instructions);
+            return new InMemoryRepository<IInstruction>(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(_dataFile, new JsonSerialization()));
         }
     }
 }

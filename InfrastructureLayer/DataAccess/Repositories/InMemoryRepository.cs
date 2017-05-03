@@ -12,27 +12,30 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// </summary>
     public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
     {
-        // TODO: Add File and file handling to persist the data.
+        // TODO: Add tests for Fill and Persist.
 
+        private readonly IFileHandler<IList<T>> _fileHandler;
         private readonly IUpdateMapper<T> _updateMapper;
         private IList<T> _entities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<T> updateMapper)
+        public InMemoryRepository(IUpdateMapper<T> updateMapper, IFileHandler<IList<T>> fileHandler)
         {
             _entities = new List<T>();
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
+            _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<T> updateMapper, IList<T> entities)
+        public InMemoryRepository(IUpdateMapper<T> updateMapper, IList<T> entities, IFileHandler<IList<T>> fileHandler)
         {
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _entities = entities ?? throw new ArgumentNullException(nameof(entities));
+            _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 
         /// <summary>
@@ -52,6 +55,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public void Dispose()
         {
             _entities = new List<T>();
+        }
+
+        /// <summary>
+        /// Fill the data set with data from the data store.
+        /// </summary>
+        public void FillDataSet()
+        {
+            _entities = _fileHandler.Read();
         }
 
         /// <summary>
@@ -78,6 +89,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
             entity.Id = GetNextId();
             _entities.Add(entity);
             return entity;
+        }
+
+        /// <summary>
+        /// Persist data to the data store.
+        /// </summary>
+        public void PersistData()
+        {
+            _fileHandler.Write(_entities);
         }
 
         /// <summary>
