@@ -13,23 +13,23 @@ using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using NSubstitute;
 using InfrastructureLayer.Configure;
+using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {
     [TestClass]
     public class InMemoryRepositoryTests
     {
-        private IOptions<Datafile> _dataFile;
-
         [TestInitialize]
         public void SetUp()
         {
-            _dataFile = Substitute.For<IOptions<Datafile>>();
+            RestoreFileContent();
         }
 
         [TestCleanup]
         public void TearDown()
         {
+            RestoreFileContent();
         }
 
         [TestMethod]
@@ -119,12 +119,12 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         private IRepository<IInstruction> CreateInMemoryRepository()
         {
-            return new InMemoryRepository<IInstruction>(new Instruction(), new FileHandler<IList<IInstruction>>(_dataFile, new JsonSerialization()));
+            return new InMemoryRepository<IInstruction>(new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
         private IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
-            return new InMemoryRepository<IInstruction>(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(_dataFile, new JsonSerialization()));
+            return new InMemoryRepository<IInstruction>(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }

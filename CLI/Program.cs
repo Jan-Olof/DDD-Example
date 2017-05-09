@@ -8,8 +8,6 @@ using CLI.Controllers;
 using Microsoft.Extensions.Logging;
 
 using static CLI.ConsoleCommands;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace CLI
 {

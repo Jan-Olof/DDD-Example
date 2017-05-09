@@ -1,5 +1,4 @@
 ﻿using ApplicationLayer.Interfaces.Infrastructure;
-using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.Configure;

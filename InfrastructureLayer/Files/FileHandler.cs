@@ -29,7 +29,7 @@ namespace InfrastructureLayer.Files
         /// </summary>
         public T Read()
         {
-            FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
+            var fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
 
             return _serialization.Deserialize<T>(fileStream);
         }
@@ -41,7 +41,7 @@ namespace InfrastructureLayer.Files
         {
             File.WriteAllText(_datafile.Value.FileName, string.Empty);
 
-            FileStream fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
+            var fileStream = new FileStream(_datafile.Value.FileName, FileMode.Open);
 
             _serialization.Serialize(obj, fileStream);
         }

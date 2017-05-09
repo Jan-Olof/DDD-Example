@@ -4,8 +4,6 @@ using ApplicationLayer.Interfaces.Services;
 using ApplicationLayer.Services;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
-using InfrastructureLayer.DataAccess.SqlServer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;

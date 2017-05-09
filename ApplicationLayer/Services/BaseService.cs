@@ -24,23 +24,13 @@ namespace ApplicationLayer.Services
         /// </summary>
         protected BaseService(IRepository<T> repository, TModel model, ILogger<BaseService<T, TModel>> logger)
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-
             if (model == null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-
-            Logger = logger;
-            Repository = repository;
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
             Model = model;
         }
 
