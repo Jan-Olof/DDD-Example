@@ -117,14 +117,14 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         // TODO: Add tests for Fill and Persist.
 
-        private IRepository<IInstruction> CreateInMemoryRepository()
+        private IDomainRepository CreateInMemoryRepository()
         {
-            return new InMemoryRepository<IInstruction>(new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+            return new InMemoryRepository(new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
+        private IDomainRepository CreateInMemoryRepository(IList<IInstruction> instructions)
         {
-            return new InMemoryRepository<IInstruction>(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+            return new InMemoryRepository(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }

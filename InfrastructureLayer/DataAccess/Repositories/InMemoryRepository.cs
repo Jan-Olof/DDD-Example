@@ -10,20 +10,20 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository for a certain entity.
     /// </summary>
-    public class InMemoryRepository<T> : IRepository<T> where T : class, IIdentifier
+    public class InMemoryRepository : IDomainRepository
     {
         // TODO: Add tests for Fill and Persist.
 
-        private readonly IFileHandler<IList<T>> _fileHandler;
-        private readonly IUpdateMapper<T> _updateMapper;
-        private IList<T> _entities;
+        private readonly IFileHandler<IList<IInstruction>> _fileHandler;
+        private readonly IUpdateMapper<IInstruction> _updateMapper;
+        private IList<IInstruction> _entities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<T> updateMapper, IFileHandler<IList<T>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IFileHandler<IList<IInstruction>> fileHandler)
         {
-            _entities = new List<T>();
+            _entities = new List<IInstruction>();
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
@@ -31,7 +31,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<T> updateMapper, IList<T> entities, IFileHandler<IList<T>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IList<IInstruction> entities, IFileHandler<IList<IInstruction>> fileHandler)
         {
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _entities = entities ?? throw new ArgumentNullException(nameof(entities));
@@ -41,7 +41,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete an entity object.
         /// </summary>
-        public void Delete(T entity)
+        public void Delete(IInstruction entity)
         {
             var item = _entities.SingleOrDefault(e => e.Id == entity.Id);
 
@@ -54,7 +54,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Dispose()
         {
-            _entities = new List<T>();
+            _entities = new List<IInstruction>();
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all entity objects.
         /// </summary>
-        public IEnumerable<T> Get()
+        public IEnumerable<IInstruction> Get()
         {
             return _entities;
         }
@@ -76,7 +76,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get entity objects based on a condition.
         /// </summary>
-        public IEnumerable<T> Get(Expression<Func<T, bool>> condition)
+        public IEnumerable<IInstruction> Get(Expression<Func<IInstruction, bool>> condition)
         {
             return _entities.Where(condition.Compile());
         }
@@ -84,7 +84,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert an entity object.
         /// </summary>
-        public T Insert(T entity)
+        public IInstruction Insert(IInstruction entity)
         {
             entity.Id = GetNextId();
             _entities.Add(entity);
@@ -102,7 +102,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(T entity, Expression<Func<T, bool>> condition)
+        public void Update(IInstruction entity, Expression<Func<IInstruction, bool>> condition)
         {
             var toUpdate = _entities.SingleOrDefault(condition.Compile());
 

@@ -20,7 +20,7 @@ dotnet_style_coalesce_expression = true:warning
 dotnet_style_null_propagation = true:warning
 
 # CSharp Code Style Settings
-csharp_style_var_for_built_in_types = true:warning
+csharp_style_var_for_built_in_types = false:warning
 csharp_style_var_when_type_is_apparent = true:warning
 csharp_style_var_elsewhere = true:warning
 

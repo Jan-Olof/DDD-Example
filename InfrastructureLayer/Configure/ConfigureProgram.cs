@@ -27,8 +27,8 @@ namespace InfrastructureLayer.Configure
             services.AddTransient<IInstructionModel, Instruction>();
             services.AddTransient<IInstruction, Instruction>();
             services.AddTransient<IUpdateMapper<IInstruction>, Instruction>();
-            services.AddTransient<IRepository<IInstruction>, InMemoryRepository<IInstruction>>();
-            //serviceCollection.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
+            services.AddTransient<IDomainRepository, InMemoryRepository>();
+            services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
             services.AddTransient<IInstructionService, InstructionService>();
 
             return services;
