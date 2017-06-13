@@ -10,7 +10,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository for a certain entity.
     /// </summary>
-    public class InMemoryRepository : IDomainRepository
+    public class InMemoryRepository : IRepository<IInstruction>
     {
         // TODO: Add tests for Fill and Persist.
 

@@ -13,7 +13,7 @@ namespace ApplicationLayer.Services
     /// <summary>
     /// The base service abstract class.
     /// </summary>
-    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IIdentifier where TModel : IModel<T>
+    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IIdentifier where TModel : class, IModel<T>
     {
         protected readonly ILogger Logger;
         protected readonly TModel Model;
@@ -24,14 +24,9 @@ namespace ApplicationLayer.Services
         /// </summary>
         protected BaseService(IRepository<T> repository, TModel model, ILogger<BaseService<T, TModel>> logger)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            Model = model;
+            Model = model ?? throw new ArgumentNullException(nameof(model));
         }
 
         /// <summary>

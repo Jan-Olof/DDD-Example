@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using ApplicationLayer.Interfaces.Infrastructure;
+using InfrastructureLayer.Files;
+using System.Collections.Generic;
 
 namespace InfrastructureLayer.Configure
 {
@@ -24,11 +26,14 @@ namespace InfrastructureLayer.Configure
         {
             //services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
+            services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IInstructionModel, Instruction>();
             services.AddTransient<IInstruction, Instruction>();
+            services.AddTransient<IList<IInstruction>, List<IInstruction>>();
             services.AddTransient<IUpdateMapper<IInstruction>, Instruction>();
-            services.AddTransient<IDomainRepository, InMemoryRepository>();
-            services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
+            services.AddTransient<IFileHandler<IList<IInstruction>>, FileHandler<IList<IInstruction>>>();
+            services.AddTransient<IRepository<IInstruction>, InMemoryRepository>();
+            //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
             services.AddTransient<IInstructionService, InstructionService>();
 
             return services;

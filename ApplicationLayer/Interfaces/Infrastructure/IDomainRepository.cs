@@ -8,7 +8,7 @@ namespace ApplicationLayer.Interfaces.Infrastructure
     /// <summary>
     /// The domain repository interface. Handles CRUD operations.
     /// </summary>
-    public interface IDomainRepository : IDisposable 
+    public interface IDomainRepository : IDisposable // TODO: Remove again?
     {
         /// <summary>
         /// Delete an entity object.

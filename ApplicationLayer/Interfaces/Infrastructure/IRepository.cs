@@ -7,7 +7,7 @@ namespace ApplicationLayer.Interfaces.Infrastructure
     /// <summary>
     /// The generic repository interface. Handles CRUD operations.
     /// </summary>
-    public interface IRepository<T> : IDisposable // TODO: Remove generic repository interface and replace with a domain repository.
+    public interface IRepository<T> : IDisposable // TODO: Decide if to remove generic repository interface and replace with a domain repository.
     {
         /// <summary>
         /// Delete an entity object.

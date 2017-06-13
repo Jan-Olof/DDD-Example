@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
@@ -10,9 +9,6 @@ using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer.Interfaces.Infrastructure;
 using InfrastructureLayer.Files;
-using Microsoft.Extensions.Options;
-using NSubstitute;
-using InfrastructureLayer.Configure;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
@@ -117,12 +113,12 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         // TODO: Add tests for Fill and Persist.
 
-        private IDomainRepository CreateInMemoryRepository()
+        private IRepository<IInstruction> CreateInMemoryRepository()
         {
             return new InMemoryRepository(new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private IDomainRepository CreateInMemoryRepository(IList<IInstruction> instructions)
+        private IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
             return new InMemoryRepository(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
