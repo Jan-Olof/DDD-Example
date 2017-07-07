@@ -42,6 +42,19 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
+        public void TestShouldFillDataSet()
+        {
+            // Arrange
+            var sut = CreateInMemoryRepository();
+
+            // Act
+            sut.FillDataSet();
+
+            // Assert
+            Assert.AreEqual(3, sut.Get().Count());
+        }
+
+        [TestMethod]
         public void TestShouldGetAllEntities()
         {
             // Arrange
@@ -98,6 +111,22 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
+        public void TestShouldPersistData()
+        {
+            // Arrange
+            var sut = CreateInMemoryRepository(SampleInstructions.CreateInstructions4());
+
+            // Act
+            sut.PersistData();
+
+            // Assert
+            var sut2 = CreateInMemoryRepository();
+            sut2.FillDataSet();
+
+            Assert.AreEqual(4, sut2.Get().Count());
+        }
+
+        [TestMethod]
         public void TestShouldUpdateEntity()
         {
             // Arrange
@@ -113,14 +142,16 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         // TODO: Add tests for Fill and Persist.
 
-        private IRepository<IInstruction> CreateInMemoryRepository()
+        private static IRepository<IInstruction> CreateInMemoryRepository()
         {
-            return new InMemoryRepository(new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+            return new InMemoryRepository(
+                new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
+        private static IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
         {
-            return new InMemoryRepository(new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+            return new InMemoryRepository(
+                new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }

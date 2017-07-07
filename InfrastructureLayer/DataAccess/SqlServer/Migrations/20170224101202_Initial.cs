@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     public partial class Initial : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Instructions");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -22,12 +26,6 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 {
                     table.PrimaryKey("PK_Instructions", x => x.Id);
                 });
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Instructions");
         }
     }
 }

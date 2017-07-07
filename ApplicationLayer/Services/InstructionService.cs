@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces;
 using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using Microsoft.Extensions.Logging;

@@ -58,8 +58,7 @@ namespace CLI.Controllers
             Console.WriteLine("Id of instruction to update?");
             string idEntered = Console.ReadLine();
 
-            int id;
-            bool ok = int.TryParse(idEntered, out id);
+            bool ok = int.TryParse(idEntered, out int id);
 
             if (!ok)
             {

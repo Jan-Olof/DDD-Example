@@ -44,6 +44,17 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
+        public static IList<IInstruction> CreateInstructions4()
+        {
+            return new List<IInstruction>
+            {
+                CreateInstruction(1),
+                CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
+                CreateInstruction(3, "ThirdInstruction", "This is the third instruction."),
+                CreateInstruction(4, "FourthInstruction", "This is the fourth instruction.")
+            };
+        }
+
         public static List<Instruction> CreateInstructionsDuplicate()
         {
             return new List<Instruction>

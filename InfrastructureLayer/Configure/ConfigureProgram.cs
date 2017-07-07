@@ -55,12 +55,12 @@ namespace InfrastructureLayer.Configure
         /// <summary>
         /// Add and configure extension services with dependency injection.
         /// </summary>
-        public static IServiceCollection ConfigureServices(IServiceCollection services, IConfigurationRoot Configuration)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddLogging();
             services.AddOptions();
 
-            services.Configure<Datafile>(options => Configuration.GetSection("datafile").Bind(options));
+            services.Configure<Datafile>(options => configuration.GetSection("datafile").Bind(options));
 
             //var connection = Configuration["database:connectionstring"];
             //services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));

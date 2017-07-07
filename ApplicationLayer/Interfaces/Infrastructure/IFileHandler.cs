@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ApplicationLayer.Interfaces.Infrastructure
+﻿namespace ApplicationLayer.Interfaces.Infrastructure
 {
     /// <summary>
     /// The file handler interface.

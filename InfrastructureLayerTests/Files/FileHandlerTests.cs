@@ -1,4 +1,6 @@
-﻿using ApplicationLayer.Interfaces.Infrastructure;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.Configure;
@@ -6,16 +8,13 @@ using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace AdminWebApiTests
+namespace InfrastructureLayerTests.Files
 {
     [TestClass]
     public class FileHandlerTests
     {
-        private const string _instructionsFileName = @"..\..\..\Instructions.json";
+        private const string InstructionsFileName = @"..\..\..\Instructions.json";
         private IOptions<Datafile> _dataFile;
 
         [TestInitialize]
@@ -35,7 +34,7 @@ namespace AdminWebApiTests
         public void TestShouldReadAllInstructions()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
 
             var sut = CreateFileHandler();
 
@@ -51,7 +50,7 @@ namespace AdminWebApiTests
         public void TestShouldWriteInstructionsToFile()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
 
             var sut = CreateFileHandler();
 
@@ -76,7 +75,7 @@ namespace AdminWebApiTests
 
         private void RestoreFileContent()
         {
-            _dataFile.Value.Returns(new Datafile { FileName = _instructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
             var sut = CreateFileHandler();
             sut.Write((SampleInstructions.CreateInstructions2()));
         }

@@ -19,7 +19,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         private IList<IInstruction> _entities;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
+        /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
         public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IFileHandler<IList<IInstruction>> fileHandler)
         {
@@ -29,7 +29,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryRepository{T}"/> class.
+        /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
         public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IList<IInstruction> entities, IFileHandler<IList<IInstruction>> fileHandler)
         {
