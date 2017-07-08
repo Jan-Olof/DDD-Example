@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Interfaces.Models
+﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// Interface for the primary key.

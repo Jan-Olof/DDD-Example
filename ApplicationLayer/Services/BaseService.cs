@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Utilities.Enums;
 using Utilities.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Interfaces;
 
 namespace ApplicationLayer.Services
 {

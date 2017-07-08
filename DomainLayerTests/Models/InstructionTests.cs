@@ -1,10 +1,9 @@
+// ReSharper disable UnusedMember.Global
 using System.Linq;
-using ApplicationLayer.Interfaces.Models;
+using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-// ReSharper disable UnusedMember.Global
 
 namespace DomainLayerTests.Models
 {

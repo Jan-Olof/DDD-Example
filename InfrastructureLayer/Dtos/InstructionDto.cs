@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Interfaces.Models;
+﻿using DomainLayer.Interfaces;
 
 namespace InfrastructureLayer.Dtos
 {

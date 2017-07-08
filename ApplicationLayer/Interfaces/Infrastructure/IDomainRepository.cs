@@ -1,7 +1,7 @@
-﻿using ApplicationLayer.Interfaces.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using DomainLayer.Interfaces;
 
 namespace ApplicationLayer.Interfaces.Infrastructure
 {

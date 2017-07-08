@@ -1,5 +1,4 @@
 ﻿using System;
-using ApplicationLayer.Interfaces.Models;
 using ApplicationLayer.Interfaces.Services;
 using ApplicationLayer.Services;
 using DomainLayer.Models;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using ApplicationLayer.Interfaces.Infrastructure;
 using InfrastructureLayer.Files;
 using System.Collections.Generic;
+using DomainLayer.Interfaces;
 
 namespace InfrastructureLayer.Configure
 {

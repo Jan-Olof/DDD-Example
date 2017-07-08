@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace ApplicationLayer.Interfaces.Models
+namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// The instruction model interface.

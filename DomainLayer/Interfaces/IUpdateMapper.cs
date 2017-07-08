@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Interfaces.Models
+﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// Handles what fields to update in a model.

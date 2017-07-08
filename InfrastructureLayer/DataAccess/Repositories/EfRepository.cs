@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using ApplicationLayer.Interfaces.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Utilities.Expressions;
 using Utilities.Enums;
 using Utilities.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Interfaces;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

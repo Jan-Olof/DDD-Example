@@ -2,7 +2,7 @@
 
 using System;
 using System.Linq;
-using ApplicationLayer.Interfaces.Models;
+using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -181,9 +181,9 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
-                context.Instructions.Add((Instruction)SampleInstructions.CreateInstruction(0, "No1", "Desc1"));
-                context.Instructions.Add((Instruction)SampleInstructions.CreateInstruction(0, "No2", "Desc2"));
-                context.Instructions.Add((Instruction)SampleInstructions.CreateInstruction(0, "No3", "Desc3"));
+                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No1", "Desc1"));
+                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No2", "Desc2"));
+                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
         }

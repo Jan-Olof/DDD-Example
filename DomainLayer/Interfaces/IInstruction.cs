@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Interfaces.Models
+﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// The instruction properties interface.

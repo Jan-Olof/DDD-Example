@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces.Models;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Interfaces;
 using InfrastructureLayer.Files;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
