@@ -5,9 +5,9 @@ using DomainLayer.Models;
 namespace DomainLayer.Interfaces
 {
     /// <summary>
-    /// The instruction model interface.
+    /// The instruction model functions interface.
     /// </summary>
-    public interface IInstructionModel : IModel<Instruction>
+    public interface IInstructionFunctions : IFunctions<Instruction>
     {
         /// <summary>
         /// Defines how to get instructions by name.

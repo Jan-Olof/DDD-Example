@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using DomainLayer.Models;
 
-namespace ApplicationLayer.Interfaces.Services
+namespace ApplicationLayer.Interfaces.Interactors
 {
     /// <summary>
-    /// The instruction service interface.
+    /// The instruction interactor interface.
     /// </summary>
-    public interface IInstructionService : IBaseService<Instruction>
+    public interface IInstructionInteractor : IBaseInteractor<Instruction>
     {
         /// <summary>
         /// Get instruction by name.

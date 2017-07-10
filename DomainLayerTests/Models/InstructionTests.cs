@@ -42,7 +42,7 @@ namespace DomainLayerTests.Models
             Assert.AreEqual(2, instruction.Id);
         }
 
-        private static IInstructionModel CreateInstruction()
+        private static IInstructionFunctions CreateInstruction()
         {
             return new Instruction();
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using ApplicationLayer.Interfaces.Services;
+using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,11 +8,11 @@ namespace CLI.Controllers
 {
     public class InstructionController : BaseController
     {
-        private readonly IInstructionService _instructionService;
+        private readonly IInstructionInteractor _instructionService;
 
         public InstructionController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _instructionService = serviceProvider.GetService<IInstructionService>();
+            _instructionService = serviceProvider.GetService<IInstructionInteractor>();
         }
 
         public void InstructionFlow()

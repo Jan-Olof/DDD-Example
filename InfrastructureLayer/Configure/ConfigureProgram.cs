@@ -1,6 +1,4 @@
 ﻿using System;
-using ApplicationLayer.Interfaces.Services;
-using ApplicationLayer.Services;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using ApplicationLayer.Interfaces.Infrastructure;
 using InfrastructureLayer.Files;
 using System.Collections.Generic;
+using ApplicationLayer.Interactors;
+using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 
 namespace InfrastructureLayer.Configure
@@ -25,16 +25,16 @@ namespace InfrastructureLayer.Configure
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
             //services.AddTransient<DbContext, ExampleContext>();
-            services.AddTransient<ILogger<InstructionService>, Logger<InstructionService>>();
+            services.AddTransient<ILogger<InstructionInteractor>, Logger<InstructionInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
-            services.AddTransient<IInstructionModel, Instruction>();
+            services.AddTransient<IInstructionFunctions, Instruction>();
             services.AddTransient<IInstruction, Instruction>();
             services.AddTransient<IList<Instruction>, List<Instruction>>();
             services.AddTransient<IUpdateMapper<Instruction>, Instruction>();
             services.AddTransient<IFileHandler<IList<IInstruction>>, FileHandler<IList<IInstruction>>>();
             services.AddTransient<IRepository<Instruction>, InMemoryRepository>();
             //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
-            services.AddTransient<IInstructionService, InstructionService>();
+            services.AddTransient<IInstructionInteractor, InstructionInteractor>();
 
             return services;
         }

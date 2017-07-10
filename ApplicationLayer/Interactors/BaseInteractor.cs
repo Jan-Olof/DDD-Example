@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces.Services;
+using ApplicationLayer.Interfaces.Infrastructure;
+using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Interfaces;
 using Microsoft.Extensions.Logging;
 using Utilities.Enums;
 using Utilities.Exceptions;
-using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Interfaces;
 
-namespace ApplicationLayer.Services
+namespace ApplicationLayer.Interactors
 {
     /// <summary>
-    /// The base service abstract class.
+    /// The base interactor abstract class.
     /// </summary>
-    public abstract class BaseService<T, TModel> : IBaseService<T> where T : class, IIdentifier where TModel : class, IModel<T>
+    public abstract class BaseInteractor<T, TModel> : IBaseInteractor<T> where T : class, IIdentifier where TModel : class, IFunctions<T>
     {
         protected readonly ILogger Logger;
         protected readonly TModel Model;
         protected readonly IRepository<T> Repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseService{T, TModel}"/> class.
+        /// Initializes a new instance of the <see cref="BaseInteractor{T,TModel}"/> class.
         /// </summary>
-        protected BaseService(IRepository<T> repository, TModel model, ILogger<BaseService<T, TModel>> logger)
+        protected BaseInteractor(IRepository<T> repository, TModel model, ILogger<BaseInteractor<T, TModel>> logger)
         {
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));

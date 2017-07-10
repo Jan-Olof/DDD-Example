@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 namespace DomainLayer.Interfaces
 {
     /// <summary>
-    /// A generic model interface.
+    /// A generic interface for model functions.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IModel<T> : IUpdateMapper<T> where T : IIdentifier
+    public interface IFunctions<T> : IUpdateMapper<T> where T : IIdentifier
     {
         /// <summary>
         /// Defines how to get instructions by id.

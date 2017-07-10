@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces.Services;
-using Microsoft.Extensions.Logging;
-using Utilities.Enums;
 using ApplicationLayer.Interfaces.Infrastructure;
+using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
+using Microsoft.Extensions.Logging;
+using Utilities.Enums;
 
-namespace ApplicationLayer.Services
+namespace ApplicationLayer.Interactors
 {
     /// <summary>
-    /// The instruction service class. Handles the stories/tasks concerning instructions.
+    /// The instruction interactor class. Handles the stories/tasks concerning instructions.
     /// </summary>
-    public class InstructionService : BaseService<Instruction, IInstruction>, IInstructionService
+    public class InstructionInteractor : BaseInteractor<Instruction, IInstruction>, IInstructionInteractor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InstructionService"/> class.
+        /// Initializes a new instance of the <see cref="InstructionInteractor"/> class.
         /// </summary>
-        public InstructionService(IRepository<Instruction> repository, IInstruction model, ILogger<InstructionService> logger)
+        public InstructionInteractor(IRepository<Instruction> repository, IInstruction model, ILogger<InstructionInteractor> logger)
             : base(repository, model, logger)
         {
         }

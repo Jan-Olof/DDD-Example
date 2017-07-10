@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ApplicationLayer.Interfaces.Services
+namespace ApplicationLayer.Interfaces.Interactors
 {
     /// <summary>
-    /// The base service interface.
+    /// The base intercator interface.
     /// </summary>
-    public interface IBaseService<T>
+    public interface IBaseInteractor<T>
     {
         /// <summary>
         /// Create a new entity object.
