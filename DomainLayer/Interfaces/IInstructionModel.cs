@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Linq.Expressions;
+using DomainLayer.Models;
 
 namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// The instruction model interface.
     /// </summary>
-    public interface IInstructionModel : IModel<IInstruction>
+    public interface IInstructionModel : IModel<Instruction>
     {
         /// <summary>
         /// Defines how to get instructions by name.
         /// </summary>
-        Expression<Func<IInstruction, bool>> Get(string name);
+        Expression<Func<Instruction, bool>> Get(string name);
     }
 }

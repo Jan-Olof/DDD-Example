@@ -4,26 +4,25 @@ using System.Linq;
 using System.Linq.Expressions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
     /// <summary>
     /// A simple in memory repository for a certain entity.
     /// </summary>
-    public class InMemoryRepository : IRepository<IInstruction>
+    public class InMemoryRepository : IRepository<Instruction>
     {
-        // TODO: Add tests for Fill and Persist.
-
-        private readonly IFileHandler<IList<IInstruction>> _fileHandler;
-        private readonly IUpdateMapper<IInstruction> _updateMapper;
-        private IList<IInstruction> _entities;
+        private readonly IFileHandler<IList<Instruction>> _fileHandler;
+        private readonly IUpdateMapper<Instruction> _updateMapper;
+        private IList<Instruction> _entities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IFileHandler<IList<IInstruction>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<Instruction> updateMapper, IFileHandler<IList<Instruction>> fileHandler)
         {
-            _entities = new List<IInstruction>();
+            _entities = new List<Instruction>();
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
@@ -31,7 +30,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<IInstruction> updateMapper, IList<IInstruction> entities, IFileHandler<IList<IInstruction>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<Instruction> updateMapper, IList<Instruction> entities, IFileHandler<IList<Instruction>> fileHandler)
         {
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _entities = entities ?? throw new ArgumentNullException(nameof(entities));
@@ -41,7 +40,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete an entity object.
         /// </summary>
-        public void Delete(IInstruction entity)
+        public void Delete(Instruction entity)
         {
             var item = _entities.SingleOrDefault(e => e.Id == entity.Id);
 
@@ -54,7 +53,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Dispose()
         {
-            _entities = new List<IInstruction>();
+            _entities = new List<Instruction>();
         }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all entity objects.
         /// </summary>
-        public IEnumerable<IInstruction> Get()
+        public IEnumerable<Instruction> Get()
         {
             return _entities;
         }
@@ -76,7 +75,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get entity objects based on a condition.
         /// </summary>
-        public IEnumerable<IInstruction> Get(Expression<Func<IInstruction, bool>> condition)
+        public IEnumerable<Instruction> Get(Expression<Func<Instruction, bool>> condition)
         {
             return _entities.Where(condition.Compile());
         }
@@ -84,7 +83,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert an entity object.
         /// </summary>
-        public IInstruction Insert(IInstruction entity)
+        public Instruction Insert(Instruction entity)
         {
             entity.Id = GetNextId();
             _entities.Add(entity);
@@ -102,7 +101,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(IInstruction entity, Expression<Func<IInstruction, bool>> condition)
+        public void Update(Instruction entity, Expression<Func<Instruction, bool>> condition)
         {
             var toUpdate = _entities.SingleOrDefault(condition.Compile());
 

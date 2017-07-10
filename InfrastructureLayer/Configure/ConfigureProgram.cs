@@ -29,10 +29,10 @@ namespace InfrastructureLayer.Configure
             services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IInstructionModel, Instruction>();
             services.AddTransient<IInstruction, Instruction>();
-            services.AddTransient<IList<IInstruction>, List<IInstruction>>();
-            services.AddTransient<IUpdateMapper<IInstruction>, Instruction>();
+            services.AddTransient<IList<Instruction>, List<Instruction>>();
+            services.AddTransient<IUpdateMapper<Instruction>, Instruction>();
             services.AddTransient<IFileHandler<IList<IInstruction>>, FileHandler<IList<IInstruction>>>();
-            services.AddTransient<IRepository<IInstruction>, InMemoryRepository>();
+            services.AddTransient<IRepository<Instruction>, InMemoryRepository>();
             //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
             services.AddTransient<IInstructionService, InstructionService>();
 

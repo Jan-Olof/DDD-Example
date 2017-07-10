@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 
 namespace DomainLayerTests.TestObjects
@@ -17,9 +16,9 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IList<IInstruction> CreateInstructions()
+        public static IList<Instruction> CreateInstructions()
         {
-            return new List<IInstruction>
+            return new List<Instruction>
             {
                 CreateInstruction(1),
                 CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
@@ -44,9 +43,9 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IList<IInstruction> CreateInstructions4()
+        public static IList<Instruction> CreateInstructions4()
         {
-            return new List<IInstruction>
+            return new List<Instruction>
             {
                 CreateInstruction(1),
                 CreateInstruction(2, "SecondInstruction", "This is the second instruction."),

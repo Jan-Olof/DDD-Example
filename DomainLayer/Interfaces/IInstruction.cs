@@ -3,7 +3,7 @@
     /// <summary>
     /// The instruction properties interface.
     /// </summary>
-    public interface IInstruction : IIdentifier
+    public interface IInstruction : IIdentifier, IInstructionModel
     {
         /// <summary>
         /// Gets or sets the description. A text field that describes the instruction.

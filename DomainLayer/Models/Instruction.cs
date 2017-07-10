@@ -7,7 +7,7 @@ namespace DomainLayer.Models
     /// <summary>
     /// This is the Instruction domain model.
     /// </summary>
-    public class Instruction : IInstruction, IInstructionModel
+    public class Instruction : IInstruction
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Instruction"/> class.
@@ -36,7 +36,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Defines how to get instructions by id.
         /// </summary>
-        public Expression<Func<IInstruction, bool>> Get(int id)
+        public Expression<Func<Instruction, bool>> Get(int id)
         {
             return instruction => instruction.Id == id;
         }
@@ -44,7 +44,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Defines how to get instructions by name.
         /// </summary>
-        public Expression<Func<IInstruction, bool>> Get(string name)
+        public Expression<Func<Instruction, bool>> Get(string name)
         {
             return instruction => instruction.Name == name;
         }
@@ -52,7 +52,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Updates the fields that are supposed to be updated when editing an instruction.
         /// </summary>
-        public IInstruction MapUpdate(IInstruction from, IInstruction to)
+        public Instruction MapUpdate(Instruction from, Instruction to)
         {
             to.Name = from.Name;
             to.Description = from.Description;

@@ -2,7 +2,6 @@
 
 using System;
 using System.Linq;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -17,7 +16,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
     [TestClass]
     public class EfRepositoryTests
     {
-        private ILogger<EfRepository<IInstruction, Instruction>> _logger;
+        private ILogger<EfRepository<Instruction>> _logger;
         private DbContextOptions<ExampleContext> _options;
 
         [TestInitialize]
@@ -27,7 +26,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            _logger = Substitute.For<ILogger<EfRepository<IInstruction, Instruction>>>();
+            _logger = Substitute.For<ILogger<EfRepository<Instruction>>>();
         }
 
         [TestCleanup]
@@ -188,9 +187,9 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             }
         }
 
-        private EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        private EfRepository<Instruction> CreateEfRepository(ExampleContext context)
         {
-            return new EfRepository<IInstruction, Instruction>(context, new Instruction(), _logger);
+            return new EfRepository<Instruction>(context, new Instruction(), _logger);
         }
     }
 }

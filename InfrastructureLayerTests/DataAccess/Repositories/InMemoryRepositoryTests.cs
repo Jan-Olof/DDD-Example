@@ -7,7 +7,6 @@ using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Interfaces;
 using InfrastructureLayer.Files;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
@@ -51,7 +50,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             sut.FillDataSet();
 
             // Assert
-            Assert.AreEqual(3, sut.Get().Count());
+            Assert.AreEqual(2, sut.Get().Count());
         }
 
         [TestMethod]
@@ -140,18 +139,16 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("Updated description.", sut.Get(e => e.Id == 2).Single().Description);
         }
 
-        // TODO: Add tests for Fill and Persist.
-
-        private static IRepository<IInstruction> CreateInMemoryRepository()
+        private static IRepository<Instruction> CreateInMemoryRepository()
         {
             return new InMemoryRepository(
-                new Instruction(), new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+                new Instruction(), new FileHandler<IList<Instruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private static IRepository<IInstruction> CreateInMemoryRepository(IList<IInstruction> instructions)
+        private static IRepository<Instruction> CreateInMemoryRepository(IList<Instruction> instructions)
         {
             return new InMemoryRepository(
-                new Instruction(), instructions, new FileHandler<IList<IInstruction>>(CreateDatafileOptions(), new JsonSerialization()));
+                new Instruction(), instructions, new FileHandler<IList<Instruction>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }

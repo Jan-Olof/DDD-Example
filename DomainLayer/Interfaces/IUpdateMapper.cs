@@ -7,7 +7,7 @@
     public interface IUpdateMapper<T>
     {
         /// <summary>
-        /// Updates the fields that are supposed to be updated when editing an instruction.
+        /// Updates the fields that are supposed to be updated when editing an entity.
         /// </summary>
         T MapUpdate(T from, T to);
     }

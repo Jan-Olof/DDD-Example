@@ -6,18 +6,19 @@ using Microsoft.Extensions.Logging;
 using Utilities.Enums;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 namespace ApplicationLayer.Services
 {
     /// <summary>
     /// The instruction service class. Handles the stories/tasks concerning instructions.
     /// </summary>
-    public class InstructionService : BaseService<IInstruction, IInstructionModel>, IInstructionService
+    public class InstructionService : BaseService<Instruction, IInstruction>, IInstructionService
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InstructionService"/> class.
         /// </summary>
-        public InstructionService(IRepository<IInstruction> repository, IInstructionModel model, ILogger<InstructionService> logger)
+        public InstructionService(IRepository<Instruction> repository, IInstruction model, ILogger<InstructionService> logger)
             : base(repository, model, logger)
         {
         }
@@ -25,7 +26,7 @@ namespace ApplicationLayer.Services
         /// <summary>
         /// Get instruction by name.
         /// </summary>
-        public IList<IInstruction> Get(string name)
+        public IList<Instruction> Get(string name)
         {
             try
             {
@@ -41,7 +42,7 @@ namespace ApplicationLayer.Services
         /// <summary>
         /// Update an instruction.
         /// </summary>
-        public void Update(IInstruction entity, int id)
+        public void Update(Instruction entity, int id)
         {
             try
             {

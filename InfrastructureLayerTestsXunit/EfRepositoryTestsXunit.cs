@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -14,11 +13,11 @@ namespace InfrastructureLayerTestsXunit
 {
     public class EfRepositoryTestsXunit
     {
-        private ILogger<EfRepository<IInstruction, Instruction>> _logger;
+        private ILogger<EfRepository<Instruction>> _logger;
 
         public EfRepositoryTestsXunit()
         {
-            _logger = Substitute.For<ILogger<EfRepository<IInstruction, Instruction>>>();
+            _logger = Substitute.For<ILogger<EfRepository<Instruction>>>();
         }
 
         [Fact]
@@ -188,9 +187,9 @@ namespace InfrastructureLayerTestsXunit
                 .Options;
         }
 
-        private EfRepository<IInstruction, Instruction> CreateEfRepository(ExampleContext context)
+        private EfRepository<Instruction> CreateEfRepository(ExampleContext context)
         {
-            return new EfRepository<IInstruction, Instruction>(context, new Instruction(), _logger);
+            return new EfRepository<Instruction>(context, new Instruction(), _logger);
         }
     }
 }

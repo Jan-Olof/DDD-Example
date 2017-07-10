@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Utilities.Expressions;
 using Utilities.Enums;
 using Utilities.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
@@ -15,16 +14,16 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork implementation of the generic repository.
     /// </summary>
-    public class EfRepository<T, TModel> : IRepository<T> where T : class where TModel : class, T
+    public class EfRepository<T> : IRepository<T> where T : class
     {
         private readonly DbContext _context;
         private readonly ILogger _logger;
         private readonly IUpdateMapper<T> _updateMapper;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{T, TModel}"/> class.
+        /// Initializes a new instance of the <see cref="EfRepository{T}"/> class.
         /// </summary>
-        public EfRepository(DbContext dataContext, IUpdateMapper<T> updateMapper, ILogger<EfRepository<T, TModel>> logger)
+        public EfRepository(DbContext dataContext, IUpdateMapper<T> updateMapper, ILogger<EfRepository<T>> logger)
         {
             _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
@@ -61,7 +60,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<T> Get()
         {
-            return _context.Set<TModel>();
+            return _context.Set<T>();
         }
 
         /// <summary>
@@ -69,9 +68,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<T> Get(Expression<Func<T, bool>> condition)
         {
-            var expression = ChangeType.ChangeInputType<T, TModel, bool>(condition);
-
-            return _context.Set<TModel>().Where(expression);
+            return _context.Set<T>().Where(condition);
         }
 
         /// <summary>
@@ -100,7 +97,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             try
             {
-                var toUpdate = _context.Set<TModel>().SingleOrDefault(condition);
+                var toUpdate = _context.Set<T>().SingleOrDefault(condition);
 
                 if (toUpdate == null)
                 {

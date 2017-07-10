@@ -2,7 +2,7 @@
 
 namespace InfrastructureLayer.Dtos
 {
-    public class InstructionDto : IInstruction
+    public class InstructionDto
     {
         public InstructionDto()
         {

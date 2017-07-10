@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
-using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Services
 {
     /// <summary>
     /// The instruction service interface.
     /// </summary>
-    public interface IInstructionService : IBaseService<IInstruction>
+    public interface IInstructionService : IBaseService<Instruction>
     {
         /// <summary>
         /// Get instruction by name.
         /// </summary>
-        IList<IInstruction> Get(string name);
+        IList<Instruction> Get(string name);
 
         /// <summary>
         /// Update an instruction.
         /// </summary>
-        void Update(IInstruction entity, int id);
+        void Update(Instruction entity, int id);
     }
 }

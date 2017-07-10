@@ -7,6 +7,7 @@ using NSubstitute;
 using Utilities.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 // ReSharper disable UnusedMember.Global
 
@@ -16,14 +17,14 @@ namespace ApplicationLayerTests.Services
     public class InstructionServiceTests
     {
         private ILogger<InstructionService> _logger;
-        private IInstructionModel _model;
-        private IRepository<IInstruction> _repository;
+        private IInstruction _model;
+        private IRepository<Instruction> _repository;
 
         [TestInitialize]
         public void SetUp()
         {
-            _repository = Substitute.For<IRepository<IInstruction>>();
-            _model = Substitute.For<IInstructionModel>();
+            _repository = Substitute.For<IRepository<Instruction>>();
+            _model = Substitute.For<IInstruction>();
             _logger = Substitute.For<ILogger<InstructionService>>();
         }
 
