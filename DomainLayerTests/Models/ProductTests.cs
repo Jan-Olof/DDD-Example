@@ -8,41 +8,41 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DomainLayerTests.Models
 {
     [TestClass]
-    public class InstructionTests
+    public class ProductTests
     {
         [TestMethod]
-        public void TestShouldGetAnInstructionFromId()
+        public void TestShouldGetProductFromId()
         {
             // Arrange
 
-            var sut = CreateInstruction();
+            var sut = CreateProduct();
 
             // Act
             var result = sut.Get(2);
 
             // Assert
-            var instruction = SampleInstructions.CreateInstructions().SingleOrDefault(result.Compile());
+            var instruction = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());
 
             Assert.AreEqual("SecondInstruction", instruction.Name);
         }
 
         [TestMethod]
-        public void TestShouldGetAnInstructionsFromName()
+        public void TestShouldGetProductFromName()
         {
             // Arrange
 
-            var sut = CreateInstruction();
+            var sut = CreateProduct();
 
             // Act
             var result = sut.Get("SecondInstruction");
 
             // Assert
-            var instruction = SampleInstructions.CreateInstructions().SingleOrDefault(result.Compile());
+            var instruction = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());
 
             Assert.AreEqual(2, instruction.Id);
         }
 
-        private static IProductFunctions CreateInstruction()
+        private static IProduct CreateProduct()
         {
             return new Product();
         }

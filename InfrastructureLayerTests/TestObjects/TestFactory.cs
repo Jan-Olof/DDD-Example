@@ -29,7 +29,7 @@ namespace InfrastructureLayerTests.TestObjects
         public static void RestoreFileContent()
         {
             var sut = CreateFileHandler();
-            sut.Write(SampleInstructions.CreateInstructions2());
+            sut.Write(SampleProducts.CreateProducts2());
         }
     }
 }

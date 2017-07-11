@@ -55,7 +55,7 @@ namespace InfrastructureLayerTests.Files
             var sut = CreateFileHandler();
 
             var instructions = sut.Read();
-            instructions.Add(SampleInstructions.CreateInstruction(3, "ThirdInstruction", "This is the third instruction."));
+            instructions.Add(SampleProducts.CreateProduct(3, "ThirdInstruction", "This is the third instruction."));
 
             // Act
             sut.Write(instructions);
@@ -77,7 +77,7 @@ namespace InfrastructureLayerTests.Files
         {
             _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
             var sut = CreateFileHandler();
-            sut.Write((SampleInstructions.CreateInstructions2()));
+            sut.Write((SampleProducts.CreateProducts2()));
         }
     }
 }

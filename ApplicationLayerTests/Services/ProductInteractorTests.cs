@@ -14,7 +14,7 @@ using DomainLayer.Models;
 namespace ApplicationLayerTests.Services
 {
     [TestClass]
-    public class InstructionServiceTests
+    public class ProductInteractorTests
     {
         private ILogger<ProductInteractor> _logger;
         private IProduct _model;
@@ -34,29 +34,29 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
-        public void TestShouldCreateInstruction()
+        public void TestShouldCreateProduct()
         {
             // Arrange
-            _repository.Insert(SampleInstructions.CreateInstruction())
-                .ReturnsForAnyArgs(SampleInstructions.CreateInstruction(1));
+            _repository.Insert(SampleProducts.CreateProduct())
+                .ReturnsForAnyArgs(SampleProducts.CreateProduct(1));
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Create(SampleInstructions.CreateInstruction());
+            var result = sut.Create(SampleProducts.CreateProduct());
 
             // Assert
             Assert.AreEqual(1, result.Id);
         }
 
         [TestMethod]
-        public void TestShouldGetAllInstructions()
+        public void TestShouldGetAllProducts()
         {
             // Arrange
             _repository.Get()
-                .Returns(SampleInstructions.CreateInstructions());
+                .Returns(SampleProducts.CreateProducts());
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act
             var result = sut.Get();
@@ -66,16 +66,16 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
-        public void TestShouldGetInstructionFromId()
+        public void TestShouldGetProductFromId()
         {
             // Arrange
             _model.Get(3)
                 .Returns(i => i.Id == 3);
 
             _repository.Get(i => i.Id == 3)
-                .ReturnsForAnyArgs(SampleInstructions.CreateInstructions3());
+                .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act
             var result = sut.Get(3);
@@ -85,32 +85,32 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
-        public void TestShouldGetInstructionFromIdAndFindsDuplicates()
+        public void TestShouldGetProductFromIdAndFindsDuplicates()
         {
             // Arrange
             _model.Get(3)
                 .Returns(i => i.Id == 3);
 
             _repository.Get(i => i.Id == 3)
-                .ReturnsForAnyArgs(SampleInstructions.CreateInstructionsDuplicate());
+                .ReturnsForAnyArgs(SampleProducts.CreateProductsDuplicate());
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act and assert
             Assert.ThrowsException<TooManyFoundException>(() => sut.Get(3));
         }
 
         [TestMethod]
-        public void TestShouldGetInstructionFromName()
+        public void TestShouldGetProductFromName()
         {
             // Arrange
             _model.Get("ThirdInstruction")
                 .Returns(i => i.Name == "ThirdInstruction");
 
             _repository.Get(i => i.Name == "ThirdInstruction")
-                .ReturnsForAnyArgs(SampleInstructions.CreateInstructions3());
+                .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act
             var result = sut.Get("ThirdInstruction");
@@ -120,23 +120,23 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
-        public void TestShouldUpdateInstructionFromId()
+        public void TestShouldUpdateProductFromId()
         {
             // Arrange
             _model.Get(3).Returns(i => i.Id == 3);
 
-            _repository.Update(SampleInstructions.CreateInstruction(), i => i.Id == 3);
+            _repository.Update(SampleProducts.CreateProduct(), i => i.Id == 3);
 
-            var sut = CreateInstructionService();
+            var sut = CreateProductInteractor();
 
             // Act
-            sut.Update(SampleInstructions.CreateInstruction(3), 3);
+            sut.Update(SampleProducts.CreateProduct(3), 3);
 
             // Assert
             Assert.IsTrue(true);
         }
 
-        private ProductInteractor CreateInstructionService()
+        private ProductInteractor CreateProductInteractor()
         {
             return new ProductInteractor(_repository, _model, _logger);
         }

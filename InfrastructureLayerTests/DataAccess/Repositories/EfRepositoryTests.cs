@@ -108,7 +108,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleInstructions.CreateInstruction());
+                var result = sut.Insert(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -135,7 +135,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleInstructions.CreateInstruction());
+                var result = sut.Insert(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -162,7 +162,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                sut.Update(SampleInstructions.CreateInstruction(2, "No2", "Updated description."), i => i.Name == "No2");
+                sut.Update(SampleProducts.CreateProduct(2, "No2", "Updated description."), i => i.Name == "No2");
             }
 
             // Assert
@@ -180,9 +180,9 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
-                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No1", "Desc1"));
-                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No2", "Desc2"));
-                context.Instructions.Add(SampleInstructions.CreateInstruction(0, "No3", "Desc3"));
+                context.Instructions.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
+                context.Instructions.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
+                context.Instructions.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
         }
