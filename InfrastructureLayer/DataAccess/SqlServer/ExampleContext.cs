@@ -28,7 +28,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// <summary>
         /// Gets or sets the instructions.
         /// </summary>
-        public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<Product> Instructions { get; set; }
 
         /// <summary>
         /// Override this method to configure the database (and other options) to be used

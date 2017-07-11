@@ -13,14 +13,14 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// </summary>
         public static void Configure(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Instruction>()
+            modelBuilder.Entity<Product>()
                 .HasKey(instruction => instruction.Id);
 
-            modelBuilder.Entity<Instruction>()
+            modelBuilder.Entity<Product>()
                 .Property(instruction => instruction.Name)
                 .HasMaxLength(50);
 
-            modelBuilder.Entity<Instruction>()
+            modelBuilder.Entity<Product>()
                 .Property(instruction => instruction.Description)
                 .HasMaxLength(200);
         }

@@ -2,9 +2,9 @@
 
 namespace InfrastructureLayer.Dtos
 {
-    public class InstructionDto : IInstructionProps
+    public class ProductDto : IProductProps
     {
-        public InstructionDto()
+        public ProductDto()
         {
             Description = string.Empty;
             Name = string.Empty;

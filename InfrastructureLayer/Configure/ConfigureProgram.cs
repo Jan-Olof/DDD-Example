@@ -25,16 +25,16 @@ namespace InfrastructureLayer.Configure
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
             //services.AddTransient<DbContext, ExampleContext>();
-            services.AddTransient<ILogger<InstructionInteractor>, Logger<InstructionInteractor>>();
+            services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
-            services.AddTransient<IInstructionFunctions, Instruction>();
-            services.AddTransient<IInstruction, Instruction>();
-            services.AddTransient<IList<Instruction>, List<Instruction>>();
-            services.AddTransient<IUpdateMapper<Instruction>, Instruction>();
-            services.AddTransient<IFileHandler<IList<IInstruction>>, FileHandler<IList<IInstruction>>>();
-            services.AddTransient<IRepository<Instruction>, InMemoryRepository>();
+            services.AddTransient<IProductFunctions, Product>();
+            services.AddTransient<IProduct, Product>();
+            services.AddTransient<IList<Product>, List<Product>>();
+            services.AddTransient<IUpdateMapper<Product>, Product>();
+            services.AddTransient<IFileHandler<IList<IProduct>>, FileHandler<IList<IProduct>>>();
+            services.AddTransient<IRepository<Product>, InMemoryRepository>();
             //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
-            services.AddTransient<IInstructionInteractor, InstructionInteractor>();
+            services.AddTransient<IProductInteractor, ProductInteractor>();
 
             return services;
         }

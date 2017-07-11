@@ -68,9 +68,9 @@ namespace InfrastructureLayerTests.Files
             Assert.AreEqual("ThirdInstruction", result.Single(r => r.Id == 3).Name);
         }
 
-        private IFileHandler<IList<Instruction>> CreateFileHandler()
+        private IFileHandler<IList<Product>> CreateFileHandler()
         {
-            return new FileHandler<IList<Instruction>>(_dataFile, new JsonSerialization());
+            return new FileHandler<IList<Product>>(_dataFile, new JsonSerialization());
         }
 
         private void RestoreFileContent()

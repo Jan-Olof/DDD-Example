@@ -8,11 +8,11 @@ namespace CLI.Controllers
 {
     public class InstructionController : BaseController
     {
-        private readonly IInstructionInteractor _instructionService;
+        private readonly IProductInteractor _productService;
 
         public InstructionController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _instructionService = serviceProvider.GetService<IInstructionInteractor>();
+            _productService = serviceProvider.GetService<IProductInteractor>();
         }
 
         public void InstructionFlow()
@@ -40,7 +40,7 @@ namespace CLI.Controllers
 
         private void CreateInstruction()
         {
-            var instruction = new Instruction();
+            var instruction = new Product();
 
             Console.WriteLine("Name?");
             instruction.Name = Console.ReadLine();
@@ -48,7 +48,7 @@ namespace CLI.Controllers
             Console.WriteLine("Description?");
             instruction.Description = Console.ReadLine();
 
-            var createdInstruction = _instructionService.Create(instruction);
+            var createdInstruction = _productService.Create(instruction);
 
             Console.WriteLine($"Instruction created with id {createdInstruction.Id}.");
         }
@@ -66,7 +66,7 @@ namespace CLI.Controllers
                 return;
             }
 
-            var instruction = _instructionService.Get(id);
+            var instruction = _productService.Get(id);
 
             if (instruction == null)
             {
@@ -79,14 +79,14 @@ namespace CLI.Controllers
             string description = Console.ReadLine();
 
             instruction.Description = description;
-            _instructionService.Update(instruction, id);
+            _productService.Update(instruction, id);
 
             Console.WriteLine("New description entered.");
         }
 
         private void ViewInstructions()
         {
-            var instructions = _instructionService.Get();
+            var instructions = _productService.Get();
 
             if (instructions == null || !instructions.Any())
             {

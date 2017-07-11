@@ -11,22 +11,22 @@ using Utilities.Enums;
 namespace ApplicationLayer.Interactors
 {
     /// <summary>
-    /// The instruction interactor class. Handles the stories/tasks concerning instructions.
+    /// The product interactor class. Handles the stories/tasks concerning products.
     /// </summary>
-    public class InstructionInteractor : BaseInteractor<Instruction, IInstruction>, IInstructionInteractor
+    public class ProductInteractor : BaseInteractor<Product, IProduct>, IProductInteractor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InstructionInteractor"/> class.
+        /// Initializes a new instance of the <see cref="ProductInteractor"/> class.
         /// </summary>
-        public InstructionInteractor(IRepository<Instruction> repository, IInstruction model, ILogger<InstructionInteractor> logger)
+        public ProductInteractor(IRepository<Product> repository, IProduct model, ILogger<ProductInteractor> logger)
             : base(repository, model, logger)
         {
         }
 
         /// <summary>
-        /// Get instruction by name.
+        /// Get product by name.
         /// </summary>
-        public IList<Instruction> Get(string name)
+        public IList<Product> Get(string name)
         {
             try
             {
@@ -40,9 +40,9 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
-        /// Update an instruction.
+        /// Update a product.
         /// </summary>
-        public void Update(Instruction entity, int id)
+        public void Update(Product entity, int id)
         {
             try
             {

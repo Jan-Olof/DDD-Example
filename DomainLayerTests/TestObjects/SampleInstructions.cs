@@ -5,10 +5,10 @@ namespace DomainLayerTests.TestObjects
 {
     public static class SampleInstructions
     {
-        public static Instruction CreateInstruction(
+        public static Product CreateInstruction(
             int id = 0, string name = "FirstInstruction", string description = "This is the first instruction.")
         {
-            return new Instruction
+            return new Product
             {
                 Description = description,
                 Id = id,
@@ -16,9 +16,9 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static IList<Instruction> CreateInstructions()
+        public static IList<Product> CreateInstructions()
         {
-            return new List<Instruction>
+            return new List<Product>
             {
                 CreateInstruction(1),
                 CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
@@ -26,26 +26,26 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static List<Instruction> CreateInstructions2()
+        public static List<Product> CreateInstructions2()
         {
-            return new List<Instruction>
+            return new List<Product>
             {
                 CreateInstruction(1),
                 CreateInstruction(2, "SecondInstruction", "This is the second instruction.")
             };
         }
 
-        public static List<Instruction> CreateInstructions3()
+        public static List<Product> CreateInstructions3()
         {
-            return new List<Instruction>
+            return new List<Product>
             {
                 CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")
             };
         }
 
-        public static IList<Instruction> CreateInstructions4()
+        public static IList<Product> CreateInstructions4()
         {
-            return new List<Instruction>
+            return new List<Product>
             {
                 CreateInstruction(1),
                 CreateInstruction(2, "SecondInstruction", "This is the second instruction."),
@@ -54,9 +54,9 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        public static List<Instruction> CreateInstructionsDuplicate()
+        public static List<Product> CreateInstructionsDuplicate()
         {
-            return new List<Instruction>
+            return new List<Product>
             {
                 CreateInstruction(3, "ThirdInstruction", "This is the third instruction."),
                 CreateInstruction(3, "ThirdInstruction", "This is the third instruction.")

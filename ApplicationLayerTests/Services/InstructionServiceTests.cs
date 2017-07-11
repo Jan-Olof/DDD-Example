@@ -16,16 +16,16 @@ namespace ApplicationLayerTests.Services
     [TestClass]
     public class InstructionServiceTests
     {
-        private ILogger<InstructionInteractor> _logger;
-        private IInstruction _model;
-        private IRepository<Instruction> _repository;
+        private ILogger<ProductInteractor> _logger;
+        private IProduct _model;
+        private IRepository<Product> _repository;
 
         [TestInitialize]
         public void SetUp()
         {
-            _repository = Substitute.For<IRepository<Instruction>>();
-            _model = Substitute.For<IInstruction>();
-            _logger = Substitute.For<ILogger<InstructionInteractor>>();
+            _repository = Substitute.For<IRepository<Product>>();
+            _model = Substitute.For<IProduct>();
+            _logger = Substitute.For<ILogger<ProductInteractor>>();
         }
 
         [TestCleanup]
@@ -136,9 +136,9 @@ namespace ApplicationLayerTests.Services
             Assert.IsTrue(true);
         }
 
-        private InstructionInteractor CreateInstructionService()
+        private ProductInteractor CreateInstructionService()
         {
-            return new InstructionInteractor(_repository, _model, _logger);
+            return new ProductInteractor(_repository, _model, _logger);
         }
     }
 }

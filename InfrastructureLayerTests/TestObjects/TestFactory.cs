@@ -20,10 +20,10 @@ namespace InfrastructureLayerTests.TestObjects
             return Options.Create(CreateDatafile());
         }
 
-        public static IFileHandler<IList<Instruction>> CreateFileHandler()
+        public static IFileHandler<IList<Product>> CreateFileHandler()
         {
             var datafile = CreateDatafileOptions();
-            return new FileHandler<IList<Instruction>>(datafile, new JsonSerialization());
+            return new FileHandler<IList<Product>>(datafile, new JsonSerialization());
         }
 
         public static void RestoreFileContent()

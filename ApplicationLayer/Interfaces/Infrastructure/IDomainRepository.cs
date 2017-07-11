@@ -13,7 +13,7 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Delete an entity object.
         /// </summary>
-        void Delete(IInstruction entity);
+        void Delete(IProduct entity);
 
         /// <summary>
         /// Fill the data set with data from the data store.
@@ -23,17 +23,17 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Get all entity objects.
         /// </summary>
-        IEnumerable<IInstruction> Get();
+        IEnumerable<IProduct> Get();
 
         /// <summary>
         /// Get entity objects based on a condition.
         /// </summary>
-        IEnumerable<IInstruction> Get(Expression<Func<IInstruction, bool>> condition);
+        IEnumerable<IProduct> Get(Expression<Func<IProduct, bool>> condition);
 
         /// <summary>
         /// Insert an entity object.
         /// </summary>
-        IInstruction Insert(IInstruction entity);
+        IProduct Insert(IProduct entity);
 
         /// <summary>
         /// Persist data to the data store.
@@ -43,6 +43,6 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.
         /// </summary>
-        void Update(IInstruction entity, Expression<Func<IInstruction, bool>> findWhatToUpdate);
+        void Update(IProduct entity, Expression<Func<IProduct, bool>> findWhatToUpdate);
     }
 }

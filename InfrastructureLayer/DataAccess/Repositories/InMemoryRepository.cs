@@ -11,18 +11,18 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository for a certain entity.
     /// </summary>
-    public class InMemoryRepository : IRepository<Instruction>
+    public class InMemoryRepository : IRepository<Product>
     {
-        private readonly IFileHandler<IList<Instruction>> _fileHandler;
-        private readonly IUpdateMapper<Instruction> _updateMapper;
-        private IList<Instruction> _entities;
+        private readonly IFileHandler<IList<Product>> _fileHandler;
+        private readonly IUpdateMapper<Product> _updateMapper;
+        private IList<Product> _entities;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<Instruction> updateMapper, IFileHandler<IList<Instruction>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IFileHandler<IList<Product>> fileHandler)
         {
-            _entities = new List<Instruction>();
+            _entities = new List<Product>();
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
@@ -30,7 +30,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<Instruction> updateMapper, IList<Instruction> entities, IFileHandler<IList<Instruction>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IList<Product> entities, IFileHandler<IList<Product>> fileHandler)
         {
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _entities = entities ?? throw new ArgumentNullException(nameof(entities));
@@ -40,7 +40,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete an entity object.
         /// </summary>
-        public void Delete(Instruction entity)
+        public void Delete(Product entity)
         {
             var item = _entities.SingleOrDefault(e => e.Id == entity.Id);
 
@@ -53,7 +53,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Dispose()
         {
-            _entities = new List<Instruction>();
+            _entities = new List<Product>();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all entity objects.
         /// </summary>
-        public IEnumerable<Instruction> Get()
+        public IEnumerable<Product> Get()
         {
             return _entities;
         }
@@ -75,7 +75,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get entity objects based on a condition.
         /// </summary>
-        public IEnumerable<Instruction> Get(Expression<Func<Instruction, bool>> condition)
+        public IEnumerable<Product> Get(Expression<Func<Product, bool>> condition)
         {
             return _entities.Where(condition.Compile());
         }
@@ -83,7 +83,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert an entity object.
         /// </summary>
-        public Instruction Insert(Instruction entity)
+        public Product Insert(Product entity)
         {
             entity.Id = GetNextId();
             _entities.Add(entity);
@@ -101,7 +101,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(Instruction entity, Expression<Func<Instruction, bool>> condition)
+        public void Update(Product entity, Expression<Func<Product, bool>> condition)
         {
             var toUpdate = _entities.SingleOrDefault(condition.Compile());
 

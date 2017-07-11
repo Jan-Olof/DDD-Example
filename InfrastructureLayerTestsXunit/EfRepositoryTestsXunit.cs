@@ -13,11 +13,11 @@ namespace InfrastructureLayerTestsXunit
 {
     public class EfRepositoryTestsXunit
     {
-        private ILogger<EfRepository<Instruction>> _logger;
+        private ILogger<EfRepository<Product>> _logger;
 
         public EfRepositoryTestsXunit()
         {
-            _logger = Substitute.For<ILogger<EfRepository<Instruction>>>();
+            _logger = Substitute.For<ILogger<EfRepository<Product>>>();
         }
 
         [Fact]
@@ -187,9 +187,9 @@ namespace InfrastructureLayerTestsXunit
                 .Options;
         }
 
-        private EfRepository<Instruction> CreateEfRepository(ExampleContext context)
+        private EfRepository<Product> CreateEfRepository(ExampleContext context)
         {
-            return new EfRepository<Instruction>(context, new Instruction(), _logger);
+            return new EfRepository<Product>(context, new Product(), _logger);
         }
     }
 }
