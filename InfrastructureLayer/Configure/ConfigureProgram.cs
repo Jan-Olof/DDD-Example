@@ -28,10 +28,11 @@ namespace InfrastructureLayer.Configure
             services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IProductFunctions, Product>();
+            services.AddTransient<IProductProps, Product>();
             services.AddTransient<IProduct, Product>();
             services.AddTransient<IList<Product>, List<Product>>();
             services.AddTransient<IUpdateMapper<Product>, Product>();
-            services.AddTransient<IFileHandler<IList<IProduct>>, FileHandler<IList<IProduct>>>();
+            services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
             services.AddTransient<IRepository<Product>, InMemoryRepository>();
             //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
             services.AddTransient<IProductInteractor, ProductInteractor>();

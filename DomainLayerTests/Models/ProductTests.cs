@@ -23,7 +23,7 @@ namespace DomainLayerTests.Models
             // Assert
             var instruction = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());
 
-            Assert.AreEqual("SecondInstruction", instruction.Name);
+            Assert.AreEqual("SecondProduct", instruction.Name);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace DomainLayerTests.Models
             var sut = CreateProduct();
 
             // Act
-            var result = sut.Get("SecondInstruction");
+            var result = sut.Get("SecondProduct");
 
             // Assert
             var instruction = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());

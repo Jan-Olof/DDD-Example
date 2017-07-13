@@ -4,24 +4,24 @@ using Microsoft.EntityFrameworkCore;
 namespace InfrastructureLayer.DataAccess.SqlServer
 {
     /// <summary>
-    /// Database configuration for Instruction.
+    /// Database configuration for Product.
     /// </summary>
-    public static class InstructionConfiguration
+    public static class ProductConfiguration
     {
         /// <summary>
-        /// Database configuration for Instruction.
+        /// Database configuration for Product.
         /// </summary>
         public static void Configure(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>()
-                .HasKey(instruction => instruction.Id);
+                .HasKey(product => product.Id);
 
             modelBuilder.Entity<Product>()
-                .Property(instruction => instruction.Name)
+                .Property(product => product.Name)
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Product>()
-                .Property(instruction => instruction.Description)
+                .Property(product => product.Description)
                 .HasMaxLength(200);
         }
     }

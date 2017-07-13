@@ -81,7 +81,7 @@ namespace ApplicationLayerTests.Services
             var result = sut.Get(3);
 
             // Assert
-            Assert.AreEqual("ThirdInstruction", result.Name);
+            Assert.AreEqual("ThirdProduct", result.Name);
         }
 
         [TestMethod]
@@ -104,16 +104,16 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetProductFromName()
         {
             // Arrange
-            _model.Get("ThirdInstruction")
-                .Returns(i => i.Name == "ThirdInstruction");
+            _model.Get("ThirdProduct")
+                .Returns(i => i.Name == "ThirdProduct");
 
-            _repository.Get(i => i.Name == "ThirdInstruction")
+            _repository.Get(i => i.Name == "ThirdProduct")
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Get("ThirdInstruction");
+            var result = sut.Get("ThirdProduct");
 
             // Assert
             Assert.AreEqual(3, result.Single().Id);

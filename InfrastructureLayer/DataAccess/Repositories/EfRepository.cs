@@ -14,7 +14,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork implementation of the generic repository.
     /// </summary>
-    public class EfRepository<T> : IRepository<T> where T : class
+    public class EfRepository<T> : IRepository<T> where T : class // TODO: This will have to change to a DomainRepository once we add another aggregate. (It can implement both interfaces.)
     {
         private readonly DbContext _context;
         private readonly ILogger _logger;

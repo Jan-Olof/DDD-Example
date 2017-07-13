@@ -64,7 +64,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
             // Assert
             Assert.AreEqual(3, result.Count);
-            Assert.AreEqual("FirstInstruction", result.Single(n => n.Id == 1).Name);
+            Assert.AreEqual("FirstProduct", result.Single(n => n.Id == 1).Name);
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
             // Assert
             Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("SecondInstruction", result.Single().Name);
+            Assert.AreEqual("SecondProduct", result.Single().Name);
         }
 
         [TestMethod]
@@ -92,7 +92,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
             // Assert
             Assert.AreEqual(1, result.Id);
-            Assert.AreEqual("FirstInstruction", result.Name);
+            Assert.AreEqual("FirstProduct", result.Name);
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
             // Assert
             Assert.AreEqual(4, result.Id);
-            Assert.AreEqual("FirstInstruction", result.Name);
+            Assert.AreEqual("FirstProduct", result.Name);
         }
 
         [TestMethod]
@@ -145,10 +145,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 new Product(), new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private static IRepository<Product> CreateInMemoryRepository(IList<Product> instructions)
+        private static IRepository<Product> CreateInMemoryRepository(IList<Product> products)
         {
             return new InMemoryRepository(
-                new Product(), instructions, new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
+                new Product(), products, new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }

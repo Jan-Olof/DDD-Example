@@ -6,7 +6,7 @@ namespace DomainLayerTests.TestObjects
     public static class SampleProducts
     {
         public static Product CreateProduct(
-            int id = 0, string name = "FirstInstruction", string description = "This is the first instruction.")
+            int id = 0, string name = "FirstProduct", string description = "This is the first product.")
         {
             return new Product
             {
@@ -21,8 +21,8 @@ namespace DomainLayerTests.TestObjects
             return new List<Product>
             {
                 CreateProduct(1),
-                CreateProduct(2, "SecondInstruction", "This is the second instruction."),
-                CreateProduct(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProduct(2, "SecondProduct", "This is the second product."),
+                CreateProduct(3, "ThirdProduct", "This is the third product.")
             };
         }
 
@@ -31,7 +31,7 @@ namespace DomainLayerTests.TestObjects
             return new List<Product>
             {
                 CreateProduct(1),
-                CreateProduct(2, "SecondInstruction", "This is the second instruction.")
+                CreateProduct(2, "SecondProduct", "This is the second product.")
             };
         }
 
@@ -39,7 +39,7 @@ namespace DomainLayerTests.TestObjects
         {
             return new List<Product>
             {
-                CreateProduct(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProduct(3, "ThirdProduct", "This is the third product.")
             };
         }
 
@@ -48,9 +48,9 @@ namespace DomainLayerTests.TestObjects
             return new List<Product>
             {
                 CreateProduct(1),
-                CreateProduct(2, "SecondInstruction", "This is the second instruction."),
-                CreateProduct(3, "ThirdInstruction", "This is the third instruction."),
-                CreateProduct(4, "FourthInstruction", "This is the fourth instruction.")
+                CreateProduct(2, "SecondProduct", "This is the second product."),
+                CreateProduct(3, "ThirdProduct", "This is the third product."),
+                CreateProduct(4, "FourthProduct", "This is the fourth product.")
             };
         }
 
@@ -58,8 +58,8 @@ namespace DomainLayerTests.TestObjects
         {
             return new List<Product>
             {
-                CreateProduct(3, "ThirdInstruction", "This is the third instruction."),
-                CreateProduct(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProduct(3, "ThirdProduct", "This is the third product."),
+                CreateProduct(3, "ThirdProduct", "This is the third product.")
             };
         }
     }

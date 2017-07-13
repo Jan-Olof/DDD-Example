@@ -6,7 +6,7 @@ namespace InfrastructureLayerTests.TestObjects
     public static class SampleProductDtos
     {
         public static ProductDto CreateProductDto(
-            int id = 0, string name = "FirstInstruction", string description = "This is the first instruction.")
+            int id = 0, string name = "FirstProduct", string description = "This is the first product.")
         {
             return new ProductDto
             {
@@ -21,8 +21,8 @@ namespace InfrastructureLayerTests.TestObjects
             return new List<ProductDto>
             {
                 CreateProductDto(1),
-                CreateProductDto(2, "SecondInstruction", "This is the second instruction."),
-                CreateProductDto(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProductDto(2, "SecondProduct", "This is the second product."),
+                CreateProductDto(3, "ThirdProduct", "This is the third product.")
             };
         }
 
@@ -30,8 +30,8 @@ namespace InfrastructureLayerTests.TestObjects
         {
             return new List<ProductDto>
             {
-                CreateProductDto(3, "ThirdInstruction", "This is the third instruction."),
-                CreateProductDto(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProductDto(3, "ThirdProduct", "This is the third product."),
+                CreateProductDto(3, "ThirdProduct", "This is the third product.")
             };
         }
 
@@ -39,7 +39,7 @@ namespace InfrastructureLayerTests.TestObjects
         {
             return new List<ProductDto>
             {
-                CreateProductDto(3, "ThirdInstruction", "This is the third instruction.")
+                CreateProductDto(3, "ThirdProduct", "This is the third product.")
             };
         }
     }

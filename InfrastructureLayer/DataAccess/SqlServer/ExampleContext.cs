@@ -1,4 +1,5 @@
-﻿// ReSharper disable  ObjectCreationAsStatement
+﻿// ReSharper disable ObjectCreationAsStatement
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// <summary>
         /// Gets or sets the instructions.
         /// </summary>
-        public DbSet<Product> Instructions { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         /// <summary>
         /// Override this method to configure the database (and other options) to be used
@@ -54,7 +55,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            InstructionConfiguration.Configure(modelBuilder);
+            ProductConfiguration.Configure(modelBuilder);
         }
     }
 }

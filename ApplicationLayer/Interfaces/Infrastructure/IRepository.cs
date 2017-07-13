@@ -10,7 +10,7 @@ namespace ApplicationLayer.Interfaces.Infrastructure
     public interface IRepository<T> : IDisposable // TODO: Decide if to remove generic repository interface and replace with a domain repository.
     {
         /// <summary>
-        /// Delete an entity object.
+        /// Delete an object.
         /// </summary>
         void Delete(T entity);
 
@@ -20,17 +20,17 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void FillDataSet();
 
         /// <summary>
-        /// Get all entity objects.
+        /// Get all objects.
         /// </summary>
         IEnumerable<T> Get();
 
         /// <summary>
-        /// Get entity objects based on a condition.
+        /// Get objects based on a condition.
         /// </summary>
         IEnumerable<T> Get(Expression<Func<T, bool>> condition);
 
         /// <summary>
-        /// Insert an entity object.
+        /// Insert an object.
         /// </summary>
         T Insert(T entity);
 
@@ -40,7 +40,7 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void PersistData();
 
         /// <summary>
-        /// Update an entity object. This is based on a condition defining how to find the object.
+        /// Update an object. This is based on a condition defining how to find the object.
         /// </summary>
         void Update(T entity, Expression<Func<T, bool>> findWhatToUpdate);
     }

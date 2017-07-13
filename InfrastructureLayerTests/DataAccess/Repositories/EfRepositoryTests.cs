@@ -44,16 +44,16 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var instruction = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.Get(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(instruction);
+                sut.Delete(product);
             }
 
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.AreEqual(2, result.Count);
                 Assert.AreEqual("Desc1", result.Single(i => i.Name == "No1").Description);
@@ -112,15 +112,15 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
-                Assert.AreEqual("FirstInstruction", result.Name);
+                Assert.AreEqual("FirstProduct", result.Name);
             }
 
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.AreEqual(1, result.Count);
-                Assert.AreEqual("FirstInstruction", result.Single().Name);
+                Assert.AreEqual("FirstProduct", result.Single().Name);
             }
         }
 
@@ -139,15 +139,15 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
-                Assert.AreEqual("FirstInstruction", result.Name);
+                Assert.AreEqual("FirstProduct", result.Name);
             }
 
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.AreEqual(4, result.Count);
-                Assert.AreEqual("This is the first instruction.", result.Single(i => i.Name == "FirstInstruction").Description);
+                Assert.AreEqual("This is the first product.", result.Single(i => i.Name == "FirstProduct").Description);
             }
         }
 
@@ -168,7 +168,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated description.", result.Single(i => i.Name == "No2").Description);
@@ -180,9 +180,9 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
         }

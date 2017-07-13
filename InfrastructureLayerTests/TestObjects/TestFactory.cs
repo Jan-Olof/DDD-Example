@@ -12,7 +12,7 @@ namespace InfrastructureLayerTests.TestObjects
     {
         public static Datafile CreateDatafile()
         {
-            return new Datafile { FileName = @"..\..\..\Instructions.json" };
+            return new Datafile { FileName = @"..\..\..\Products.json" };
         }
 
         public static IOptions<Datafile> CreateDatafileOptions()

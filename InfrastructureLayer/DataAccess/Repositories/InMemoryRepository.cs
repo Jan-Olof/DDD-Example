@@ -15,14 +15,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
         private readonly IUpdateMapper<Product> _updateMapper;
-        private IList<Product> _entities;
+        private IList<Product> _products;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
         public InMemoryRepository(IUpdateMapper<Product> updateMapper, IFileHandler<IList<Product>> fileHandler)
         {
-            _entities = new List<Product>();
+            _products = new List<Product>();
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
@@ -30,22 +30,22 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IList<Product> entities, IFileHandler<IList<Product>> fileHandler)
+        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IList<Product> products, IFileHandler<IList<Product>> fileHandler)
         {
             _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
-            _entities = entities ?? throw new ArgumentNullException(nameof(entities));
+            _products = products ?? throw new ArgumentNullException(nameof(products));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 
         /// <summary>
-        /// Delete an entity object.
+        /// Delete a product.
         /// </summary>
-        public void Delete(Product entity)
+        public void Delete(Product product)
         {
-            var item = _entities.SingleOrDefault(e => e.Id == entity.Id);
+            var item = _products.SingleOrDefault(e => e.Id == product.Id);
 
-            int index = _entities.IndexOf(item);
-            _entities.RemoveAt(index);
+            int index = _products.IndexOf(item);
+            _products.RemoveAt(index);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Dispose()
         {
-            _entities = new List<Product>();
+            _products = new List<Product>();
         }
 
         /// <summary>
@@ -61,33 +61,33 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void FillDataSet()
         {
-            _entities = _fileHandler.Read();
+            _products = _fileHandler.Read();
         }
 
         /// <summary>
-        /// Get all entity objects.
+        /// Get all products.
         /// </summary>
         public IEnumerable<Product> Get()
         {
-            return _entities;
+            return _products;
         }
 
         /// <summary>
-        /// Get entity objects based on a condition.
+        /// Get products based on a condition.
         /// </summary>
         public IEnumerable<Product> Get(Expression<Func<Product, bool>> condition)
         {
-            return _entities.Where(condition.Compile());
+            return _products.Where(condition.Compile());
         }
 
         /// <summary>
-        /// Insert an entity object.
+        /// Insert a product.
         /// </summary>
-        public Product Insert(Product entity)
+        public Product Insert(Product product)
         {
-            entity.Id = GetNextId();
-            _entities.Add(entity);
-            return entity;
+            product.Id = GetNextId();
+            _products.Add(product);
+            return product;
         }
 
         /// <summary>
@@ -95,17 +95,17 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void PersistData()
         {
-            _fileHandler.Write(_entities);
+            _fileHandler.Write(_products);
         }
 
         /// <summary>
-        /// Update an entity object. This is based on a condition defining how to find the object.
+        /// Update a product. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(Product entity, Expression<Func<Product, bool>> condition)
+        public void Update(Product product, Expression<Func<Product, bool>> condition)
         {
-            var toUpdate = _entities.SingleOrDefault(condition.Compile());
+            var toUpdate = _products.SingleOrDefault(condition.Compile());
 
-            _updateMapper.MapUpdate(entity, toUpdate);
+            _updateMapper.MapUpdate(product, toUpdate);
         }
 
         /// <summary>
@@ -113,12 +113,12 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         private int GetNextId()
         {
-            if (_entities?.Any() == false)
+            if (_products?.Any() == false)
             {
                 return 1;
             }
 
-            return _entities.Max(n => n.Id) + 1;
+            return _products.Max(n => n.Id) + 1;
         }
     }
 }

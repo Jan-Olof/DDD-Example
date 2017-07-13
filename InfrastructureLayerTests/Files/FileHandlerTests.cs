@@ -14,7 +14,7 @@ namespace InfrastructureLayerTests.Files
     [TestClass]
     public class FileHandlerTests
     {
-        private const string InstructionsFileName = @"..\..\..\Instructions.json";
+        private const string ProductsFileName = @"..\..\..\Products.json";
         private IOptions<Datafile> _dataFile;
 
         [TestInitialize]
@@ -31,10 +31,10 @@ namespace InfrastructureLayerTests.Files
         }
 
         [TestMethod]
-        public void TestShouldReadAllInstructions()
+        public void TestShouldReadAllProducts()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = ProductsFileName });
 
             var sut = CreateFileHandler();
 
@@ -43,29 +43,29 @@ namespace InfrastructureLayerTests.Files
 
             // Assert
             Assert.AreEqual(2, result.Count);
-            Assert.AreEqual("SecondInstruction", result.Single(r => r.Id == 2).Name);
+            Assert.AreEqual("SecondProduct", result.Single(r => r.Id == 2).Name);
         }
 
         [TestMethod]
-        public void TestShouldWriteInstructionsToFile()
+        public void TestShouldWriteProductsToFile()
         {
             // Arrange
-            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = ProductsFileName });
 
             var sut = CreateFileHandler();
 
-            var instructions = sut.Read();
-            instructions.Add(SampleProducts.CreateProduct(3, "ThirdInstruction", "This is the third instruction."));
+            var products = sut.Read();
+            products.Add(SampleProducts.CreateProduct(3, "ThirdProduct", "This is the third product."));
 
             // Act
-            sut.Write(instructions);
+            sut.Write(products);
 
             // Assert
             var result = sut.Read();
 
             Assert.AreEqual(3, result.Count);
-            Assert.AreEqual("SecondInstruction", result.Single(r => r.Id == 2).Name);
-            Assert.AreEqual("ThirdInstruction", result.Single(r => r.Id == 3).Name);
+            Assert.AreEqual("SecondProduct", result.Single(r => r.Id == 2).Name);
+            Assert.AreEqual("ThirdProduct", result.Single(r => r.Id == 3).Name);
         }
 
         private IFileHandler<IList<Product>> CreateFileHandler()
@@ -75,9 +75,9 @@ namespace InfrastructureLayerTests.Files
 
         private void RestoreFileContent()
         {
-            _dataFile.Value.Returns(new Datafile { FileName = InstructionsFileName });
+            _dataFile.Value.Returns(new Datafile { FileName = ProductsFileName });
             var sut = CreateFileHandler();
-            sut.Write((SampleProducts.CreateProducts2()));
+            sut.Write(SampleProducts.CreateProducts2());
         }
     }
 }

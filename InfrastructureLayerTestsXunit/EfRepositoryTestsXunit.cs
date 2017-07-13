@@ -13,7 +13,7 @@ namespace InfrastructureLayerTestsXunit
 {
     public class EfRepositoryTestsXunit
     {
-        private ILogger<EfRepository<Product>> _logger;
+        private readonly ILogger<EfRepository<Product>> _logger;
 
         public EfRepositoryTestsXunit()
         {
@@ -31,16 +31,16 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
-                var instruction = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.Get(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(instruction);
+                sut.Delete(product);
             }
 
             // Assert
             using (var context = new ExampleContext(options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.Equal(2, result.Count);
                 Assert.Equal("Desc1", result.Single(i => i.Name == "No1").Description);
@@ -103,15 +103,15 @@ namespace InfrastructureLayerTestsXunit
 
                 // Assert
                 Assert.True(result.Id > 0);
-                Assert.Equal("FirstInstruction", result.Name);
+                Assert.Equal("FirstProduct", result.Name);
             }
 
             using (var context = new ExampleContext(options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.Equal(1, result.Count);
-                Assert.Equal("FirstInstruction", result.Single().Name);
+                Assert.Equal("FirstProduct", result.Single().Name);
             }
         }
 
@@ -131,15 +131,15 @@ namespace InfrastructureLayerTestsXunit
 
                 // Assert
                 Assert.True(result.Id > 0);
-                Assert.Equal("FirstInstruction", result.Name);
+                Assert.Equal("FirstProduct", result.Name);
             }
 
             using (var context = new ExampleContext(options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.Equal(4, result.Count);
-                Assert.Equal("This is the first instruction.", result.Single(i => i.Name == "FirstInstruction").Description);
+                Assert.Equal("This is the first product.", result.Single(i => i.Name == "FirstProduct").Description);
             }
         }
 
@@ -161,7 +161,7 @@ namespace InfrastructureLayerTestsXunit
             // Assert
             using (var context = new ExampleContext(options))
             {
-                var result = context.Instructions.ToList();
+                var result = context.Products.ToList();
 
                 Assert.Equal(3, result.Count);
                 Assert.Equal("Updated description.", result.Single(i => i.Name == "No2").Description);
@@ -173,9 +173,9 @@ namespace InfrastructureLayerTestsXunit
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
-                context.Instructions.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
                 context.SaveChanges();
             }
         }
