@@ -8,16 +8,16 @@ using InfrastructureLayer.DataAccess.SqlServer;
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    [Migration("20170224101202_Initial")]
+    [Migration("20170714083900_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DomainLayer.Models.Instruction", b =>
+            modelBuilder.Entity("DomainLayer.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -30,7 +30,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instructions");
+                    b.ToTable("Products");
                 });
         }
     }

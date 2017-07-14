@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// ReSharper disable UnusedMember.Global
+// ReSharper disable PartialTypeWithSinglePart
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -10,10 +13,10 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DomainLayer.Models.Instruction", b =>
+            modelBuilder.Entity("DomainLayer.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -26,7 +29,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instructions");
+                    b.ToTable("Products");
                 });
         }
     }

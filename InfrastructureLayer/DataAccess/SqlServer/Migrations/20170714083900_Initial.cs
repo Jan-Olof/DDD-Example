@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// ReSharper disable RedundantArgumentDefaultValue
+// ReSharper disable UnusedMember.Global
+
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
@@ -8,13 +11,13 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Instructions");
+                name: "Products");
         }
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Instructions",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -24,7 +27,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Instructions", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
         }
     }
