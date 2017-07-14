@@ -13,7 +13,7 @@ namespace ApplicationLayer.Interactors
     /// <summary>
     /// The base interactor abstract class.
     /// </summary>
-    public abstract class BaseInteractor<T, TModel> : IBaseInteractor<T> where T : class, IIdentifier where TModel : class, IFunctions<T>
+    public abstract class BaseInteractor<T, TModel> : IBaseInteractor<T> where T : class, IIdentifier, IName where TModel : class, IFunctions<T>
     {
         protected readonly ILogger Logger;
         protected readonly TModel Model;

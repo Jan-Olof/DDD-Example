@@ -27,7 +27,12 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         }
 
         /// <summary>
-        /// Gets or sets the instructions.
+        /// Gets or sets the persons.
+        /// </summary>
+        public DbSet<Person> Persons { get; set; }
+
+        /// <summary>
+        /// Gets or sets the products.
         /// </summary>
         public DbSet<Product> Products { get; set; }
 
@@ -56,6 +61,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ProductConfiguration.Configure(modelBuilder);
+            PersonConfiguration.Configure(modelBuilder);
         }
     }
 }

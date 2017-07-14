@@ -3,9 +3,9 @@
 namespace DomainLayer.Interfaces
 {
     /// <summary>
-    /// The product model functions interface.
+    /// The person model functions interface.
     /// </summary>
-    public interface IProductFunctions : IFunctions<Product>
+    public interface IPersonFunctions : IFunctions<Person>
     {
     }
 }
