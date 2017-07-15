@@ -1,4 +1,5 @@
-﻿using DomainLayer.Interfaces;
+﻿using System.Collections.Generic;
+using DomainLayer.Interfaces;
 
 namespace DomainLayer.Models
 {
@@ -20,6 +21,11 @@ namespace DomainLayer.Models
         /// Gets or sets the description. A text field that describes the product.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ProductPersons.
+        /// </summary>
+        public List<ProductPerson> ProductPerson { get; set; }
 
         /// <summary>
         /// Updates the fields that are supposed to be updated when editing a product.

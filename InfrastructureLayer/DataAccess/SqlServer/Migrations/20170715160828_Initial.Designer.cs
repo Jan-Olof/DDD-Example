@@ -1,14 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using InfrastructureLayer.DataAccess.SqlServer;
 
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    [Migration("20170714151757_Initial")]
+    [Migration("20170715160828_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,6 +45,34 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+                {
+                    b.Property<int>("PersonId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("Role");
+
+                    b.HasKey("PersonId", "ProductId", "Role");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPerson");
+                });
+
+            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+                {
+                    b.HasOne("DomainLayer.Models.Person", "Person")
+                        .WithMany("ProductPerson")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DomainLayer.Models.Product", "Product")
+                        .WithMany("ProductPerson")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

@@ -1,4 +1,5 @@
-﻿using DomainLayer.Interfaces;
+﻿using System.Collections.Generic;
+using DomainLayer.Interfaces;
 
 namespace DomainLayer.Models
 {
@@ -17,19 +18,24 @@ namespace DomainLayer.Models
         }
 
         /// <summary>
-        /// The first name of the person.
+        /// Gets or sets the first name of the person.
         /// </summary>
         public string FirstName { get; set; }
 
         /// <summary>
-        /// The last name of the person.
+        /// Gets or sets the last name of the person.
         /// </summary>
         public string LastName { get; set; }
 
         /// <summary>
-        /// The name of the person. Gets first and last name.
+        /// Gets the name of the person. Gets first and last name.
         /// </summary>
         public override string Name { get => $"{FirstName} {LastName}"; set { } }
+
+        /// <summary>
+        /// Gets or sets the ProductPersons.
+        /// </summary>
+        public List<ProductPerson> ProductPerson { get; set; }
 
         /// <summary>
         /// Updates the fields that are supposed to be updated when editing a person.

@@ -147,8 +147,14 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         private static IRepository<Product> CreateInMemoryRepository(IList<Product> products)
         {
-            return new InMemoryRepository(
-                products, new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
+            var repository = CreateInMemoryRepository();
+
+            foreach (var product in products)
+            {
+                repository.Insert(product);
+            }
+
+            return repository;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DomainLayer.Interfaces;
+﻿using System.Collections.Generic;
+using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 namespace InfrastructureLayer.Dtos
 {
@@ -13,5 +15,6 @@ namespace InfrastructureLayer.Dtos
         public string Description { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
+        public List<ProductPerson> ProductPerson { get; set; }
     }
 }

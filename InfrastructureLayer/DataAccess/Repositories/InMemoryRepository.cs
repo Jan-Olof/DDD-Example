@@ -8,7 +8,7 @@ using DomainLayer.Models;
 namespace InfrastructureLayer.DataAccess.Repositories
 {
     /// <summary>
-    /// A simple in memory repository for a certain entity.
+    /// A simple in memory repository.
     /// </summary>
     public class InMemoryRepository : IRepository<Product> // TODO: Add person.
     {
@@ -21,15 +21,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public InMemoryRepository(IFileHandler<IList<Product>> fileHandler)
         {
             _products = new List<Product>();
-            _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
-        /// </summary>
-        public InMemoryRepository(IList<Product> products, IFileHandler<IList<Product>> fileHandler)
-        {
-            _products = products ?? throw new ArgumentNullException(nameof(products));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 

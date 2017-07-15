@@ -1,7 +1,5 @@
-﻿// ReSharper disable ArgumentsStyleStringLiteral
-// ReSharper disable ArgumentsStyleAnonymousFunction
+﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable RedundantArgumentDefaultValue
-// ReSharper disable UnusedMember.Global
 
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -12,6 +10,9 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
     {
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ProductPerson");
+
             migrationBuilder.DropTable(
                 name: "Persons");
 
@@ -48,6 +49,36 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ProductPerson",
+                columns: table => new
+                {
+                    PersonId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Role = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductPerson", x => new { x.PersonId, x.ProductId, x.Role });
+                    table.ForeignKey(
+                        name: "FK_ProductPerson_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductPerson_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductPerson_ProductId",
+                table: "ProductPerson",
+                column: "ProductId");
         }
     }
 }

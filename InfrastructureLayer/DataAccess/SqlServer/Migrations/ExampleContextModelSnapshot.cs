@@ -47,6 +47,34 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 
                     b.ToTable("Products");
                 });
+
+            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+                {
+                    b.Property<int>("PersonId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("Role");
+
+                    b.HasKey("PersonId", "ProductId", "Role");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPerson");
+                });
+
+            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+                {
+                    b.HasOne("DomainLayer.Models.Person", "Person")
+                        .WithMany("ProductPerson")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DomainLayer.Models.Product", "Product")
+                        .WithMany("ProductPerson")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
         }
     }
 }

@@ -62,6 +62,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         {
             ProductConfiguration.Configure(modelBuilder);
             PersonConfiguration.Configure(modelBuilder);
+            ProductPersonConfiguration.Configure(modelBuilder);
         }
     }
 }
