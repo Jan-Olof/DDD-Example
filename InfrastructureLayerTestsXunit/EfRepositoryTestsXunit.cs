@@ -189,7 +189,7 @@ namespace InfrastructureLayerTestsXunit
 
         private EfRepository<Product> CreateEfRepository(ExampleContext context)
         {
-            return new EfRepository<Product>(context, new Product(), _logger);
+            return new EfRepository<Product>(context, _logger);
         }
     }
 }

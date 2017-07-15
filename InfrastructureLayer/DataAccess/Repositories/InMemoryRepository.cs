@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
@@ -11,28 +10,25 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository for a certain entity.
     /// </summary>
-    public class InMemoryRepository : IRepository<Product>
+    public class InMemoryRepository : IRepository<Product> // TODO: Add person.
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
-        private readonly IUpdateMapper<Product> _updateMapper;
         private IList<Product> _products;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IFileHandler<IList<Product>> fileHandler)
+        public InMemoryRepository(IFileHandler<IList<Product>> fileHandler)
         {
             _products = new List<Product>();
-            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IUpdateMapper<Product> updateMapper, IList<Product> products, IFileHandler<IList<Product>> fileHandler)
+        public InMemoryRepository(IList<Product> products, IFileHandler<IList<Product>> fileHandler)
         {
-            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _products = products ?? throw new ArgumentNullException(nameof(products));
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
@@ -105,7 +101,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var toUpdate = _products.SingleOrDefault(condition.Compile());
 
-            _updateMapper.MapUpdate(product, toUpdate);
+            product.MapUpdate(product, toUpdate);
         }
 
         /// <summary>

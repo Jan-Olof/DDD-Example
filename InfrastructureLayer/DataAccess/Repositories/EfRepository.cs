@@ -11,22 +11,22 @@ using DomainLayer.Interfaces;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
+    // TODO: This will have to change to a DomainRepository once we add another aggregate. (It can implement both interfaces.)
+
     /// <summary>
     /// The entity framwork implementation of the generic repository.
     /// </summary>
-    public class EfRepository<T> : IRepository<T> where T : class // TODO: This will have to change to a DomainRepository once we add another aggregate. (It can implement both interfaces.)
+    public class EfRepository<T> : IRepository<T> where T : class, IUpdateMapper<T>
     {
         private readonly DbContext _context;
         private readonly ILogger _logger;
-        private readonly IUpdateMapper<T> _updateMapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{T}"/> class.
         /// </summary>
-        public EfRepository(DbContext dataContext, IUpdateMapper<T> updateMapper, ILogger<EfRepository<T>> logger)
+        public EfRepository(DbContext dataContext, ILogger<EfRepository<T>> logger)
         {
             _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
-            _updateMapper = updateMapper ?? throw new ArgumentNullException(nameof(updateMapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -104,7 +104,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
                     throw new NullReferenceException("No value was found for toUpdate.");
                 }
 
-                _updateMapper.MapUpdate(entity, toUpdate);
+                entity.MapUpdate(entity, toUpdate);
 
                 int changes = _context.SaveChanges();
                 _logger.LogInformation($"Saved {changes} changes.");

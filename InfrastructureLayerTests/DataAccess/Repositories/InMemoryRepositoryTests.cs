@@ -142,13 +142,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         private static IRepository<Product> CreateInMemoryRepository()
         {
             return new InMemoryRepository(
-                new Product(), new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
+                new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
         private static IRepository<Product> CreateInMemoryRepository(IList<Product> products)
         {
             return new InMemoryRepository(
-                new Product(), products, new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
+                products, new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
         }
     }
 }
