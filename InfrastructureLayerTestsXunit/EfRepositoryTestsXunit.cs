@@ -154,8 +154,10 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
+                int id = sut.Get(new Product().Get("No2")).Single().Id;
+
                 // Act
-                sut.Update(SampleProducts.CreateProduct(2, "No2", "Updated description."), i => i.Name == "No2");
+                sut.Update(SampleProducts.CreateProduct(id, "No2", "Updated description."));
             }
 
             // Assert

@@ -101,7 +101,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                _repository.Update(product, _model.Get(id));
+                _repository.Update(product);
             }
             catch (Exception e)
             {

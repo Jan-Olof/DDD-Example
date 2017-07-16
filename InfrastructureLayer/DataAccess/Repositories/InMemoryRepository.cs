@@ -88,9 +88,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update a product. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(Product product, Expression<Func<Product, bool>> condition)
+        public void Update(Product product)
         {
-            var toUpdate = _products.SingleOrDefault(condition.Compile());
+            var toUpdate = _products.SingleOrDefault(product.Get(product.Id).Compile());
 
             product.MapUpdate(product, toUpdate);
         }

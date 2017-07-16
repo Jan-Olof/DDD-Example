@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Utilities.Enums;
-using Utilities.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Interfaces;
 
@@ -16,18 +13,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork implementation of the generic repository.
     /// </summary>
-    public class EfRepository<T> : IRepository<T> where T : class, IUpdateMapper<T>
+    public class EfRepository<T> : RepositoryEfBase, IRepository<T> where T : class, IUpdateMapper<T>, IIdentifier
     {
-        private readonly DbContext _context;
-        private readonly ILogger _logger;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EfRepository{T}"/> class.
         /// </summary>
         public EfRepository(DbContext dataContext, ILogger<EfRepository<T>> logger)
+            : base(dataContext, logger)
         {
-            _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -35,16 +28,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Delete(T entity)
         {
-            _context.Remove(entity);
-            _context.SaveChanges();
-        }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            _context?.Dispose();
+            base.Delete(entity);
         }
 
         /// <summary>
@@ -60,7 +44,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<T> Get()
         {
-            return _context.Set<T>();
+            return Get<T>();
         }
 
         /// <summary>
@@ -68,7 +52,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<T> Get(Expression<Func<T, bool>> condition)
         {
-            return _context.Set<T>().Where(condition);
+            return base.Get(condition);
         }
 
         /// <summary>
@@ -76,10 +60,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public T Insert(T entity)
         {
-            _context.Add(entity);
-            _context.SaveChanges();
-
-            return entity;
+            return base.Insert(entity);
         }
 
         /// <summary>
@@ -93,27 +74,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update an entity object. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(T entity, Expression<Func<T, bool>> condition)
+        public void Update(T entity)
         {
-            try
-            {
-                var toUpdate = _context.Set<T>().SingleOrDefault(condition);
-
-                if (toUpdate == null)
-                {
-                    throw new NullReferenceException("No value was found for toUpdate.");
-                }
-
-                entity.MapUpdate(entity, toUpdate);
-
-                int changes = _context.SaveChanges();
-                _logger.LogInformation($"Saved {changes} changes.");
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
-                throw new TooManyFoundException(e.Message, e);
-            }
+            base.Update(entity);
         }
     }
 }

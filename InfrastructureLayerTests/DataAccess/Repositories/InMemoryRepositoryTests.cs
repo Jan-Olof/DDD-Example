@@ -132,7 +132,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.Update(SampleProducts.CreateProduct(2, "Updated name", "Updated description."), i => i.Id == 2);
+            sut.Update(SampleProducts.CreateProduct(2, "Updated name", "Updated description."));
 
             // Assert
             Assert.AreEqual("Updated name", sut.Get(e => e.Id == 2).Single().Name);

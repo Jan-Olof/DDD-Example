@@ -161,8 +161,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
+                int id = sut.Get(new Product().Get("No2")).Single().Id;
+
                 // Act
-                sut.Update(SampleProducts.CreateProduct(2, "No2", "Updated description."), i => i.Name == "No2");
+                sut.Update(SampleProducts.CreateProduct(id, "No2", "Updated description."));
             }
 
             // Assert
@@ -180,9 +182,11 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
+
                 context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
                 context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
                 context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
+
                 context.SaveChanges();
             }
         }

@@ -17,7 +17,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// The database context.
         /// </summary>
-        protected readonly DbContext Context;
+        private readonly DbContext _context;
 
         /// <summary>
         /// The logging interface.
@@ -29,7 +29,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         protected RepositoryEfBase(DbContext dataContext, ILogger logger)
         {
-            Context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
+            _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -38,19 +38,27 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Dispose()
         {
-            Context.Dispose();
+            _context?.Dispose();
         }
 
         /// <summary>
         /// Delete an entity.
         /// </summary>
-        protected void Delete<T>(int id) where T : class
+        protected void Delete<T>(int id) where T : class, IIdentifier
         {
             var entity = FindEntity<T>(id);
 
-            Context.Remove(entity);
+            Delete(entity);
+        }
 
-            SaveChanges($"No changes in context when deleting object with id {id}.");
+        /// <summary>
+        /// Delete an entity.
+        /// </summary>
+        protected void Delete<T>(T entity) where T : class, IIdentifier
+        {
+            _context.Remove(entity);
+
+            SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
         }
 
         /// <summary>
@@ -58,7 +66,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class
         {
-            return Context.Set<T>();
+            return _context.Set<T>();
         }
 
         /// <summary>
@@ -66,7 +74,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition) where T : class
         {
-            return Context.Set<T>().Where(condition);
+            return _context.Set<T>().Where(condition);
         }
 
         /// <summary>
@@ -74,7 +82,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         protected T Insert<T>(T entity) where T : class
         {
-            Context.Add(entity);
+            _context.Add(entity);
 
             SaveChanges("No changes in context when adding new object.");
 
@@ -98,7 +106,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         private T FindEntity<T>(int id) where T : class
         {
-            var entityToUpdate = Context.Set<T>().Find(id);
+            var entityToUpdate = _context.Set<T>().Find(id);
 
             if (entityToUpdate == null)
             {
@@ -128,7 +136,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             try
             {
-                int changes = Context.SaveChanges();
+                int changes = _context.SaveChanges();
 
                 if (changes == 0)
                 {

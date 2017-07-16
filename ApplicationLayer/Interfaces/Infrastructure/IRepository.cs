@@ -42,6 +42,6 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Update an object. This is based on a condition defining how to find the object.
         /// </summary>
-        void Update(T entity, Expression<Func<T, bool>> findWhatToUpdate);
+        void Update(T entity);
     }
 }

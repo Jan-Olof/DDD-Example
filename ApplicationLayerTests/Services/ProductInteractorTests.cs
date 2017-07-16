@@ -125,7 +125,7 @@ namespace ApplicationLayerTests.Services
             // Arrange
             _model.Get(3).Returns(i => i.Id == 3);
 
-            _repository.Update(SampleProducts.CreateProduct(), i => i.Id == 3);
+            _repository.Update(SampleProducts.CreateProduct());
 
             var sut = CreateProductInteractor();
 
