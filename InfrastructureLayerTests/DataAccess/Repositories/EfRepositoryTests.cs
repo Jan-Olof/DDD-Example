@@ -35,7 +35,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntityWhenThereAreSomeAlready()
+        public void TestShouldDeleteEntity()
         {
             // Arrange
             SeedDatabase(_options);
@@ -48,6 +48,33 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 // Act
                 sut.Delete(product);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var result = context.Products.ToList();
+
+                Assert.AreEqual(2, result.Count);
+                Assert.AreEqual("Desc1", result.Single(i => i.Name == "No1").Description);
+                Assert.AreEqual("Desc3", result.Single(i => i.Name == "No3").Description);
+            }
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteEntityUsingId()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var product = sut.Get(i => i.Name == "No2").Single();
+
+                // Act
+                sut.Delete(product.Id);
             }
 
             // Assert

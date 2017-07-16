@@ -21,7 +21,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldDeleteEntityWhenThereAreSomeAlready()
+        public void TestShouldDeleteEntity()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -35,6 +35,34 @@ namespace InfrastructureLayerTestsXunit
 
                 // Act
                 sut.Delete(product);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Products.ToList();
+
+                Assert.Equal(2, result.Count);
+                Assert.Equal("Desc1", result.Single(i => i.Name == "No1").Description);
+                Assert.Equal("Desc3", result.Single(i => i.Name == "No3").Description);
+            }
+        }
+
+        [Fact]
+        public void TestShouldDeleteEntityUsingId()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var product = sut.Get(i => i.Name == "No2").Single();
+
+                // Act
+                sut.Delete(product.Id);
             }
 
             // Assert

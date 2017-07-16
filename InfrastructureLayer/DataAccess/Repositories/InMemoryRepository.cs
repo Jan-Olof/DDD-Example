@@ -36,6 +36,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Delete a product.
+        /// </summary>
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()

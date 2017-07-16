@@ -15,6 +15,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void Delete(T entity);
 
         /// <summary>
+        /// Delete an object.
+        /// </summary>
+        void Delete(int id);
+
+        /// <summary>
         /// Fill the data set with data from the data store.
         /// </summary>
         void FillDataSet();

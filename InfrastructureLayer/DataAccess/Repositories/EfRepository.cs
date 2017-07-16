@@ -32,6 +32,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Delete an entity object.
+        /// </summary>
+        public void Delete(int id)
+        {
+            Delete<T>(id);
+        }
+
+        /// <summary>
         /// Fill the data set with data from the data store.
         /// EF don't support this behaviour.
         /// </summary>
