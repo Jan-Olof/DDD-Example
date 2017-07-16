@@ -28,13 +28,26 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntityWhenThereAreSomeAlready()
+        public void TestShouldDeleteEntity()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
             sut.Delete(SampleProducts.CreateProduct(1));
+
+            // Assert
+            Assert.AreEqual(2, sut.Get().Count());
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteEntityUsingId()
+        {
+            // Arrange
+            var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
+
+            // Act
+            sut.Delete(1);
 
             // Assert
             Assert.AreEqual(2, sut.Get().Count());

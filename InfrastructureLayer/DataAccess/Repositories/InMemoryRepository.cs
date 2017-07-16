@@ -29,10 +29,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Delete(Product product)
         {
-            var item = _products.SingleOrDefault(e => e.Id == product.Id);
-
-            int index = _products.IndexOf(item);
-            _products.RemoveAt(index);
+            Delete(product.Id);
         }
 
         /// <summary>
@@ -40,7 +37,10 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var item = _products.SingleOrDefault(e => e.Id == id);
+
+            int index = _products.IndexOf(item);
+            _products.RemoveAt(index);
         }
 
         /// <summary>
