@@ -12,7 +12,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork base implementation of a repository interface.
     /// </summary>
-    public abstract class RepositoryEfBase
+    public abstract class RepositoryEfBase : IDisposable
     {
         /// <summary>
         /// The database context.
