@@ -7,20 +7,75 @@ using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
 using Utilities.Enums;
+using Utilities.Exceptions;
 
 namespace ApplicationLayer.Interactors
 {
     /// <summary>
     /// The product interactor class. Handles the stories/tasks concerning products.
     /// </summary>
-    public class ProductInteractor : BaseInteractor<Product, IProduct>, IProductInteractor
+    public class ProductInteractor : IProductInteractor
     {
+        private readonly ILogger _logger;
+        private readonly IProduct _model;
+        private readonly IRepository<Product> _repository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductInteractor"/> class.
         /// </summary>
         public ProductInteractor(IRepository<Product> repository, IProduct model, ILogger<ProductInteractor> logger)
-            : base(repository, model, logger)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _model = model ?? throw new ArgumentNullException(nameof(model));
+        }
+
+        /// <summary>
+        /// Create a new product.
+        /// </summary>
+        public Product Create(Product product)
+        {
+            try
+            {
+                return _repository.Insert(product);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get all products.
+        /// </summary>
+        public IList<Product> Get()
+        {
+            try
+            {
+                return _repository.Get().ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get product by id.
+        /// </summary>
+        public Product Get(int id)
+        {
+            try
+            {
+                return _repository.Get(_model.Get(id)).SingleOrDefault();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                throw new TooManyFoundException(e.Message, e);
+            }
         }
 
         /// <summary>
@@ -30,11 +85,11 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return Repository.Get(Model.Get(name)).ToList();
+                return _repository.Get(_model.Get(name)).ToList();
             }
             catch (Exception e)
             {
-                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw;
             }
         }
@@ -42,15 +97,15 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        public void Update(Product entity, int id)
+        public void Update(Product product, int id)
         {
             try
             {
-                Repository.Update(entity, Model.Get(id));
+                _repository.Update(product, _model.Get(id));
             }
             catch (Exception e)
             {
-                Logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
                 throw;
             }
         }

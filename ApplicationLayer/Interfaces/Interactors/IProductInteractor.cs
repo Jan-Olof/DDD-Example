@@ -6,16 +6,31 @@ namespace ApplicationLayer.Interfaces.Interactors
     /// <summary>
     /// The product interactor interface.
     /// </summary>
-    public interface IProductInteractor : IBaseInteractor<Product>
+    public interface IProductInteractor
     {
+        /// <summary>
+        /// Create a new product.
+        /// </summary>
+        Product Create(Product product);
+
         /// <summary>
         /// Get product by name.
         /// </summary>
         IList<Product> Get(string name);
 
         /// <summary>
+        /// Get all products.
+        /// </summary>
+        IList<Product> Get();
+
+        /// <summary>
+        /// Get product by id.
+        /// </summary>
+        Product Get(int id);
+
+        /// <summary>
         /// Update a product.
         /// </summary>
-        void Update(Product entity, int id);
+        void Update(Product product, int id);
     }
 }

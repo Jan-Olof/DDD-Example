@@ -27,6 +27,7 @@ namespace InfrastructureLayer.Configure
             //services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
+
             services.AddTransient<IProductFunctions, Product>();
             services.AddTransient<IProductProps, Product>();
             services.AddTransient<IProduct, Product>();
