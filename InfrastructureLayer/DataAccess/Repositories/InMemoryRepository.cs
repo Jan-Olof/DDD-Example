@@ -24,12 +24,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
         }
 
-        /// <summary>
-        /// Delete a product.
-        /// </summary>
-        public void DeleteProduct(Product product)
+        public void DeletePerson(int id)
         {
-            DeleteProduct(product.Id);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -59,6 +56,16 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _products = _fileHandler.Read();
         }
 
+        public IEnumerable<Person> GetPersons()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Get all products.
         /// </summary>
@@ -73,6 +80,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
         {
             return _products.Where(condition.Compile());
+        }
+
+        public Person InsertPerson(Person person)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -91,6 +103,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public void PersistData()
         {
             _fileHandler.Write(_products);
+        }
+
+        public void UpdatePerson(Person person)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -34,34 +34,6 @@ namespace InfrastructureLayerTestsXunit
                 var product = sut.GetProducts(i => i.Name == "No2").Single();
 
                 // Act
-                sut.DeleteProduct(product);
-            }
-
-            // Assert
-            using (var context = new ExampleContext(options))
-            {
-                var result = context.Products.ToList();
-
-                Assert.Equal(2, result.Count);
-                Assert.Equal("Desc1", result.Single(i => i.Name == "No1").Description);
-                Assert.Equal("Desc3", result.Single(i => i.Name == "No3").Description);
-            }
-        }
-
-        [Fact]
-        public void TestShouldDeleteProductUsingId()
-        {
-            // Arrange
-            var options = SetDbContextOptions();
-            SeedDatabase(options);
-
-            using (var context = new ExampleContext(options))
-            {
-                var sut = CreateEfRepository(context);
-
-                var product = sut.GetProducts(i => i.Name == "No2").Single();
-
-                // Act
                 sut.DeleteProduct(product.Id);
             }
 
@@ -203,9 +175,14 @@ namespace InfrastructureLayerTestsXunit
             using (var context = new ExampleContext(options))
             {
                 context.Database.EnsureDeleted();
+
                 context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
                 context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
                 context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
+                context.Persons.Add(SamplePersons.CreatePerson());
+                context.Persons.Add(SamplePersons.CreatePerson(0, "Second"));
+                context.Persons.Add(SamplePersons.CreatePerson(0, "Third"));
+
                 context.SaveChanges();
             }
         }

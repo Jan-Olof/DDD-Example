@@ -11,9 +11,9 @@ namespace ApplicationLayer.Interfaces.Infrastructure
     public interface IDomainRepository : IDisposable
     {
         /// <summary>
-        /// Delete a product.
+        /// Delete a person.
         /// </summary>
-        void DeleteProduct(Product product);
+        void DeletePerson(int id);
 
         /// <summary>
         /// Delete a product.
@@ -26,6 +26,16 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void FillDataSet();
 
         /// <summary>
+        /// Get all persons.
+        /// </summary>
+        IEnumerable<Person> GetPersons();
+
+        /// <summary>
+        /// Get persons based on a condition.
+        /// </summary>
+        IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition);
+
+        /// <summary>
         /// Get all products.
         /// </summary>
         IEnumerable<Product> GetProducts();
@@ -36,6 +46,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition);
 
         /// <summary>
+        /// Insert a person.
+        /// </summary>
+        Person InsertPerson(Person person);
+
+        /// <summary>
         /// Insert a product.
         /// </summary>
         Product InsertProduct(Product product);
@@ -44,6 +59,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// Persist data to the data store.
         /// </summary>
         void PersistData();
+
+        /// <summary>
+        /// Update a person.
+        /// </summary>
+        void UpdatePerson(Person person);
 
         /// <summary>
         /// Update a product.

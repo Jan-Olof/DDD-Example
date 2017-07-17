@@ -34,19 +34,6 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.DeleteProduct(SampleProducts.CreateProduct(1));
-
-            // Assert
-            Assert.AreEqual(2, sut.GetProducts().Count());
-        }
-
-        [TestMethod]
-        public void TestShouldDeleteProductUsingId()
-        {
-            // Arrange
-            var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
-
-            // Act
             sut.DeleteProduct(1);
 
             // Assert

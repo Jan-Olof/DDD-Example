@@ -54,14 +54,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Delete an entity.
-        /// </summary>
-        protected void Delete<T>(T entity) where T : class, IIdentifier
-        {
-            Delete<T>(entity.Id);
-        }
-
-        /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class

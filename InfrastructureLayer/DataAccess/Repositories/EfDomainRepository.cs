@@ -22,11 +22,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Delete a product.
+        /// Delete a person.
         /// </summary>
-        public void DeleteProduct(Product product)
+        public void DeletePerson(int id)
         {
-            base.Delete(product);
+            Delete<Person>(id);
         }
 
         /// <summary>
@@ -46,11 +46,30 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Get all persons.
+        /// </summary>
+        public IEnumerable<Person> GetPersons()
+        {
+            return Get<Person>()
+                .Include(p => p.ProductPersons);
+        }
+
+        /// <summary>
+        /// Get persons based on a condition.
+        /// </summary>
+        public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
+        {
+            return Get(condition)
+                .Include(p => p.ProductPersons);
+        }
+
+        /// <summary>
         /// Get all products.
         /// </summary>
         public IEnumerable<Product> GetProducts()
         {
-            return Get<Product>();
+            return Get<Product>()
+                .Include(p => p.ProductPersons);
         }
 
         /// <summary>
@@ -58,7 +77,16 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
         {
-            return base.Get(condition);
+            return Get(condition)
+                .Include(p => p.ProductPersons);
+        }
+
+        /// <summary>
+        /// Insert a person.
+        /// </summary>
+        public Person InsertPerson(Person person)
+        {
+            return Insert(person);
         }
 
         /// <summary>
@@ -66,7 +94,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public Product InsertProduct(Product product)
         {
-            return base.Insert(product);
+            return Insert(product);
         }
 
         /// <summary>
@@ -78,11 +106,19 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Update a person.
+        /// </summary>
+        public void UpdatePerson(Person person)
+        {
+            Update(person);
+        }
+
+        /// <summary>
         /// Update a product.
         /// </summary>
         public void UpdateProduct(Product product)
         {
-            base.Update(product);
+            Update(product);
         }
     }
 }
