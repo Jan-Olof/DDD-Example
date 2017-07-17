@@ -18,12 +18,12 @@ namespace ApplicationLayer.Interactors
     {
         private readonly ILogger _logger;
         private readonly IProduct _model;
-        private readonly IRepository<Product> _repository;
+        private readonly IDomainRepository _repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductInteractor"/> class.
         /// </summary>
-        public ProductInteractor(IRepository<Product> repository, IProduct model, ILogger<ProductInteractor> logger)
+        public ProductInteractor(IDomainRepository repository, IProduct model, ILogger<ProductInteractor> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));

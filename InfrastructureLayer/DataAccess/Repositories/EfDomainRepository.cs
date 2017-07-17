@@ -4,39 +4,37 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Interfaces;
+using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
-    // TODO: This will have to change to a DomainRepository once we add another aggregate. (It can implement both interfaces.)
-
     /// <summary>
-    /// The entity framwork implementation of the generic repository.
+    /// The entity framwork implementation of the domain repository.
     /// </summary>
-    public class EfRepository<T> : RepositoryEfBase, IRepository<T> where T : class, IUpdateMapper<T>, IIdentifier
+    public class EfDomainRepository : EfRepositoryBase, IDomainRepository
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EfRepository{T}"/> class.
+        /// Initializes a new instance of the <see cref="EfDomainRepository"/> class.
         /// </summary>
-        public EfRepository(DbContext dataContext, ILogger<EfRepository<T>> logger)
+        public EfDomainRepository(DbContext dataContext, ILogger<EfDomainRepository> logger)
             : base(dataContext, logger)
         {
         }
 
         /// <summary>
-        /// Delete an entity object.
+        /// Delete a product.
         /// </summary>
-        public void Delete(T entity)
+        public void Delete(Product product)
         {
-            base.Delete(entity);
+            base.Delete(product);
         }
 
         /// <summary>
-        /// Delete an entity object.
+        /// Delete a product.
         /// </summary>
         public void Delete(int id)
         {
-            Delete<T>(id);
+            Delete<Product>(id);
         }
 
         /// <summary>
@@ -48,27 +46,27 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Get all entity objects.
+        /// Get all products.
         /// </summary>
-        public IEnumerable<T> Get()
+        public IEnumerable<Product> Get()
         {
-            return Get<T>();
+            return Get<Product>();
         }
 
         /// <summary>
-        /// Get entity objects based on a condition.
+        /// Get products based on a condition.
         /// </summary>
-        public IEnumerable<T> Get(Expression<Func<T, bool>> condition)
+        public IEnumerable<Product> Get(Expression<Func<Product, bool>> condition)
         {
             return base.Get(condition);
         }
 
         /// <summary>
-        /// Insert an entity object.
+        /// Insert a product.
         /// </summary>
-        public T Insert(T entity)
+        public Product Insert(Product product)
         {
-            return base.Insert(entity);
+            return base.Insert(product);
         }
 
         /// <summary>
@@ -80,11 +78,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Update an entity object. This is based on a condition defining how to find the object.
+        /// Update a product.
         /// </summary>
-        public void Update(T entity)
+        public void Update(Product product)
         {
-            base.Update(entity);
+            base.Update(product);
         }
     }
 }

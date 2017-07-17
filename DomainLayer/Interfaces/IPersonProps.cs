@@ -21,6 +21,6 @@ namespace DomainLayer.Interfaces
         /// <summary>
         /// Gets or sets the ProductPersons.
         /// </summary>
-        List<ProductPerson> ProductPerson { get; set; }
+        List<ProductPerson> ProductPersons { get; set; }
     }
 }

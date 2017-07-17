@@ -1,5 +1,5 @@
-﻿// ReSharper disable UnusedMember.Global
-// ReSharper disable PartialTypeWithSinglePart
+﻿// ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable UnusedMember.Global
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -60,18 +60,18 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductPerson");
+                    b.ToTable("ProductPersons");
                 });
 
             modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
                 {
                     b.HasOne("DomainLayer.Models.Person", "Person")
-                        .WithMany("ProductPerson")
+                        .WithMany("ProductPersons")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DomainLayer.Models.Product", "Product")
-                        .WithMany("ProductPerson")
+                        .WithMany("ProductPersons")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

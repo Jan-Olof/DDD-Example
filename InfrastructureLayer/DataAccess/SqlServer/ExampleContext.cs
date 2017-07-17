@@ -32,6 +32,11 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         public DbSet<Person> Persons { get; set; }
 
         /// <summary>
+        /// Gets or sets the productpersons.
+        /// </summary>
+        public DbSet<ProductPerson> ProductPersons { get; set; }
+
+        /// <summary>
         /// Gets or sets the products.
         /// </summary>
         public DbSet<Product> Products { get; set; }

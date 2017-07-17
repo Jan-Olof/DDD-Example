@@ -20,11 +20,11 @@ namespace InfrastructureLayer.DataAccess.SqlServer
                 .Ignore(person => person.Name);
 
             modelBuilder.Entity<Person>()
-                .Property(product => product.FirstName)
+                .Property(person => person.FirstName)
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Person>()
-                .Property(product => product.LastName)
+                .Property(person => person.LastName)
                 .HasMaxLength(50);
         }
     }

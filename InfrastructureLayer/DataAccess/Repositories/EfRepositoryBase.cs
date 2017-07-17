@@ -12,7 +12,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork base implementation of a repository interface.
     /// </summary>
-    public abstract class RepositoryEfBase : IDisposable
+    public abstract class EfRepositoryBase : IDisposable
     {
         /// <summary>
         /// The database context.
@@ -25,9 +25,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         private readonly ILogger _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RepositoryEfBase"/> class.
+        /// Initializes a new instance of the <see cref="EfRepositoryBase"/> class.
         /// </summary>
-        protected RepositoryEfBase(DbContext dataContext, ILogger logger)
+        protected EfRepositoryBase(DbContext dataContext, ILogger logger)
         {
             _context = dataContext ?? throw new ArgumentNullException(nameof(dataContext));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -48,7 +48,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var entity = FindEntity<T>(id);
 
-            Delete(entity);
+            _context.Remove(entity);
+
+            SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
         }
 
         /// <summary>
@@ -56,9 +58,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         protected void Delete<T>(T entity) where T : class, IIdentifier
         {
-            _context.Remove(entity);
-
-            SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
+            Delete<T>(entity.Id);
         }
 
         /// <summary>

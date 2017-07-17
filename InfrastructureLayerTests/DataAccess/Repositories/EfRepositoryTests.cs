@@ -16,7 +16,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
     [TestClass]
     public class EfRepositoryTests
     {
-        private ILogger<EfRepository<Product>> _logger;
+        private ILogger<EfDomainRepository> _logger;
         private DbContextOptions<ExampleContext> _options;
 
         [TestInitialize]
@@ -26,7 +26,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            _logger = Substitute.For<ILogger<EfRepository<Product>>>();
+            _logger = Substitute.For<ILogger<EfDomainRepository>>();
         }
 
         [TestCleanup]
@@ -218,9 +218,9 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             }
         }
 
-        private EfRepository<Product> CreateEfRepository(ExampleContext context)
+        private EfDomainRepository CreateEfRepository(ExampleContext context)
         {
-            return new EfRepository<Product>(context, _logger);
+            return new EfDomainRepository(context, _logger);
         }
     }
 }

@@ -18,12 +18,12 @@ namespace InfrastructureLayer.DataAccess.SqlServer
 
             modelBuilder.Entity<ProductPerson>()
                 .HasOne(productPerson => productPerson.Product)
-                .WithMany(product => product.ProductPerson)
+                .WithMany(product => product.ProductPersons)
                 .HasForeignKey(productPerson => productPerson.ProductId);
 
             modelBuilder.Entity<ProductPerson>()
                 .HasOne(productPerson => productPerson.Person)
-                .WithMany(person => person.ProductPerson)
+                .WithMany(person => person.ProductPersons)
                 .HasForeignKey(productPerson => productPerson.PersonId);
         }
     }

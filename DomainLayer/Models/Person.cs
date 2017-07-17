@@ -35,7 +35,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets or sets the ProductPersons.
         /// </summary>
-        public List<ProductPerson> ProductPerson { get; set; }
+        public List<ProductPerson> ProductPersons { get; set; }
 
         /// <summary>
         /// Updates the fields that are supposed to be updated when editing a person.

@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using ApplicationLayer.Interactors;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
+using InfrastructureLayer.DataAccess.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.Configure
 {
@@ -24,7 +26,7 @@ namespace InfrastructureLayer.Configure
         /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
-            //services.AddTransient<DbContext, ExampleContext>();
+            services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
 
@@ -34,8 +36,8 @@ namespace InfrastructureLayer.Configure
             services.AddTransient<IList<Product>, List<Product>>();
             services.AddTransient<IUpdateMapper<Product>, Product>();
             services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
-            services.AddTransient<IRepository<Product>, InMemoryRepository>();
-            //services.AddTransient<IRepository<IInstruction>, EfRepository<IInstruction, Instruction>>();
+            //services.AddTransient<IRepository<Product>, InMemoryRepository>();
+            //services.AddTransient<IDomainRepository, EfRepository<>>();
             services.AddTransient<IProductInteractor, ProductInteractor>();
 
             return services;

@@ -11,7 +11,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductPerson");
+                name: "ProductPersons");
 
             migrationBuilder.DropTable(
                 name: "Persons");
@@ -51,7 +51,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductPerson",
+                name: "ProductPersons",
                 columns: table => new
                 {
                     PersonId = table.Column<int>(nullable: false),
@@ -60,15 +60,15 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductPerson", x => new { x.PersonId, x.ProductId, x.Role });
+                    table.PrimaryKey("PK_ProductPersons", x => new { x.PersonId, x.ProductId, x.Role });
                     table.ForeignKey(
-                        name: "FK_ProductPerson_Persons_PersonId",
+                        name: "FK_ProductPersons_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductPerson_Products_ProductId",
+                        name: "FK_ProductPersons_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -76,8 +76,8 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductPerson_ProductId",
-                table: "ProductPerson",
+                name: "IX_ProductPersons_ProductId",
+                table: "ProductPersons",
                 column: "ProductId");
         }
     }
