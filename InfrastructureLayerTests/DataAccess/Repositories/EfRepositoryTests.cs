@@ -35,7 +35,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntity()
+        public void TestShouldDeleteProduct()
         {
             // Arrange
             SeedDatabase(_options);
@@ -44,10 +44,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.GetProducts(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(product);
+                sut.DeleteProduct(product);
             }
 
             // Assert
@@ -62,7 +62,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntityUsingId()
+        public void TestShouldDeleteProductUsingId()
         {
             // Arrange
             SeedDatabase(_options);
@@ -71,10 +71,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.GetProducts(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(product.Id);
+                sut.DeleteProduct(product.Id);
             }
 
             // Assert
@@ -89,7 +89,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldGetAllEntities()
+        public void TestShouldGetAllProducts()
         {
             // Arrange
             SeedDatabase(_options);
@@ -99,7 +99,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Get().ToList();
+                var result = sut.GetProducts().ToList();
 
                 // Assert
                 Assert.AreEqual(3, result.Count);
@@ -108,7 +108,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldGetEntities()
+        public void TestShouldGetProducts()
         {
             // Arrange
             SeedDatabase(_options);
@@ -118,7 +118,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Get(n => n.Name == "No2").ToList();
+                var result = sut.GetProducts(n => n.Name == "No2").ToList();
 
                 // Assert
                 Assert.AreEqual(1, result.Count);
@@ -127,7 +127,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldInsertEntityWhenThereAreNone()
+        public void TestShouldInsertProductWhenThereAreNone()
         {
             // Arrange
             using (var context = new ExampleContext(_options))
@@ -135,7 +135,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleProducts.CreateProduct());
+                var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -152,7 +152,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldInsertEntityWhenThereAreSomeAlready()
+        public void TestShouldInsertProductWhenThereAreSomeAlready()
         {
             // Arrange
             SeedDatabase(_options);
@@ -162,7 +162,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleProducts.CreateProduct());
+                var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -179,7 +179,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldUpdateEntity()
+        public void TestShouldUpdateProduct()
         {
             // Arrange
             SeedDatabase(_options);
@@ -188,10 +188,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                int id = sut.Get(new Product().Get("No2")).Single().Id;
+                int id = sut.GetProducts(new Product().Get("No2")).Single().Id;
 
                 // Act
-                sut.Update(SampleProducts.CreateProduct(id, "No2", "Updated description."));
+                sut.UpdateProduct(SampleProducts.CreateProduct(id, "No2", "Updated description."));
             }
 
             // Assert

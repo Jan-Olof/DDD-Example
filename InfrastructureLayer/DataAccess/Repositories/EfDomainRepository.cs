@@ -24,7 +24,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void Delete(Product product)
+        public void DeleteProduct(Product product)
         {
             base.Delete(product);
         }
@@ -32,7 +32,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void Delete(int id)
+        public void DeleteProduct(int id)
         {
             Delete<Product>(id);
         }
@@ -48,7 +48,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all products.
         /// </summary>
-        public IEnumerable<Product> Get()
+        public IEnumerable<Product> GetProducts()
         {
             return Get<Product>();
         }
@@ -56,7 +56,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
-        public IEnumerable<Product> Get(Expression<Func<Product, bool>> condition)
+        public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
         {
             return base.Get(condition);
         }
@@ -64,7 +64,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert a product.
         /// </summary>
-        public Product Insert(Product product)
+        public Product InsertProduct(Product product)
         {
             return base.Insert(product);
         }
@@ -80,7 +80,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update a product.
         /// </summary>
-        public void Update(Product product)
+        public void UpdateProduct(Product product)
         {
             base.Update(product);
         }

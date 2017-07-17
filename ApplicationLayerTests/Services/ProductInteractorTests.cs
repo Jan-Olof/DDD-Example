@@ -36,7 +36,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldCreateProduct()
         {
             // Arrange
-            _repository.Insert(SampleProducts.CreateProduct())
+            _repository.InsertProduct(SampleProducts.CreateProduct())
                 .ReturnsForAnyArgs(SampleProducts.CreateProduct(1));
 
             var sut = CreateProductInteractor();
@@ -52,7 +52,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetAllProducts()
         {
             // Arrange
-            _repository.Get()
+            _repository.GetProducts()
                 .Returns(SampleProducts.CreateProducts());
 
             var sut = CreateProductInteractor();
@@ -71,7 +71,7 @@ namespace ApplicationLayerTests.Services
             _model.Get(3)
                 .Returns(i => i.Id == 3);
 
-            _repository.Get(i => i.Id == 3)
+            _repository.GetProducts(i => i.Id == 3)
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -90,7 +90,7 @@ namespace ApplicationLayerTests.Services
             _model.Get(3)
                 .Returns(i => i.Id == 3);
 
-            _repository.Get(i => i.Id == 3)
+            _repository.GetProducts(i => i.Id == 3)
                 .ReturnsForAnyArgs(SampleProducts.CreateProductsDuplicate());
 
             var sut = CreateProductInteractor();
@@ -106,7 +106,7 @@ namespace ApplicationLayerTests.Services
             _model.Get("ThirdProduct")
                 .Returns(i => i.Name == "ThirdProduct");
 
-            _repository.Get(i => i.Name == "ThirdProduct")
+            _repository.GetProducts(i => i.Name == "ThirdProduct")
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -124,7 +124,7 @@ namespace ApplicationLayerTests.Services
             // Arrange
             _model.Get(3).Returns(i => i.Id == 3);
 
-            _repository.Update(SampleProducts.CreateProduct());
+            _repository.UpdateProduct(SampleProducts.CreateProduct());
 
             var sut = CreateProductInteractor();
 

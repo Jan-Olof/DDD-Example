@@ -27,15 +27,15 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void Delete(Product product)
+        public void DeleteProduct(Product product)
         {
-            Delete(product.Id);
+            DeleteProduct(product.Id);
         }
 
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void Delete(int id)
+        public void DeleteProduct(int id)
         {
             var item = _products.SingleOrDefault(e => e.Id == id);
 
@@ -62,7 +62,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all products.
         /// </summary>
-        public IEnumerable<Product> Get()
+        public IEnumerable<Product> GetProducts()
         {
             return _products;
         }
@@ -70,7 +70,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
-        public IEnumerable<Product> Get(Expression<Func<Product, bool>> condition)
+        public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
         {
             return _products.Where(condition.Compile());
         }
@@ -78,7 +78,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert a product.
         /// </summary>
-        public Product Insert(Product product)
+        public Product InsertProduct(Product product)
         {
             product.Id = GetNextId();
             _products.Add(product);
@@ -96,7 +96,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Update a product. This is based on a condition defining how to find the object.
         /// </summary>
-        public void Update(Product product)
+        public void UpdateProduct(Product product)
         {
             var toUpdate = _products.SingleOrDefault(product.Get(product.Id).Compile());
 

@@ -28,29 +28,29 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntity()
+        public void TestShouldDeleteProduct()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.Delete(SampleProducts.CreateProduct(1));
+            sut.DeleteProduct(SampleProducts.CreateProduct(1));
 
             // Assert
-            Assert.AreEqual(2, sut.Get().Count());
+            Assert.AreEqual(2, sut.GetProducts().Count());
         }
 
         [TestMethod]
-        public void TestShouldDeleteEntityUsingId()
+        public void TestShouldDeleteProductUsingId()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.Delete(1);
+            sut.DeleteProduct(1);
 
             // Assert
-            Assert.AreEqual(2, sut.Get().Count());
+            Assert.AreEqual(2, sut.GetProducts().Count());
         }
 
         [TestMethod]
@@ -63,17 +63,17 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             sut.FillDataSet();
 
             // Assert
-            Assert.AreEqual(2, sut.Get().Count());
+            Assert.AreEqual(2, sut.GetProducts().Count());
         }
 
         [TestMethod]
-        public void TestShouldGetAllEntities()
+        public void TestShouldGetAllProducts()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            var result = sut.Get().ToList();
+            var result = sut.GetProducts().ToList();
 
             // Assert
             Assert.AreEqual(3, result.Count);
@@ -81,13 +81,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldGetEntities()
+        public void TestShouldGetProducts()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            var result = sut.Get(n => n.Id == 2).ToList();
+            var result = sut.GetProducts(n => n.Id == 2).ToList();
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -95,13 +95,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldInsertEntityWhenThereAreNone()
+        public void TestShouldInsertProductWhenThereAreNone()
         {
             // Arrange
             var sut = CreateInMemoryRepository();
 
             // Act
-            var result = sut.Insert(SampleProducts.CreateProduct());
+            var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
             // Assert
             Assert.AreEqual(1, result.Id);
@@ -109,13 +109,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
-        public void TestShouldInsertEntityWhenThereAreSomeAlready()
+        public void TestShouldInsertProductWhenThereAreSomeAlready()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            var result = sut.Insert(SampleProducts.CreateProduct());
+            var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
             // Assert
             Assert.AreEqual(4, result.Id);
@@ -135,21 +135,21 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut2 = CreateInMemoryRepository();
             sut2.FillDataSet();
 
-            Assert.AreEqual(4, sut2.Get().Count());
+            Assert.AreEqual(4, sut2.GetProducts().Count());
         }
 
         [TestMethod]
-        public void TestShouldUpdateEntity()
+        public void TestShouldUpdateProduct()
         {
             // Arrange
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.Update(SampleProducts.CreateProduct(2, "Updated name", "Updated description."));
+            sut.UpdateProduct(SampleProducts.CreateProduct(2, "Updated name", "Updated description."));
 
             // Assert
-            Assert.AreEqual("Updated name", sut.Get(e => e.Id == 2).Single().Name);
-            Assert.AreEqual("Updated description.", sut.Get(e => e.Id == 2).Single().Description);
+            Assert.AreEqual("Updated name", sut.GetProducts(e => e.Id == 2).Single().Name);
+            Assert.AreEqual("Updated description.", sut.GetProducts(e => e.Id == 2).Single().Description);
         }
 
         private static IDomainRepository CreateInMemoryRepository()
@@ -164,7 +164,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
             foreach (var product in products)
             {
-                repository.Insert(product);
+                repository.InsertProduct(product);
             }
 
             return repository;

@@ -13,12 +13,12 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Delete a product.
         /// </summary>
-        void Delete(Product entity);
+        void DeleteProduct(Product product);
 
         /// <summary>
         /// Delete a product.
         /// </summary>
-        void Delete(int id);
+        void DeleteProduct(int id);
 
         /// <summary>
         /// Fill the data set with data from the data store.
@@ -28,17 +28,17 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Get all products.
         /// </summary>
-        IEnumerable<Product> Get();
+        IEnumerable<Product> GetProducts();
 
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
-        IEnumerable<Product> Get(Expression<Func<Product, bool>> condition);
+        IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition);
 
         /// <summary>
         /// Insert a product.
         /// </summary>
-        Product Insert(Product entity);
+        Product InsertProduct(Product product);
 
         /// <summary>
         /// Persist data to the data store.
@@ -48,6 +48,6 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// <summary>
         /// Update a product.
         /// </summary>
-        void Update(Product entity);
+        void UpdateProduct(Product product);
     }
 }

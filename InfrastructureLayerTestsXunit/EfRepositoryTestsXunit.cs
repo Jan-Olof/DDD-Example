@@ -21,7 +21,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldDeleteEntity()
+        public void TestShouldDeleteProduct()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -31,10 +31,10 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.GetProducts(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(product);
+                sut.DeleteProduct(product);
             }
 
             // Assert
@@ -49,7 +49,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldDeleteEntityUsingId()
+        public void TestShouldDeleteProductUsingId()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -59,10 +59,10 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.Get(i => i.Name == "No2").Single();
+                var product = sut.GetProducts(i => i.Name == "No2").Single();
 
                 // Act
-                sut.Delete(product.Id);
+                sut.DeleteProduct(product.Id);
             }
 
             // Assert
@@ -77,7 +77,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldGetAllEntities()
+        public void TestShouldGetAllProducts()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -89,7 +89,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Get().ToList();
+                var result = sut.GetProducts().ToList();
 
                 // Assert
                 Assert.Equal(3, result.Count);
@@ -98,7 +98,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldGetEntities()
+        public void TestShouldGetProducts()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -109,7 +109,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Get(n => n.Name == "No2").ToList();
+                var result = sut.GetProducts(n => n.Name == "No2").ToList();
 
                 // Assert
                 Assert.Equal(1, result.Count);
@@ -118,7 +118,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldInsertEntityWhenThereAreNone()
+        public void TestShouldInsertProductWhenThereAreNone()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -127,7 +127,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleProducts.CreateProduct());
+                var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.True(result.Id > 0);
@@ -144,7 +144,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldInsertEntityWhenThereAreSomeAlready()
+        public void TestShouldInsertProductWhenThereAreSomeAlready()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -155,7 +155,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.Insert(SampleProducts.CreateProduct());
+                var result = sut.InsertProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.True(result.Id > 0);
@@ -172,7 +172,7 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
-        public void TestShouldUpdateEntity()
+        public void TestShouldUpdateProduct()
         {
             // Arrange
             var options = SetDbContextOptions();
@@ -182,10 +182,10 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
-                int id = sut.Get(new Product().Get("No2")).Single().Id;
+                int id = sut.GetProducts(new Product().Get("No2")).Single().Id;
 
                 // Act
-                sut.Update(SampleProducts.CreateProduct(id, "No2", "Updated description."));
+                sut.UpdateProduct(SampleProducts.CreateProduct(id, "No2", "Updated description."));
             }
 
             // Assert

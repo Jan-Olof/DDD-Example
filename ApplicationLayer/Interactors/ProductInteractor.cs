@@ -37,7 +37,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.Insert(product);
+                return _repository.InsertProduct(product);
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.Get().ToList();
+                return _repository.GetProducts().ToList();
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.Get(_model.Get(id)).SingleOrDefault();
+                return _repository.GetProducts(_model.Get(id)).SingleOrDefault();
             }
             catch (InvalidOperationException e)
             {
@@ -85,7 +85,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.Get(_model.Get(name)).ToList();
+                return _repository.GetProducts(_model.Get(name)).ToList();
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                _repository.Update(product);
+                _repository.UpdateProduct(product);
             }
             catch (Exception e)
             {
