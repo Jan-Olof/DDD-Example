@@ -21,6 +21,34 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
+        public void TestShouldDeletePerson()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var person = sut.GetPersons(p => p.FirstName == "Second").Single();
+
+                // Act
+                sut.DeletePerson(person.Id);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Persons.ToList();
+
+                Assert.Equal(2, result.Count);
+                Assert.Equal("First Person", result.Single(p => p.FirstName == "First").Name);
+                Assert.Equal("Third Person", result.Single(p => p.FirstName == "Third").Name);
+            }
+        }
+
+        [Fact]
         public void TestShouldDeleteProduct()
         {
             // Arrange
@@ -31,7 +59,7 @@ namespace InfrastructureLayerTestsXunit
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.GetProducts(i => i.Name == "No2").Single();
+                var product = sut.GetProducts(p => p.Name == "No2").Single();
 
                 // Act
                 sut.DeleteProduct(product.Id);
@@ -43,8 +71,29 @@ namespace InfrastructureLayerTestsXunit
                 var result = context.Products.ToList();
 
                 Assert.Equal(2, result.Count);
-                Assert.Equal("Desc1", result.Single(i => i.Name == "No1").Description);
-                Assert.Equal("Desc3", result.Single(i => i.Name == "No3").Description);
+                Assert.Equal("Desc1", result.Single(p => p.Name == "No1").Description);
+                Assert.Equal("Desc3", result.Single(p => p.Name == "No3").Description);
+            }
+        }
+
+        [Fact]
+        public void TestShouldGetAllPersons()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.GetPersons().ToList();
+
+                // Assert
+                Assert.Equal(3, result.Count);
+                Assert.Equal("First Person", result.Single(p => p.FirstName == "First").Name);
             }
         }
 
@@ -65,7 +114,27 @@ namespace InfrastructureLayerTestsXunit
 
                 // Assert
                 Assert.Equal(3, result.Count);
-                Assert.Equal("No1", result.Single(n => n.Description == "Desc1").Name);
+                Assert.Equal("No1", result.Single(p => p.Description == "Desc1").Name);
+            }
+        }
+
+        [Fact]
+        public void TestShouldGetPersons()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.GetPersons(p => p.FirstName == "Second").ToList();
+
+                // Assert
+                Assert.Equal(1, result.Count);
+                Assert.Equal("Second Person", result.Single().Name);
             }
         }
 
@@ -81,11 +150,65 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.GetProducts(n => n.Name == "No2").ToList();
+                var result = sut.GetProducts(p => p.Name == "No2").ToList();
 
                 // Assert
                 Assert.Equal(1, result.Count);
                 Assert.Equal("No2", result.Single().Name);
+            }
+        }
+
+        [Fact]
+        public void TestShouldInsertPersontWhenThereAreSomeAlready()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.InsertPerson(SamplePersons.CreatePerson(0, "Fourth", "Human"));
+
+                // Assert
+                Assert.True(result.Id > 0);
+                Assert.Equal("Fourth Human", result.Name);
+            }
+
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Persons.ToList();
+
+                Assert.Equal(4, result.Count);
+                Assert.Equal("Fourth Human", result.Single(p => p.FirstName == "Fourth").Name);
+            }
+        }
+
+        [Fact]
+        public void TestShouldInsertPersonWhenThereAreNone()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.InsertPerson(SamplePersons.CreatePerson());
+
+                // Assert
+                Assert.True(result.Id > 0);
+                Assert.Equal("First Person", result.Name);
+            }
+
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Persons.ToList();
+
+                Assert.Equal(1, result.Count);
+                Assert.Equal("First Person", result.Single().Name);
             }
         }
 
@@ -139,7 +262,35 @@ namespace InfrastructureLayerTestsXunit
                 var result = context.Products.ToList();
 
                 Assert.Equal(4, result.Count);
-                Assert.Equal("This is the first product.", result.Single(i => i.Name == "FirstProduct").Description);
+                Assert.Equal("This is the first product.", result.Single(p => p.Name == "FirstProduct").Description);
+            }
+        }
+
+        [Fact]
+        public void TestShouldUpdatePerson()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            int id;
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                id = sut.GetPersons(p => p.FirstName == "Second").Single().Id;
+
+                // Act
+                sut.UpdatePerson(SamplePersons.CreatePerson(id, "Updated", "Human"));
+            }
+
+            // Assert
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.Persons.ToList();
+
+                Assert.Equal(3, result.Count);
+                Assert.Equal("Updated Human", result.Single(p => p.Id == id).Name);
             }
         }
 
@@ -166,7 +317,7 @@ namespace InfrastructureLayerTestsXunit
                 var result = context.Products.ToList();
 
                 Assert.Equal(3, result.Count);
-                Assert.Equal("Updated description.", result.Single(i => i.Name == "No2").Description);
+                Assert.Equal("Updated description.", result.Single(p => p.Name == "No2").Description);
             }
         }
 
