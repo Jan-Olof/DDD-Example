@@ -10,7 +10,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository.
     /// </summary>
-    public class InMemoryRepository : IRepository<Product> // TODO: Add person.
+    public class InMemoryRepository : IDomainRepository // TODO: Add person.
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
         private IList<Product> _products;

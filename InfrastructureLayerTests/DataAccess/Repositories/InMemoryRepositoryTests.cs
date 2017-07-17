@@ -152,13 +152,13 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("Updated description.", sut.Get(e => e.Id == 2).Single().Description);
         }
 
-        private static IRepository<Product> CreateInMemoryRepository()
+        private static IDomainRepository CreateInMemoryRepository()
         {
             return new InMemoryRepository(
                 new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
         }
 
-        private static IRepository<Product> CreateInMemoryRepository(IList<Product> products)
+        private static IDomainRepository CreateInMemoryRepository(IList<Product> products)
         {
             var repository = CreateInMemoryRepository();
 
