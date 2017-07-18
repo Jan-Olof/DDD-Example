@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
+
+using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTestsXunit
 {
@@ -73,6 +76,35 @@ namespace InfrastructureLayerTestsXunit
                 Assert.Equal(2, result.Count);
                 Assert.Equal("Desc1", result.Single(p => p.Name == "No1").Description);
                 Assert.Equal("Desc3", result.Single(p => p.Name == "No3").Description);
+            }
+        }
+
+        [Fact]
+        public void TestShouldDeleteProductPerson()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                int prodId = sut.GetProducts(new Product().Get("No1")).Single().Id;
+                int persId = sut.GetPersons(new Person().Get("First Person")).Single().Id;
+
+                // Act
+                sut.DeleteProductPerson(prodId, persId, Role.Actor);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.ProductPersons.ToList();
+
+                Assert.Equal(2, result.Count);
+                Assert.Equal(Role.Actor, result.Single(p => p.Role == Role.Actor).Role);
+                Assert.Equal(Role.Director, result.Single(p => p.Role == Role.Director).Role);
             }
         }
 
@@ -213,6 +245,33 @@ namespace InfrastructureLayerTestsXunit
         }
 
         [Fact]
+        public void TestShouldInsertProductPerson()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.InsertProductPerson(SampleProductPerson.CreateProductPerson(3, 3, Role.Producer));
+
+                // Assert
+                Assert.Equal(Role.Producer, result.Role);
+            }
+
+            using (var context = new ExampleContext(options))
+            {
+                var result = context.ProductPersons.ToList();
+
+                Assert.Equal(4, result.Count);
+                Assert.Equal(Role.Producer, result.Single(p => p.ProductId == 3).Role);
+            }
+        }
+
+        [Fact]
         public void TestShouldInsertProductWhenThereAreNone()
         {
             // Arrange
@@ -318,23 +377,6 @@ namespace InfrastructureLayerTestsXunit
 
                 Assert.Equal(3, result.Count);
                 Assert.Equal("Updated description.", result.Single(p => p.Name == "No2").Description);
-            }
-        }
-
-        private static void SeedDatabase(DbContextOptions<ExampleContext> options)
-        {
-            using (var context = new ExampleContext(options))
-            {
-                context.Database.EnsureDeleted();
-
-                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
-                context.Persons.Add(SamplePersons.CreatePerson());
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Second"));
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Third"));
-
-                context.SaveChanges();
             }
         }
 

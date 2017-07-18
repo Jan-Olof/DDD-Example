@@ -5,6 +5,10 @@ using InfrastructureLayer.Configure;
 using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
+using DomainLayer.Enums;
+using InfrastructureLayer.DataAccess.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayerTests.TestObjects
 {
@@ -30,6 +34,34 @@ namespace InfrastructureLayerTests.TestObjects
         {
             var sut = CreateFileHandler();
             sut.Write(SampleProducts.CreateProducts2());
+        }
+
+        public static void SeedDatabase(DbContextOptions<ExampleContext> options)
+        {
+            using (var context = new ExampleContext(options))
+            {
+                context.Database.EnsureDeleted();
+
+                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
+                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
+                context.Persons.Add(SamplePersons.CreatePerson());
+                context.Persons.Add(SamplePersons.CreatePerson(0, "Second"));
+                context.Persons.Add(SamplePersons.CreatePerson(0, "Third"));
+
+                context.SaveChanges();
+
+                int prod1Id = context.Products.Single(p => p.Name == "No1").Id;
+                int prod2Id = context.Products.Single(p => p.Name == "No2").Id;
+                int pers1Id = context.Persons.Single(p => p.FirstName == "First").Id;
+                int pers2Id = context.Persons.Single(p => p.FirstName == "Second").Id;
+
+                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod1Id, pers1Id, Role.Actor));
+                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod2Id, pers1Id, Role.Actor));
+                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod2Id, pers2Id, Role.Director));
+
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DomainLayer.Interfaces;
 
 namespace DomainLayer.Models
@@ -30,7 +31,10 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets the name of the person. Gets first and last name.
         /// </summary>
-        public override string Name { get => $"{FirstName} {LastName}"; set { } }
+        public override string Name
+        {
+            get => $"{FirstName} {LastName}"; set => SetName(value);
+        }
 
         /// <summary>
         /// Gets or sets the ProductPersons.
@@ -46,6 +50,19 @@ namespace DomainLayer.Models
             to.LastName = from.LastName;
 
             return to;
+        }
+
+        private void SetName(string value)
+        {
+            int index = value.IndexOf(" ", StringComparison.Ordinal);
+
+            if (index <= 0 || index + 1 >= value.Length)
+            {
+                return;
+            }
+
+            FirstName = value.Substring(0, index);
+            LastName = value.Substring(index + 1);
         }
     }
 }

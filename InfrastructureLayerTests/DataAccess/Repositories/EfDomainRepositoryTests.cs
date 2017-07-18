@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -11,10 +12,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
+using static InfrastructureLayerTests.TestObjects.TestFactory;
+
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {
     [TestClass]
-    public class EfRepositoryTests
+    public class EfDomainRepositoryTests
     {
         private ILogger<EfDomainRepository> _logger;
         private DbContextOptions<ExampleContext> _options;
@@ -85,6 +88,34 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 Assert.AreEqual(2, result.Count);
                 Assert.AreEqual("Desc1", result.Single(p => p.Name == "No1").Description);
                 Assert.AreEqual("Desc3", result.Single(p => p.Name == "No3").Description);
+            }
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteProductPerson()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                int prodId = sut.GetProducts(new Product().Get("No1")).Single().Id;
+                int persId = sut.GetPersons(new Person().Get("First Person")).Single().Id;
+
+                // Act
+                sut.DeleteProductPerson(prodId, persId, Role.Actor);
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var result = context.ProductPersons.ToList();
+
+                Assert.AreEqual(2, result.Count);
+                Assert.AreEqual(Role.Actor, result.Single(p => p.Role == Role.Actor).Role);
+                Assert.AreEqual(Role.Director, result.Single(p => p.Role == Role.Director).Role);
             }
         }
 
@@ -217,6 +248,32 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
+        public void TestShouldInsertProductPerson()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                // Act
+                var result = sut.InsertProductPerson(SampleProductPerson.CreateProductPerson(3, 3, Role.Producer));
+
+                // Assert
+                Assert.AreEqual(Role.Producer, result.Role);
+            }
+
+            using (var context = new ExampleContext(_options))
+            {
+                var result = context.ProductPersons.ToList();
+
+                Assert.AreEqual(4, result.Count);
+                Assert.AreEqual(Role.Producer, result.Single(p => p.ProductId == 3).Role);
+            }
+        }
+
+        [TestMethod]
         public void TestShouldInsertProductWhenThereAreNone()
         {
             // Arrange
@@ -320,23 +377,6 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated description.", result.Single(p => p.Name == "No2").Description);
-            }
-        }
-
-        private static void SeedDatabase(DbContextOptions<ExampleContext> options)
-        {
-            using (var context = new ExampleContext(options))
-            {
-                context.Database.EnsureDeleted();
-
-                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
-                context.Persons.Add(SamplePersons.CreatePerson());
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Second"));
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Third"));
-
-                context.SaveChanges();
             }
         }
 

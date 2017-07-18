@@ -54,6 +54,31 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Delete an entity.
+        /// </summary>
+        protected void Delete<T>(Expression<Func<T, bool>> condition) where T : class
+        {
+            try
+            {
+                var entity = _context.Set<T>().SingleOrDefault(condition);
+
+                if (entity == null)
+                {
+                    throw new NotFoundException("Object to delete not found.");
+                }
+
+                _context.Remove(entity);
+
+                SaveChanges("No changes in context when deleting object.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogExceptionWithInnerException(ex);
+                throw new TooManyFoundException(ex.Message, ex);
+            }
+        }
+
+        /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class
@@ -79,6 +104,27 @@ namespace InfrastructureLayer.DataAccess.Repositories
             SaveChanges("No changes in context when adding new object.");
 
             return entity;
+        }
+
+        /// <summary>
+        /// Save change and handle exceptions that it might cause.
+        /// </summary>
+        protected void SaveChanges(string noChangesExceptionMsg = "No changes in context after SaveChanges.")
+        {
+            try
+            {
+                int changes = _context.SaveChanges();
+
+                if (changes == 0)
+                {
+                    throw new NoChangesException(noChangesExceptionMsg);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                LogExceptionWithInnerException(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -118,27 +164,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
             if (ex.InnerException != null)
             {
                 _logger.LogError((int)LoggingEvents.Error, ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Save change and handle exceptions that it might cause.
-        /// </summary>
-        private void SaveChanges(string noChangesExceptionMsg = "No changes in context after SaveChanges.")
-        {
-            try
-            {
-                int changes = _context.SaveChanges();
-
-                if (changes == 0)
-                {
-                    throw new NoChangesException(noChangesExceptionMsg);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                LogExceptionWithInnerException(ex);
-                throw;
             }
         }
     }

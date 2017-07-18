@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
@@ -35,6 +36,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public void DeleteProduct(int id)
         {
             Delete<Product>(id);
+        }
+
+        /// <summary>
+        /// Delete a product person.
+        /// </summary>
+        public void DeleteProductPerson(int productid, int personId, Role role)
+        {
+            Delete(new ProductPerson().Get(productid, personId, role)); //TODO: Test
         }
 
         /// <summary>
@@ -95,6 +104,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public Product InsertProduct(Product product)
         {
             return Insert(product);
+        }
+
+        /// <summary>
+        /// Insert a product person.
+        /// </summary>
+        public ProductPerson InsertProductPerson(ProductPerson productPerson)
+        {
+            return Insert(productPerson);
         }
 
         /// <summary>

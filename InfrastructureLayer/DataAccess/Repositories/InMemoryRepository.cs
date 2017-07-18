@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Repositories
@@ -38,6 +39,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             int index = _products.IndexOf(item);
             _products.RemoveAt(index);
+        }
+
+        public void DeleteProductPerson(int productid, int personId, Role role)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -95,6 +101,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
             product.Id = GetNextId();
             _products.Add(product);
             return product;
+        }
+
+        public ProductPerson InsertProductPerson(ProductPerson productPerson)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

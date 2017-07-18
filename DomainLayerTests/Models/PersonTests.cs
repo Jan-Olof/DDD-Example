@@ -11,6 +11,20 @@ namespace DomainLayerTests.Models
     public class PersonTests
     {
         [TestMethod]
+        public void TestShouldGetName()
+        {
+            // Arrange
+
+            var sut = SamplePersons.CreatePerson();
+
+            // Act
+            string result = sut.Name;
+
+            // Assert
+            Assert.AreEqual("First Person", result);
+        }
+
+        [TestMethod]
         public void TestShouldGetProductFromId()
         {
             // Arrange
@@ -56,6 +70,66 @@ namespace DomainLayerTests.Models
             Assert.AreEqual("Second Human", result.Name);
             Assert.AreEqual("Second", result.FirstName);
             Assert.AreEqual("Human", result.LastName);
+        }
+
+        [TestMethod]
+        public void TestShouldSetName()
+        {
+            // Arrange
+
+            var sut = CreatePerson();
+
+            // Act
+            sut.Name = "Super Human";
+
+            // Assert
+            Assert.AreEqual("Super", sut.FirstName);
+            Assert.AreEqual("Human", sut.LastName);
+        }
+
+        [TestMethod]
+        public void TestShouldSetNameButHasNoSpace()
+        {
+            // Arrange
+
+            var sut = CreatePerson();
+
+            // Act
+            sut.Name = "SuperHuman";
+
+            // Assert
+            Assert.AreEqual(string.Empty, sut.FirstName);
+            Assert.AreEqual(string.Empty, sut.LastName);
+        }
+
+        [TestMethod]
+        public void TestShouldSetNameButHasSpaceFirst()
+        {
+            // Arrange
+
+            var sut = CreatePerson();
+
+            // Act
+            sut.Name = " SuperHuman";
+
+            // Assert
+            Assert.AreEqual(string.Empty, sut.FirstName);
+            Assert.AreEqual(string.Empty, sut.LastName);
+        }
+
+        [TestMethod]
+        public void TestShouldSetNameButHasSpaceLast()
+        {
+            // Arrange
+
+            var sut = CreatePerson();
+
+            // Act
+            sut.Name = "SuperHuman ";
+
+            // Assert
+            Assert.AreEqual(string.Empty, sut.FirstName);
+            Assert.AreEqual(string.Empty, sut.LastName);
         }
 
         private static IPerson CreatePerson()
