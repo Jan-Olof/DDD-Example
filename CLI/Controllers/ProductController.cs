@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI.Controllers
 {
-    public class InstructionController : BaseController
+    public class ProductController : BaseController
     {
         private readonly IProductInteractor _productService;
 
-        public InstructionController(IServiceProvider serviceProvider) : base(serviceProvider)
+        public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _productService = serviceProvider.GetService<IProductInteractor>();
         }
@@ -19,43 +19,43 @@ namespace CLI.Controllers
         {
             if (ConsoleCommands.YesNoCommand("Add instruction? (y/n)"))
             {
-                CreateInstruction();
+                CreateProduct();
             }
 
             if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
             {
-                ViewInstructions();
+                ViewProducts();
             }
 
             if (ConsoleCommands.YesNoCommand("Update instruction description? (y/n)"))
             {
-                UpdateInstructions();
+                UpdateProduct();
             }
 
             if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
             {
-                ViewInstructions();
+                ViewProducts();
             }
         }
 
-        private void CreateInstruction()
+        private void CreateProduct()
         {
-            var instruction = new Product();
+            var product = new Product();
 
             Console.WriteLine("Name?");
-            instruction.Name = Console.ReadLine();
+            product.Name = Console.ReadLine();
 
             Console.WriteLine("Description?");
-            instruction.Description = Console.ReadLine();
+            product.Description = Console.ReadLine();
 
-            var createdInstruction = _productService.Create(instruction);
+            var createdProduct = _productService.Create(product);
 
-            Console.WriteLine($"Instruction created with id {createdInstruction.Id}.");
+            Console.WriteLine($"Product created with id {createdProduct.Id}.");
         }
 
-        private void UpdateInstructions()
+        private void UpdateProduct()
         {
-            Console.WriteLine("Id of instruction to update?");
+            Console.WriteLine("Id of product to update?");
             string idEntered = Console.ReadLine();
 
             bool ok = int.TryParse(idEntered, out int id);
@@ -66,39 +66,39 @@ namespace CLI.Controllers
                 return;
             }
 
-            var instruction = _productService.Get(id);
+            var product = _productService.Get(id);
 
-            if (instruction == null)
+            if (product == null)
             {
-                Console.WriteLine("Failed to get instruction from id.");
+                Console.WriteLine("Failed to get product from id.");
                 return;
             }
 
-            Console.WriteLine($"Old description: {instruction.Description}");
+            Console.WriteLine($"Old description: {product.Description}");
             Console.WriteLine("Enter new description:");
             string description = Console.ReadLine();
 
-            instruction.Description = description;
-            _productService.Update(instruction, id);
+            product.Description = description;
+            _productService.Update(product, id);
 
             Console.WriteLine("New description entered.");
         }
 
-        private void ViewInstructions()
+        private void ViewProducts()
         {
-            var instructions = _productService.Get();
+            var products = _productService.Get();
 
-            if (instructions == null || !instructions.Any())
+            if (products == null || !products.Any())
             {
-                Console.WriteLine("There are no instructions.");
+                Console.WriteLine("There are no products.");
                 return;
             }
 
-            Console.WriteLine("Showing all instructions:/n");
+            Console.WriteLine("Showing all products:/n");
 
-            foreach (var instruction in instructions)
+            foreach (var product in products)
             {
-                Console.WriteLine($"Id: {instruction.Id}, Name: {instruction.Name}, Description: {instruction.Description}");
+                Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Description: {product.Description}");
                 Console.WriteLine();
             }
         }

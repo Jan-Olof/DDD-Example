@@ -28,9 +28,9 @@ namespace CLI.Configure
 
         public BaseController GetService(Type serviceType)
         {
-            if (serviceType == typeof(InstructionController))
+            if (serviceType == typeof(ProductController))
             {
-                return new InstructionController(_serviceProvider);
+                return new ProductController(_serviceProvider);
             }
 
             throw new WrongTypeException($"GetService method does not support the {serviceType} type.");

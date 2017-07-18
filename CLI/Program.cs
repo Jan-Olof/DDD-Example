@@ -23,7 +23,7 @@ namespace CLI
 
             if (YesNoCommand("Start instruction service (y/n)?"))
             {
-                var instructionController = (InstructionController)dependencyScope.GetService(typeof(InstructionController));
+                var instructionController = (ProductController)dependencyScope.GetService(typeof(ProductController));
 
                 instructionController.InstructionFlow();
             }
