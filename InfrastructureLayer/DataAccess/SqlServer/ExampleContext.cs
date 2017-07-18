@@ -53,7 +53,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         {
             if (optionsBuilder.IsConfigured) return;
 
-            string connection = @"Server=localhost\sql2016;Database=EfExampleDatabase;Trusted_Connection=True;";
+            string connection = @"Server=localhost\sql2016;Database=DDD-Example;Trusted_Connection=True;";
             optionsBuilder.UseSqlServer(connection);
         }
 

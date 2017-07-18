@@ -26,19 +26,32 @@ namespace InfrastructureLayer.Configure
         /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
-            services.AddTransient<DbContext, ExampleContext>();
-            services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
-            services.AddTransient<IJsonSerialization, JsonSerialization>();
-
             services.AddTransient<IProductFunctions, Product>();
             services.AddTransient<IProductProps, Product>();
             services.AddTransient<IProduct, Product>();
             services.AddTransient<IList<Product>, List<Product>>();
             services.AddTransient<IUpdateMapper<Product>, Product>();
-            services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
-            //services.AddTransient<IRepository<Product>, InMemoryRepository>();
-            //services.AddTransient<IDomainRepository, EfRepository<>>();
+
+            services.AddTransient<IPersonFunctions, Person>();
+            services.AddTransient<IPersonProps, Person>();
+            services.AddTransient<IPerson, Person>();
+            services.AddTransient<IList<Person>, List<Person>>();
+            services.AddTransient<IUpdateMapper<Person>, Person>();
+
+            services.AddTransient<IProductPersonFunctions, ProductPerson>();
+            services.AddTransient<IProductPersonProps, ProductPerson>();
+            services.AddTransient<IProductPerson, ProductPerson>();
+            services.AddTransient<IList<ProductPerson>, List<ProductPerson>>();
+
             services.AddTransient<IProductInteractor, ProductInteractor>();
+
+            services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
+            services.AddTransient<IJsonSerialization, JsonSerialization>();
+            services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
+
+            services.AddTransient<DbContext, ExampleContext>();
+            services.AddTransient<IDomainRepository, EfDomainRepository>();
+            //services.AddTransient<IDomainRepository, InMemoryRepository>();
 
             return services;
         }
