@@ -21,11 +21,11 @@ namespace CLI
 
             logger.LogInformation("Starting application");
 
-            if (YesNoCommand("Start instruction service (y/n)?"))
+            if (YesNoCommand("Start product controller (y/n)?"))
             {
-                var instructionController = (ProductController)dependencyScope.GetService(typeof(ProductController));
+                var productController = (ProductController)dependencyScope.GetService(typeof(ProductController));
 
-                instructionController.InstructionFlow();
+                productController.InstructionFlow();
             }
 
             logger.LogInformation("All done!");

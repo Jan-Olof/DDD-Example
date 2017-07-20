@@ -17,22 +17,22 @@ namespace CLI.Controllers
 
         public void InstructionFlow()
         {
-            if (ConsoleCommands.YesNoCommand("Add instruction? (y/n)"))
+            if (ConsoleCommands.YesNoCommand("Add product? (y/n)"))
             {
                 CreateProduct();
             }
 
-            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
             {
                 ViewProducts();
             }
 
-            if (ConsoleCommands.YesNoCommand("Update instruction description? (y/n)"))
+            if (ConsoleCommands.YesNoCommand("Update product description? (y/n)"))
             {
                 UpdateProduct();
             }
 
-            if (ConsoleCommands.YesNoCommand("View instructions? (y/n)"))
+            if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
             {
                 ViewProducts();
             }
