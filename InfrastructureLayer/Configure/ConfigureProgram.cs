@@ -13,6 +13,7 @@ using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace InfrastructureLayer.Configure
 {
@@ -49,7 +50,7 @@ namespace InfrastructureLayer.Configure
             services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
 
-            services.AddTransient<DbContext, ExampleContext>();
+            services.AddScoped<DbContext, ExampleContext>();
             services.AddTransient<IDomainRepository, EfDomainRepository>();
             //services.AddTransient<IDomainRepository, InMemoryRepository>();
 
@@ -62,8 +63,8 @@ namespace InfrastructureLayer.Configure
         public static void ConfigureLogging(IServiceProvider serviceProvider)
         {
             serviceProvider
-                .GetService<ILoggerFactory>()
-                .AddConsole()
+                 .GetService<ILoggerFactory>()
+                //.AddConsole()
                 .AddDebug(LogLevel.Trace)
                 .AddNLog()
                 .ConfigureNLog("nlog.config");
@@ -77,10 +78,10 @@ namespace InfrastructureLayer.Configure
             services.AddLogging();
             services.AddOptions();
 
-            services.Configure<Datafile>(options => configuration.GetSection("datafile").Bind(options));
+            //services.Configure<Datafile>(options => configuration.GetSection("datafile").Bind(options));
 
-            //var connection = Configuration["database:connectionstring"];
-            //services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
+            string connection = configuration["database:connectionstring"];
+            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
 
             return services;
         }
