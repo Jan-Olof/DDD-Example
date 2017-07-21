@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApplicationLayer.Enums;
+using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
-using Utilities.Enums;
-using Utilities.Exceptions;
 
 namespace ApplicationLayer.Interactors
 {

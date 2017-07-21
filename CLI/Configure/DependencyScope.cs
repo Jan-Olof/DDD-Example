@@ -2,11 +2,10 @@
 using CLI.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Utilities.Exceptions;
-
 using static InfrastructureLayer.Configure.ConfigureProgram;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using ApplicationLayer.Exceptions;
 
 namespace CLI.Configure
 {

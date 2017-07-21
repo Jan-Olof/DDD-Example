@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utilities.Exceptions
+namespace ApplicationLayer.Exceptions
 {
     public class WrongTypeException : Exception
     {

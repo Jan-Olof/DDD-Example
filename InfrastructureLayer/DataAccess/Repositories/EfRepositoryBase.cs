@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using ApplicationLayer.Enums;
+using ApplicationLayer.Exceptions;
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Utilities.Enums;
-using Utilities.Exceptions;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

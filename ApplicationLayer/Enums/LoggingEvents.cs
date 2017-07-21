@@ -1,4 +1,4 @@
-﻿namespace Utilities.Enums
+﻿namespace ApplicationLayer.Enums
 {
     public enum LoggingEvents
     {

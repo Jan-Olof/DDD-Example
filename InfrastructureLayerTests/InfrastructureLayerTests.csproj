@@ -18,7 +18,6 @@
     <ProjectReference Include="..\DomainLayerTests\DomainLayerTests.csproj" />
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
     <ProjectReference Include="..\InfrastructureLayer\InfrastructureLayer.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
