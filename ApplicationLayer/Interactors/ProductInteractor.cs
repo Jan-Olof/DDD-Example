@@ -54,6 +54,14 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _repository?.Dispose();
+        }
+
+        /// <summary>
         /// Get all products.
         /// </summary>
         public IList<Product> Get()

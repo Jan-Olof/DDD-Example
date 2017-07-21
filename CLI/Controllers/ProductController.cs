@@ -8,11 +8,19 @@ namespace CLI.Controllers
 {
     public class ProductController : BaseController
     {
-        private readonly IProductInteractor _productService;
+        private readonly IProductInteractor _productInteractor;
 
         public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _productService = serviceProvider.GetService<IProductInteractor>();
+            _productInteractor = serviceProvider.GetService<IProductInteractor>();
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public override void Dispose()
+        {
+            _productInteractor?.Dispose();
         }
 
         public void InstructionFlow()
@@ -48,7 +56,7 @@ namespace CLI.Controllers
             Console.WriteLine("Description?");
             product.Description = Console.ReadLine();
 
-            var createdProduct = _productService.Create(product);
+            var createdProduct = _productInteractor.Create(product);
 
             Console.WriteLine($"Product created with id {createdProduct.Id}.");
         }
@@ -66,7 +74,7 @@ namespace CLI.Controllers
                 return;
             }
 
-            var product = _productService.Get(id);
+            var product = _productInteractor.Get(id);
 
             if (product == null)
             {
@@ -79,14 +87,14 @@ namespace CLI.Controllers
             string description = Console.ReadLine();
 
             product.Description = description;
-            _productService.Update(product);
+            _productInteractor.Update(product);
 
             Console.WriteLine("New description entered.");
         }
 
         private void ViewProducts()
         {
-            var products = _productService.Get();
+            var products = _productInteractor.Get();
 
             if (products == null || !products.Any())
             {

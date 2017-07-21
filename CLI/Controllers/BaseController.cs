@@ -2,7 +2,7 @@
 
 namespace CLI.Controllers
 {
-    public abstract class BaseController
+    public abstract class BaseController : IDisposable
     {
         protected BaseController(IServiceProvider serviceProvider)
         {
@@ -11,5 +11,10 @@ namespace CLI.Controllers
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
         }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public abstract void Dispose();
     }
 }

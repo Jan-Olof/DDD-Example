@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Interactors
@@ -6,7 +7,7 @@ namespace ApplicationLayer.Interfaces.Interactors
     /// <summary>
     /// The product interactor interface.
     /// </summary>
-    public interface IProductInteractor
+    public interface IProductInteractor : IDisposable
     {
         /// <summary>
         /// Create a new product.
