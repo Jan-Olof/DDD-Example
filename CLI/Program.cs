@@ -2,13 +2,10 @@
 // ReSharper disable  UnusedMember.Local
 // ReSharper disable  UnusedParameter.Local
 
-using System;
 using ApplicationLayer.Factories;
 using CLI.Configure;
-using CLI.Controllers;
+using CLI.UserInterface;
 using Microsoft.Extensions.Logging;
-
-using static CLI.ConsoleCommands;
 
 namespace CLI
 {
@@ -20,18 +17,20 @@ namespace CLI
 
             var logger = dependencyScope.CreateLogger();
 
-            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Starting application");
+            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Starting CLI application.");
 
-            if (YesNoCommand("Start product controller (y/n)?"))
-            {
-                var productController = (ProductController)dependencyScope.GetService(typeof(ProductController));
+            var ui = new BaseUi(dependencyScope);
 
-                productController.InstructionFlow();
-            }
+            ui.Flow();
 
-            logger.LogInformation(EventIdFactory.CreateUiEventId(), "All done!");
+            //if (YesNoCommand("Start product controller (y/n)?"))
+            //{
+            //    var productController = (ProductController)dependencyScope.GetService(typeof(ProductController));
 
-            Console.ReadKey();
+            //    productController.InstructionFlow();
+            //}
+
+            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Ending CLI application.");
         }
     }
 }

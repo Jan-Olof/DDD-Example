@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +12,17 @@ namespace CLI.Controllers
         public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _productInteractor = serviceProvider.GetService<IProductInteractor>();
+            Product = new Product();
+        }
+
+        /// <summary>
+        /// Gets or sets the product.
+        /// </summary>
+        public Product Product { get; set; }
+
+        public void CreateProduct()
+        {
+            Product = _productInteractor.Create(Product);
         }
 
         /// <summary>
@@ -23,92 +33,76 @@ namespace CLI.Controllers
             _productInteractor?.Dispose();
         }
 
-        public void InstructionFlow()
-        {
-            if (ConsoleCommands.YesNoCommand("Add product? (y/n)"))
-            {
-                CreateProduct();
-            }
+        //public void InstructionFlow()
+        //{
+        //    if (ConsoleCommands.YesNoCommand("Add product? (y/n)"))
+        //    {
+        //        CreateProduct();
+        //    }
 
-            if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
-            {
-                ViewProducts();
-            }
+        //    if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
+        //    {
+        //        ViewProducts();
+        //    }
 
-            if (ConsoleCommands.YesNoCommand("Update product description? (y/n)"))
-            {
-                UpdateProduct();
-            }
+        //    if (ConsoleCommands.YesNoCommand("Update product description? (y/n)"))
+        //    {
+        //        UpdateProduct();
+        //    }
 
-            if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
-            {
-                ViewProducts();
-            }
-        }
+        //    if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
+        //    {
+        //        ViewProducts();
+        //    }
+        //}
+        //private void UpdateProduct()
+        //{
+        //    Console.WriteLine("Id of product to update?");
+        //    string idEntered = Console.ReadLine();
 
-        private void CreateProduct()
-        {
-            var product = new Product();
+        //    bool ok = int.TryParse(idEntered, out int id);
 
-            Console.WriteLine("Name?");
-            product.Name = Console.ReadLine();
+        //    if (!ok)
+        //    {
+        //        Console.WriteLine("Failed to parse entered id.");
+        //        return;
+        //    }
 
-            Console.WriteLine("Description?");
-            product.Description = Console.ReadLine();
+        //    var product = _productInteractor.Get(id);
 
-            var createdProduct = _productInteractor.Create(product);
+        //    if (product == null)
+        //    {
+        //        Console.WriteLine("Failed to get product from id.");
+        //        return;
+        //    }
 
-            Console.WriteLine($"Product created with id {createdProduct.Id}.");
-        }
+        //    Console.WriteLine($"Old description: {product.Description}");
+        //    Console.WriteLine("Enter new description:");
+        //    string description = Console.ReadLine();
 
-        private void UpdateProduct()
-        {
-            Console.WriteLine("Id of product to update?");
-            string idEntered = Console.ReadLine();
+        //    product.Description = description;
+        //    _productInteractor.Update(product);
 
-            bool ok = int.TryParse(idEntered, out int id);
+        //    Console.WriteLine("New description entered.");
+        //}
 
-            if (!ok)
-            {
-                Console.WriteLine("Failed to parse entered id.");
-                return;
-            }
+        //private void ViewProducts()
+        //{
+        //    var products = _productInteractor.Get();
 
-            var product = _productInteractor.Get(id);
+        //    if (products == null || !products.Any())
+        //    {
+        //        Console.WriteLine("There are no products.");
+        //        return;
+        //    }
 
-            if (product == null)
-            {
-                Console.WriteLine("Failed to get product from id.");
-                return;
-            }
+        //    Console.WriteLine("Showing all products:/n");
 
-            Console.WriteLine($"Old description: {product.Description}");
-            Console.WriteLine("Enter new description:");
-            string description = Console.ReadLine();
-
-            product.Description = description;
-            _productInteractor.Update(product);
-
-            Console.WriteLine("New description entered.");
-        }
-
-        private void ViewProducts()
-        {
-            var products = _productInteractor.Get();
-
-            if (products == null || !products.Any())
-            {
-                Console.WriteLine("There are no products.");
-                return;
-            }
-
-            Console.WriteLine("Showing all products:/n");
-
-            foreach (var product in products)
-            {
-                Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Description: {product.Description}");
-                Console.WriteLine();
-            }
-        }
+        //    foreach (var product in products)
+        //    {
+        //        Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Description: {product.Description}");
+        //        Console.WriteLine();
+        //    }
+        //}
     }
 }
