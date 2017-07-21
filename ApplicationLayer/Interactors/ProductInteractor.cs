@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Enums;
 using ApplicationLayer.Exceptions;
+using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
@@ -41,7 +41,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -57,7 +57,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -73,7 +73,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }
@@ -89,7 +89,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -105,7 +105,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError((int)LoggingEvents.Error, e, e.Message);
+                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
                 throw;
             }
         }

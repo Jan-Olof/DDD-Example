@@ -2,7 +2,6 @@
 using CLI.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using static InfrastructureLayer.Configure.ConfigureProgram;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using ApplicationLayer.Exceptions;
@@ -44,11 +43,11 @@ namespace CLI.Configure
             var configuration = builder.Build();
 
             IServiceCollection services = new ServiceCollection();
-            services = ConfigureServices(services, configuration);
-            services = ConfigureDependencyInjection(services);
+            services = ConfigureProgram.ConfigureServices(services, configuration);
+            services = ConfigureProgram.ConfigureDependencyInjection(services);
 
-            var serviceProvider = CreateServiceProvider(services);
-            ConfigureLogging(serviceProvider);
+            var serviceProvider = ConfigureProgram.CreateServiceProvider(services);
+            ConfigureProgram.ConfigureLogging(serviceProvider);
 
             return serviceProvider;
         }

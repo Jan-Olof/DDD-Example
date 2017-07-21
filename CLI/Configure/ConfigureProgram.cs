@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using ApplicationLayer.Interactors;
+using ApplicationLayer.Interfaces.Infrastructure;
+using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
+using InfrastructureLayer.DataAccess.SqlServer;
+using InfrastructureLayer.Files;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using ApplicationLayer.Interfaces.Infrastructure;
-using InfrastructureLayer.Files;
-using System.Collections.Generic;
-using ApplicationLayer.Interactors;
-using ApplicationLayer.Interfaces.Interactors;
-using DomainLayer.Interfaces;
-using InfrastructureLayer.DataAccess.SqlServer;
-using Microsoft.EntityFrameworkCore;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-namespace InfrastructureLayer.Configure
+namespace CLI.Configure
 {
     /// <summary>
     /// Configure a .NET Core application.

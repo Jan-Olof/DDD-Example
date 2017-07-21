@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using ApplicationLayer.Enums;
 using ApplicationLayer.Exceptions;
+using ApplicationLayer.Factories;
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -159,11 +159,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         private void LogExceptionWithInnerException(Exception ex)
         {
-            _logger.LogError((int)LoggingEvents.Error, ex, ex.Message);
+            _logger.LogError(EventIdFactory.CreatePersistenceEventId(), ex, ex.Message);
 
             if (ex.InnerException != null)
             {
-                _logger.LogError((int)LoggingEvents.Error, ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
+                _logger.LogError(EventIdFactory.CreatePersistenceEventId(), ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
             }
         }
     }

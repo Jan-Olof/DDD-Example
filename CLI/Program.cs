@@ -3,6 +3,7 @@
 // ReSharper disable  UnusedParameter.Local
 
 using System;
+using ApplicationLayer.Factories;
 using CLI.Configure;
 using CLI.Controllers;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,7 @@ namespace CLI
 
             var logger = dependencyScope.CreateLogger();
 
-            logger.LogInformation("Starting application");
+            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Starting application");
 
             if (YesNoCommand("Start product controller (y/n)?"))
             {
@@ -28,7 +29,7 @@ namespace CLI
                 productController.InstructionFlow();
             }
 
-            logger.LogInformation("All done!");
+            logger.LogInformation(EventIdFactory.CreateUiEventId(), "All done!");
 
             Console.ReadKey();
         }

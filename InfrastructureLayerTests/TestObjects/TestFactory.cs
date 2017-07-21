@@ -1,12 +1,12 @@
 ﻿using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
-using InfrastructureLayer.Configure;
 using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
 using DomainLayer.Enums;
+using InfrastructureLayer.Configure;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
 
