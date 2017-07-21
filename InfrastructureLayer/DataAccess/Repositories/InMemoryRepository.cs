@@ -62,12 +62,22 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _products = _fileHandler.Read();
         }
 
+        public Person GetPerson(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Person> GetPersons()
         {
             throw new NotImplementedException();
         }
 
         public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product GetProduct(int id)
         {
             throw new NotImplementedException();
         }

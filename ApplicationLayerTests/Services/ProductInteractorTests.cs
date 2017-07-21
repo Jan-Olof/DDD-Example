@@ -71,8 +71,8 @@ namespace ApplicationLayerTests.Services
             _model.Get(3)
                 .Returns(i => i.Id == 3);
 
-            _repository.GetProducts(i => i.Id == 3)
-                .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
+            _repository.GetProduct(3)
+                .Returns(SampleProducts.CreateProduct(3, "ThirdProduct"));
 
             var sut = CreateProductInteractor();
 
@@ -81,22 +81,6 @@ namespace ApplicationLayerTests.Services
 
             // Assert
             Assert.AreEqual("ThirdProduct", result.Name);
-        }
-
-        [TestMethod]
-        public void TestShouldGetProductFromIdAndFindsDuplicates()
-        {
-            // Arrange
-            _model.Get(3)
-                .Returns(i => i.Id == 3);
-
-            _repository.GetProducts(i => i.Id == 3)
-                .ReturnsForAnyArgs(SampleProducts.CreateProductsDuplicate());
-
-            var sut = CreateProductInteractor();
-
-            // Act and assert
-            Assert.ThrowsException<TooManyFoundException>(() => sut.Get(3));
         }
 
         [TestMethod]
@@ -129,7 +113,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            sut.Update(SampleProducts.CreateProduct(3), 3);
+            sut.Update(SampleProducts.CreateProduct(3));
 
             // Assert
             Assert.IsTrue(true);

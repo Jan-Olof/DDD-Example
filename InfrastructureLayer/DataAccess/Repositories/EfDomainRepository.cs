@@ -55,6 +55,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Get person from primary key.
+        /// </summary>
+        public Person GetPerson(int id)
+        {
+            return Get<Person>(id);
+        }
+
+        /// <summary>
         /// Get all persons.
         /// </summary>
         public IEnumerable<Person> GetPersons()
@@ -70,6 +78,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             return Get(condition)
                 .Include(p => p.ProductPersons);
+        }
+
+        /// <summary>
+        /// Get product from primary key.
+        /// </summary>
+        public Product GetProduct(int id)
+        {
+            return Get<Product>(id);
         }
 
         /// <summary>

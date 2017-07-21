@@ -134,7 +134,6 @@ namespace InfrastructureLayerTestsXunit
         {
             // Arrange
             var options = SetDbContextOptions();
-
             SeedDatabase(options);
 
             using (var context = new ExampleContext(options))
@@ -147,6 +146,27 @@ namespace InfrastructureLayerTestsXunit
                 // Assert
                 Assert.Equal(3, result.Count);
                 Assert.Equal("No1", result.Single(p => p.Description == "Desc1").Name);
+            }
+        }
+
+        [Fact]
+        public void TestShouldGetPerson()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var person = sut.GetPersons(p => p.FirstName == "First").Single();
+
+                // Act
+                var result = sut.GetPerson(person.Id);
+
+                // Assert
+                Assert.Equal("First Person", result.Name);
             }
         }
 
@@ -167,6 +187,27 @@ namespace InfrastructureLayerTestsXunit
                 // Assert
                 Assert.Equal(1, result.Count);
                 Assert.Equal("Second Person", result.Single().Name);
+            }
+        }
+
+        [Fact]
+        public void TestShouldGetProduct()
+        {
+            // Arrange
+            var options = SetDbContextOptions();
+            SeedDatabase(options);
+
+            using (var context = new ExampleContext(options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var product = sut.GetProducts(p => p.Name == "No1").Single();
+
+                // Act
+                var result = sut.GetProduct(product.Id);
+
+                // Assert
+                Assert.Equal("No1", result.Name);
             }
         }
 

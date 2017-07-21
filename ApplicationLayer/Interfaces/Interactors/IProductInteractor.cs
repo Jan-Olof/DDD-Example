@@ -31,6 +31,6 @@ namespace ApplicationLayer.Interfaces.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        void Update(Product product, int id);
+        void Update(Product product);
     }
 }

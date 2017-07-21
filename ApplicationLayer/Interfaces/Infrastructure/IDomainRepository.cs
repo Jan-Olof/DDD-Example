@@ -32,6 +32,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void FillDataSet();
 
         /// <summary>
+        /// Get person from primary key.
+        /// </summary>
+        Person GetPerson(int id);
+
+        /// <summary>
         /// Get all persons.
         /// </summary>
         IEnumerable<Person> GetPersons();
@@ -40,6 +45,11 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// Get persons based on a condition.
         /// </summary>
         IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition);
+
+        /// <summary>
+        /// Get product from primary key.
+        /// </summary>
+        Product GetProduct(int id);
 
         /// <summary>
         /// Get all products.

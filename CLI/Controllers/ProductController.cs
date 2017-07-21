@@ -79,7 +79,7 @@ namespace CLI.Controllers
             string description = Console.ReadLine();
 
             product.Description = description;
-            _productService.Update(product, id);
+            _productService.Update(product);
 
             Console.WriteLine("New description entered.");
         }

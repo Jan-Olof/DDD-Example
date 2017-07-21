@@ -79,6 +79,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Get entity from primary key.
+        /// </summary>
+        protected T Get<T>(int id) where T : class, IIdentifier
+        {
+            return FindEntity<T>(id);
+        }
+
+        /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class

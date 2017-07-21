@@ -158,6 +158,26 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         [TestMethod]
+        public void TestShouldGetPerson()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var person = sut.GetPersons(p => p.FirstName == "First").Single();
+
+                // Act
+                var result = sut.GetPerson(person.Id);
+
+                // Assert
+                Assert.AreEqual("First Person", result.Name);
+            }
+        }
+
+        [TestMethod]
         public void TestShouldGetPersons()
         {
             // Arrange
@@ -173,6 +193,26 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 // Assert
                 Assert.AreEqual(1, result.Count);
                 Assert.AreEqual("Second Person", result.Single().Name);
+            }
+        }
+
+        [TestMethod]
+        public void TestShouldGetProduct()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                var product = sut.GetProducts(p => p.Name == "No1").Single();
+
+                // Act
+                var result = sut.GetProduct(product.Id);
+
+                // Assert
+                Assert.AreEqual("No1", result.Name);
             }
         }
 

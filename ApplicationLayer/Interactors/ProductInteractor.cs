@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Exceptions;
-using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
+
+using static ApplicationLayer.Factories.EventIdFactory;
 
 namespace ApplicationLayer.Interactors
 {
@@ -41,7 +42,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
+                _logger.LogError(CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -57,7 +58,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
+                _logger.LogError(CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -69,11 +70,11 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.GetProducts(_model.Get(id)).SingleOrDefault();
+                return _repository.GetProduct(id);
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
+                _logger.LogError(CreateProductEventId(), e, e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }
@@ -89,7 +90,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
+                _logger.LogError(CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -97,7 +98,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        public void Update(Product product, int id)
+        public void Update(Product product)
         {
             try
             {
@@ -105,7 +106,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(EventIdFactory.CreateProductEventId(), e, e.Message);
+                _logger.LogError(CreateProductEventId(), e, e.Message);
                 throw;
             }
         }
