@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApplicationLayer.EventLogging;
 using ApplicationLayer.Exceptions;
+using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
-
+using Newtonsoft.Json;
 using static ApplicationLayer.Factories.EventIdFactory;
 
 namespace ApplicationLayer.Interactors
@@ -38,7 +40,11 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.InsertProduct(product);
+                var insertedProduct = _repository.InsertProduct(product);
+
+                _logger.LogInformation(CreateProductEventId(), JsonConvert.SerializeObject(EventObjectFactory.CreateEventObject(insertedProduct, EventType.Create)));
+
+                return insertedProduct;
             }
             catch (Exception e)
             {
@@ -103,6 +109,8 @@ namespace ApplicationLayer.Interactors
             try
             {
                 _repository.UpdateProduct(product);
+
+                _logger.LogInformation(CreateProductEventId(), JsonConvert.SerializeObject(EventObjectFactory.CreateEventObject(product, EventType.Update)));
             }
             catch (Exception e)
             {
