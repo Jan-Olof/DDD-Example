@@ -8,10 +8,16 @@ namespace CLI.Controllers
     {
         Product CreateProduct(string name, string description = "");
 
+        Product DeleteProduct(int id);
+
         Product GetProduct(int id);
 
         Product GetProduct(string name);
 
         IList<Product> GetProducts();
+
+        IList<Product> SearchProducts(string name);
+
+        Product UpdateProduct(int id, string name, string description = "");
     }
 }

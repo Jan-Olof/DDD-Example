@@ -25,7 +25,7 @@ namespace DomainLayerTests.Models
         }
 
         [TestMethod]
-        public void TestShouldGetProductFromId()
+        public void TestShouldGetPersonFromId()
         {
             // Arrange
 
@@ -41,7 +41,7 @@ namespace DomainLayerTests.Models
         }
 
         [TestMethod]
-        public void TestShouldGetProductFromName()
+        public void TestShouldGetPersonFromName()
         {
             // Arrange
 
@@ -70,6 +70,21 @@ namespace DomainLayerTests.Models
             Assert.AreEqual("Second Human", result.Name);
             Assert.AreEqual("Second", result.FirstName);
             Assert.AreEqual("Human", result.LastName);
+        }
+
+        [TestMethod]
+        public void TestShouldSearchPersonFromName()
+        {
+            // Arrange
+            var sut = CreatePerson();
+
+            // Act
+            var result = sut.Search("Sec");
+
+            // Assert
+            var persons = SamplePersons.CreatePersons().Where(result.Compile());
+
+            Assert.AreEqual(2, persons.Single().Id);
         }
 
         [TestMethod]

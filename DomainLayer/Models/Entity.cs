@@ -34,5 +34,13 @@ namespace DomainLayer.Models
         {
             return entity => entity.Name == name;
         }
+
+        /// <summary>
+        /// Defines how to search entities by name.
+        /// </summary>
+        public Expression<Func<T, bool>> Search(string name)
+        {
+            return entity => entity.Name.Contains(name);
+        }
     }
 }

@@ -55,6 +55,21 @@ namespace DomainLayerTests.Models
             Assert.AreEqual("This is the second product.", result.Description);
         }
 
+        [TestMethod]
+        public void TestShouldSearchProductFromName()
+        {
+            // Arrange
+            var sut = CreateProduct();
+
+            // Act
+            var result = sut.Search("Second");
+
+            // Assert
+            var products = SampleProducts.CreateProducts().Where(result.Compile());
+
+            Assert.AreEqual(2, products.Single().Id);
+        }
+
         private static IProduct CreateProduct()
         {
             return new Product();

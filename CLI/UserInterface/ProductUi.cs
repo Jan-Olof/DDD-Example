@@ -51,6 +51,15 @@ namespace CLI.UserInterface
             ShowProducts(products);
         }
 
+        public void SearchProducts()
+        {
+            Console.Write("Name to search? ");
+            string input = Console.ReadLine();
+
+            var products = _controller.SearchProducts(input);
+            ShowProducts(products);
+        }
+
         private static void ShowProduct(Product product)
         {
             if (product == null)

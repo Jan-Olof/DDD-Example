@@ -80,7 +80,7 @@ namespace CLI.UserInterface
 
             if (input.Contains(Search))
             {
-                throw new NotImplementedException();
+                productUi.SearchProducts();
             }
 
             productUi.Dispose();

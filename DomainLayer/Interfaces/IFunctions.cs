@@ -17,5 +17,10 @@ namespace DomainLayer.Interfaces
         /// Defines how to get objects by name.
         /// </summary>
         Expression<Func<T, bool>> Get(string name);
+
+        /// <summary>
+        /// Defines how to search objects by name.
+        /// </summary>
+        Expression<Func<T, bool>> Search(string name);
     }
 }

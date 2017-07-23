@@ -30,6 +30,11 @@ namespace ApplicationLayer.Interfaces.Interactors
         Product Get(int id);
 
         /// <summary>
+        /// Search product by name.
+        /// </summary>
+        IList<Product> Search(string name);
+
+        /// <summary>
         /// Update a product.
         /// </summary>
         void Update(Product product);

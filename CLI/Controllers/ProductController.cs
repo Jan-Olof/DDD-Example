@@ -24,6 +24,11 @@ namespace CLI.Controllers
             return _productInteractor.Create(product);
         }
 
+        public Product DeleteProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -45,6 +50,16 @@ namespace CLI.Controllers
         public IList<Product> GetProducts()
         {
             return _productInteractor.Get();
+        }
+
+        public IList<Product> SearchProducts(string name)
+        {
+            return _productInteractor.Search(name);
+        }
+
+        public Product UpdateProduct(int id, string name, string description = "")
+        {
+            throw new NotImplementedException();
         }
 
         //private void UpdateProduct()

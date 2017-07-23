@@ -110,6 +110,14 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
+        /// Search product by name.
+        /// </summary>
+        public IList<Product> Search(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Update a product.
         /// </summary>
         public void Update(Product product)

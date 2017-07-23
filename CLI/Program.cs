@@ -23,13 +23,6 @@ namespace CLI
 
             ui.Flow();
 
-            //if (YesNoCommand("Start product controller (y/n)?"))
-            //{
-            //    var productController = (ProductController)dependencyScope.GetService(typeof(ProductController));
-
-            //    productController.InstructionFlow();
-            //}
-
             logger.LogInformation(EventIdFactory.CreateUiEventId(), "Ending CLI application.");
         }
     }
