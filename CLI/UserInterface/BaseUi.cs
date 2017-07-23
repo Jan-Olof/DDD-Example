@@ -1,11 +1,17 @@
 ﻿using System;
 using CLI.Configure;
-using CLI.Controllers;
 
 namespace CLI.UserInterface
 {
     internal class BaseUi
     {
+        private const string Add = "add-";
+        private const string All = "all-";
+        private const string Delete = "delete-";
+        private const string One = "one-";
+        private const string Search = "search-";
+        private const string Update = "update-";
+
         private readonly DependencyScope _dependencyScope;
 
         public BaseUi(DependencyScope dependencyScope)
@@ -35,7 +41,7 @@ namespace CLI.UserInterface
                 return true;
             }
 
-            if (input.Contains("-product") || input.Contains("-products"))
+            if (input.Contains("-product"))
             {
                 ProductCommands(input);
             }
@@ -47,19 +53,34 @@ namespace CLI.UserInterface
         {
             var productUi = new ProductUi(_dependencyScope);
 
-            if (input.Contains("add-product"))
+            if (input.Contains(Add))
             {
-                productUi.AddProduct(input);
+                productUi.AddProduct();
             }
 
-            if (input.Contains("one-product"))
+            if (input.Contains(Update))
             {
-                productUi.GetProduct(input);
+                throw new NotImplementedException();
             }
 
-            if (input.Contains("all-products"))
+            if (input.Contains(Delete))
             {
-                productUi.GetProducts(input);
+                throw new NotImplementedException();
+            }
+
+            if (input.Contains(One))
+            {
+                productUi.GetProduct();
+            }
+
+            if (input.Contains(All))
+            {
+                productUi.GetProducts();
+            }
+
+            if (input.Contains(Search))
+            {
+                throw new NotImplementedException();
             }
 
             productUi.Dispose();

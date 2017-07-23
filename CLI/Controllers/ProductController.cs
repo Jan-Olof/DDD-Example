@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Factories;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,22 +15,13 @@ namespace CLI.Controllers
         public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _productInteractor = serviceProvider.GetService<IProductInteractor>();
-            Product = new Product();
         }
 
-        /// <summary>
-        /// Gets or sets the product.
-        /// </summary>
-        public Product Product { get; set; }
-
-        /// <summary>
-        /// Gets or sets the product list.
-        /// </summary>
-        public IList<Product> Products { get; set; }
-
-        public void CreateProduct()
+        public Product CreateProduct(string name, string description = "")
         {
-            Product = _productInteractor.Create(Product);
+            var product = ProductFactory.CreateProduct(name, description);
+
+            return _productInteractor.Create(product);
         }
 
         /// <summary>
@@ -39,38 +32,21 @@ namespace CLI.Controllers
             _productInteractor?.Dispose();
         }
 
-        public void GetProduct(int id)
+        public Product GetProduct(int id)
         {
-            Product = _productInteractor.Get(id);
+            return _productInteractor.Get(id);
         }
 
-        public void GetProducts()
+        public Product GetProduct(string name)
         {
-            Products = _productInteractor.Get();
+            return _productInteractor.Get(name).SingleOrDefault();
         }
 
-        //public void InstructionFlow()
-        //{
-        //    if (ConsoleCommands.YesNoCommand("Add product? (y/n)"))
-        //    {
-        //        CreateProduct();
-        //    }
+        public IList<Product> GetProducts()
+        {
+            return _productInteractor.Get();
+        }
 
-        //    if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
-        //    {
-        //        ViewProducts();
-        //    }
-
-        //    if (ConsoleCommands.YesNoCommand("Update product description? (y/n)"))
-        //    {
-        //        UpdateProduct();
-        //    }
-
-        //    if (ConsoleCommands.YesNoCommand("View products? (y/n)"))
-        //    {
-        //        ViewProducts();
-        //    }
-        //}
         //private void UpdateProduct()
         //{
         //    Console.WriteLine("Id of product to update?");

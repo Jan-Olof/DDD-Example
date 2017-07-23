@@ -15,6 +15,7 @@ namespace DomainLayer.Models
         {
             Name = string.Empty;
             Description = string.Empty;
+            ProductPersons = new List<ProductPerson>();
         }
 
         /// <summary>

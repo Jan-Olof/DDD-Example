@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using DomainLayer.Models;
 
 namespace CLI.Controllers
 {
     public interface IProductController : IDisposable
     {
-        void CreateProduct();
+        Product CreateProduct(string name, string description = "");
 
-        void GetProduct(int id);
+        Product GetProduct(int id);
 
-        void GetProducts();
+        Product GetProduct(string name);
+
+        IList<Product> GetProducts();
     }
 }

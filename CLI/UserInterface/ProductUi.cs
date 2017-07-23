@@ -15,17 +15,17 @@ namespace CLI.UserInterface
             _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
         }
 
-        public void AddProduct(string input)
+        public void AddProduct()
         {
             Console.Write("Name? ");
-            _controller.Product.Name = Console.ReadLine();
+            string name = Console.ReadLine();
 
             Console.Write("Description? ");
-            _controller.Product.Description = Console.ReadLine();
+            string description = Console.ReadLine();
 
-            _controller.CreateProduct();
+            var product = _controller.CreateProduct(name, description);
 
-            Console.WriteLine($"Product created with id { _controller.Product.Id}.");
+            Console.WriteLine($"Product created with id { product.Id}.");
         }
 
         public void Dispose()
@@ -33,26 +33,32 @@ namespace CLI.UserInterface
             _controller?.Dispose();
         }
 
-        public void GetProduct(string input)
+        public void GetProduct()
         {
-            Console.Write("Id? ");
-            string line = Console.ReadLine();
+            Console.Write("Id/Name? ");
+            string input = Console.ReadLine();
 
-            if (int.TryParse(line, out int id))
-            {
-                _controller.GetProduct(id);
-                ShowProduct(_controller.Product);
-            }
+            var product = int.TryParse(input, out int id)
+                ? _controller.GetProduct(id)
+                : _controller.GetProduct(input);
+
+            ShowProduct(product);
         }
 
-        public void GetProducts(string input)
+        public void GetProducts()
         {
-            _controller.GetProducts();
-            ShowProducts(_controller.Products);
+            var products = _controller.GetProducts();
+            ShowProducts(products);
         }
 
         private static void ShowProduct(Product product)
         {
+            if (product == null)
+            {
+                Console.WriteLine("Could not find the product.");
+                return;
+            }
+
             Console.Write("Id: ");
             Console.WriteLine(product.Id);
             Console.Write("Name: ");
