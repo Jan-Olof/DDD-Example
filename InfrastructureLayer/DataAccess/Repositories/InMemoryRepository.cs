@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using ApplicationLayer.EventLogging;
+using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Enums;
 using DomainLayer.Models;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
@@ -14,15 +18,17 @@ namespace InfrastructureLayer.DataAccess.Repositories
     public class InMemoryRepository : IDomainRepository // TODO: Add person.
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
+        private readonly ILogger _logger;
         private IList<Product> _products;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryRepository"/> class.
         /// </summary>
-        public InMemoryRepository(IFileHandler<IList<Product>> fileHandler)
+        public InMemoryRepository(IFileHandler<IList<Product>> fileHandler, ILogger<InMemoryRepository> logger)
         {
             _products = new List<Product>();
             _fileHandler = fileHandler ?? throw new ArgumentNullException(nameof(fileHandler));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void DeletePerson(int id)
@@ -39,6 +45,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             int index = _products.IndexOf(item);
             _products.RemoveAt(index);
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(item, EventType.Delete)));
         }
 
         public void DeleteProductPerson(int productid, int personId, Role role)
@@ -110,6 +117,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             product.Id = GetNextId();
             _products.Add(product);
+
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(product, EventType.Create)));
+
             return product;
         }
 
@@ -139,6 +149,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
             var toUpdate = _products.SingleOrDefault(product.Get(product.Id).Compile());
 
             product.MapUpdate(product, toUpdate);
+
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(product, EventType.Update)));
         }
 
         /// <summary>

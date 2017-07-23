@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.EventLogging;
 using ApplicationLayer.Exceptions;
-using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using static ApplicationLayer.Factories.EventIdFactory;
 
 namespace ApplicationLayer.Interactors
@@ -42,13 +39,11 @@ namespace ApplicationLayer.Interactors
             {
                 var insertedProduct = _repository.InsertProduct(product);
 
-                _logger.LogInformation(CreateProductEventId(), JsonConvert.SerializeObject(EventObjectFactory.CreateEventObject(insertedProduct, EventType.Create)));
-
                 return insertedProduct;
             }
             catch (Exception e)
             {
-                _logger.LogError(CreateProductEventId(), e, e.Message);
+                _logger.LogError(ProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -72,7 +67,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(CreateProductEventId(), e, e.Message);
+                _logger.LogError(ProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -88,7 +83,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError(CreateProductEventId(), e, e.Message);
+                _logger.LogError(ProductEventId(), e, e.Message);
                 throw new TooManyFoundException(e.Message, e);
             }
         }
@@ -104,7 +99,7 @@ namespace ApplicationLayer.Interactors
             }
             catch (Exception e)
             {
-                _logger.LogError(CreateProductEventId(), e, e.Message);
+                _logger.LogError(ProductEventId(), e, e.Message);
                 throw;
             }
         }
@@ -114,23 +109,31 @@ namespace ApplicationLayer.Interactors
         /// </summary>
         public IList<Product> Search(string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _repository.GetProducts(_model.Search(name)).ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(ProductEventId(), e, e.Message);
+                throw;
+            }
         }
 
         /// <summary>
         /// Update a product.
         /// </summary>
-        public void Update(Product product)
+        public Product Update(Product product)
         {
             try
             {
                 _repository.UpdateProduct(product);
 
-                _logger.LogInformation(CreateProductEventId(), JsonConvert.SerializeObject(EventObjectFactory.CreateEventObject(product, EventType.Update)));
+                return _repository.GetProduct(product.Id);
             }
             catch (Exception e)
             {
-                _logger.LogError(CreateProductEventId(), e, e.Message);
+                _logger.LogError(ProductEventId(), e, e.Message);
                 throw;
             }
         }

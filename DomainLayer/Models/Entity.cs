@@ -40,7 +40,7 @@ namespace DomainLayer.Models
         /// </summary>
         public Expression<Func<T, bool>> Search(string name)
         {
-            return entity => entity.Name.Contains(name);
+            return entity => entity.Name.ToLower().Contains(name.ToLower());
         }
     }
 }

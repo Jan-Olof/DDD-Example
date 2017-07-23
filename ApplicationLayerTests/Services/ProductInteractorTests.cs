@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interactors;
 using DomainLayerTests.TestObjects;
 using Microsoft.Extensions.Logging;
@@ -97,6 +96,25 @@ namespace ApplicationLayerTests.Services
 
             // Act
             var result = sut.Get("ThirdProduct");
+
+            // Assert
+            Assert.AreEqual(3, result.Single().Id);
+        }
+
+        [TestMethod]
+        public void TestShouldSearchProductFromName()
+        {
+            // Arrange
+            _model.Search("Third")
+                .Returns(i => i.Name == "Third");
+
+            _repository.GetProducts(i => i.Name.Contains("Third"))
+                .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
+
+            var sut = CreateProductInteractor();
+
+            // Act
+            var result = sut.Search("Third");
 
             // Assert
             Assert.AreEqual(3, result.Single().Id);

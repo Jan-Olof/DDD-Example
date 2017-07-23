@@ -17,13 +17,13 @@ namespace CLI
 
             var logger = dependencyScope.CreateLogger();
 
-            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Starting CLI application.");
+            logger.LogInformation(EventIdFactory.UiEventId(), "Starting CLI application.");
 
             var ui = new BaseUi(dependencyScope);
 
             ui.Flow();
 
-            logger.LogInformation(EventIdFactory.CreateUiEventId(), "Ending CLI application.");
+            logger.LogInformation(EventIdFactory.UiEventId(), "Ending CLI application.");
         }
     }
 }

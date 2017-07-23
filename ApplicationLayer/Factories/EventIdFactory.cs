@@ -10,7 +10,7 @@ namespace ApplicationLayer.Factories
         /// <summary>
         /// Build EventId number 4.
         /// </summary>
-        public static EventId CreatePersistenceEventId()
+        public static EventId PersistenceEventId()
         {
             return new EventId(4, "Persistence Event");
         }
@@ -18,7 +18,7 @@ namespace ApplicationLayer.Factories
         /// <summary>
         /// Build EventId number 3.
         /// </summary>
-        public static EventId CreatePersonEventId()
+        public static EventId PersonEventId()
         {
             return new EventId(3, "Person Event");
         }
@@ -26,7 +26,7 @@ namespace ApplicationLayer.Factories
         /// <summary>
         /// Build EventId number 2.
         /// </summary>
-        public static EventId CreateProductEventId()
+        public static EventId ProductEventId()
         {
             return new EventId(2, "Product Event");
         }
@@ -34,7 +34,7 @@ namespace ApplicationLayer.Factories
         /// <summary>
         /// Build EventId number 1.
         /// </summary>
-        public static EventId CreateUiEventId()
+        public static EventId UiEventId()
         {
             return new EventId(1, "User Interface Event");
         }

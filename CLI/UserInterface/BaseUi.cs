@@ -60,7 +60,7 @@ namespace CLI.UserInterface
 
             if (input.Contains(Update))
             {
-                throw new NotImplementedException();
+                productUi.UpdateProduct();
             }
 
             if (input.Contains(Delete))

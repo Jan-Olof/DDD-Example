@@ -60,6 +60,11 @@ namespace CLI.UserInterface
             ShowProducts(products);
         }
 
+        public void UpdateProduct()
+        {
+            throw new NotImplementedException();
+        }
+
         private static void ShowProduct(Product product)
         {
             if (product == null)

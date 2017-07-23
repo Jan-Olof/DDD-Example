@@ -59,7 +59,9 @@ namespace CLI.Controllers
 
         public Product UpdateProduct(int id, string name, string description = "")
         {
-            throw new NotImplementedException();
+            var product = ProductFactory.CreateProduct(name, description, id);
+
+            return _productInteractor.Update(product);
         }
 
         //private void UpdateProduct()

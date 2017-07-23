@@ -1,35 +1,21 @@
 ﻿using ApplicationLayer.EventLogging;
-using DomainLayer.Models;
 
 namespace ApplicationLayer.Factories
 {
     /// <summary>
     /// Builds event objects used in event logging.
     /// </summary>
-    public static class EventObjectFactory
+    public static class EventObjectFactory<T>
     {
         /// <summary>
-        /// Build an event object from a product.
+        /// Build an event object from an entity.
         /// </summary>
-        public static EventObject CreateEventObject(Product product, EventType eventType)
-        {
-            return new EventObject
-            {
-                Entity = product,
-                EntityName = typeof(Product).ToString(),
-                Type = eventType.ToString()
-            };
-        }
-
-        /// <summary>
-        /// Build an event object from a person.
-        /// </summary>
-        public static EventObject CreateEventObject(Person person, EventType eventType)
+        public static EventObject CreateEventObject(T person, EventType eventType)
         {
             return new EventObject
             {
                 Entity = person,
-                EntityName = typeof(Person).ToString(),
+                EntityName = typeof(T).ToString(),
                 Type = eventType.ToString()
             };
         }

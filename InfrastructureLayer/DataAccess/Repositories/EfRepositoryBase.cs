@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using ApplicationLayer.EventLogging;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Factories;
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
@@ -51,6 +53,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _context.Remove(entity);
 
             SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
+
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete)));
         }
 
         /// <summary>
@@ -70,6 +74,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
                 _context.Remove(entity);
 
                 SaveChanges("No changes in context when deleting object.");
+
+                _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete)));//TODO: Fix!
             }
             catch (InvalidOperationException ex)
             {
@@ -111,28 +117,9 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             SaveChanges("No changes in context when adding new object.");
 
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Create)));
+
             return entity;
-        }
-
-        /// <summary>
-        /// Save change and handle exceptions that it might cause.
-        /// </summary>
-        protected void SaveChanges(string noChangesExceptionMsg = "No changes in context after SaveChanges.")
-        {
-            try
-            {
-                int changes = _context.SaveChanges();
-
-                if (changes == 0)
-                {
-                    throw new NoChangesException(noChangesExceptionMsg);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                LogExceptionWithInnerException(ex);
-                throw;
-            }
         }
 
         /// <summary>
@@ -145,6 +132,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
             entity.MapUpdate(entity, entityToUpdate);
 
             SaveChanges($"No changes in context after SaveChanges when updating id {entity.Id}.");
+
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Update)));
         }
 
         /// <summary>
@@ -167,11 +156,32 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         private void LogExceptionWithInnerException(Exception ex)
         {
-            _logger.LogError(EventIdFactory.CreatePersistenceEventId(), ex, ex.Message);
+            _logger.LogError(EventIdFactory.PersistenceEventId(), ex, ex.Message);
 
             if (ex.InnerException != null)
             {
-                _logger.LogError(EventIdFactory.CreatePersistenceEventId(), ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
+                _logger.LogError(EventIdFactory.PersistenceEventId(), ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Save change and handle exceptions that it might cause.
+        /// </summary>
+        private void SaveChanges(string noChangesExceptionMsg = "No changes in context after SaveChanges.")
+        {
+            try
+            {
+                int changes = _context.SaveChanges();
+
+                if (changes == 0)
+                {
+                    throw new NoChangesException(noChangesExceptionMsg);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                LogExceptionWithInnerException(ex);
+                throw;
             }
         }
     }

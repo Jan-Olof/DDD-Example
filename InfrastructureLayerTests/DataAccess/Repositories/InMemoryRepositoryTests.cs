@@ -8,6 +8,8 @@ using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer.Interfaces.Infrastructure;
 using InfrastructureLayer.Files;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories
@@ -15,9 +17,12 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
     [TestClass]
     public class InMemoryRepositoryTests
     {
+        private ILogger<InMemoryRepository> _logger;
+
         [TestInitialize]
         public void SetUp()
         {
+            _logger = Substitute.For<ILogger<InMemoryRepository>>();
             RestoreFileContent();
         }
 
@@ -139,13 +144,14 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("Updated description.", sut.GetProducts(e => e.Id == 2).Single().Description);
         }
 
-        private static IDomainRepository CreateInMemoryRepository()
+        private IDomainRepository CreateInMemoryRepository()
         {
             return new InMemoryRepository(
-                new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()));
+                new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()),
+                _logger);
         }
 
-        private static IDomainRepository CreateInMemoryRepository(IList<Product> products)
+        private IDomainRepository CreateInMemoryRepository(IList<Product> products)
         {
             var repository = CreateInMemoryRepository();
 
