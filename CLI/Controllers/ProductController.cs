@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CLI.Controllers
 {
-    public class ProductController : BaseController
+    public class ProductController : BaseController, IProductController
     {
         private readonly IProductInteractor _productInteractor;
 
@@ -20,6 +21,11 @@ namespace CLI.Controllers
         /// </summary>
         public Product Product { get; set; }
 
+        /// <summary>
+        /// Gets or sets the product list.
+        /// </summary>
+        public IList<Product> Products { get; set; }
+
         public void CreateProduct()
         {
             Product = _productInteractor.Create(Product);
@@ -31,6 +37,16 @@ namespace CLI.Controllers
         public override void Dispose()
         {
             _productInteractor?.Dispose();
+        }
+
+        public void GetProduct(int id)
+        {
+            Product = _productInteractor.Get(id);
+        }
+
+        public void GetProducts()
+        {
+            Products = _productInteractor.Get();
         }
 
         //public void InstructionFlow()

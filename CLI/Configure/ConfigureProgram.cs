@@ -50,7 +50,7 @@ namespace CLI.Configure
             services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
 
-            services.AddScoped<DbContext, ExampleContext>();
+            services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<IDomainRepository, EfDomainRepository>();
             //services.AddTransient<IDomainRepository, InMemoryRepository>();
 

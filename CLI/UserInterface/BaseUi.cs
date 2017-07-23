@@ -26,23 +26,6 @@ namespace CLI.UserInterface
             }
         }
 
-        private void AddProduct(string input)
-        {
-            var controller = (ProductController)_dependencyScope.GetService(typeof(ProductController));
-
-            Console.WriteLine("Name?");
-            controller.Product.Name = Console.ReadLine();
-
-            Console.WriteLine("Description?");
-            controller.Product.Description = Console.ReadLine();
-
-            controller.CreateProduct();
-
-            Console.WriteLine($"Product created with id { controller.Product.Id}.");
-
-            controller.Dispose();
-        }
-
         private bool HandleUserInput(string readLine)
         {
             string input = readLine.ToLower();
@@ -52,12 +35,34 @@ namespace CLI.UserInterface
                 return true;
             }
 
-            if (input.Contains("add-product"))
+            if (input.Contains("-product") || input.Contains("-products"))
             {
-                AddProduct(input);
+                ProductCommands(input);
             }
 
             return false;
+        }
+
+        private void ProductCommands(string input)
+        {
+            var productUi = new ProductUi(_dependencyScope);
+
+            if (input.Contains("add-product"))
+            {
+                productUi.AddProduct(input);
+            }
+
+            if (input.Contains("one-product"))
+            {
+                productUi.GetProduct(input);
+            }
+
+            if (input.Contains("all-products"))
+            {
+                productUi.GetProducts(input);
+            }
+
+            productUi.Dispose();
         }
     }
 }
