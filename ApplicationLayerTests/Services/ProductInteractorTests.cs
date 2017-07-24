@@ -41,10 +41,26 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Create(SampleProducts.CreateProduct());
+            var result = sut.Create("FirstProduct", "This is the first product.");
 
             // Assert
             Assert.AreEqual(1, result.Id);
+            Assert.AreEqual("This is the first product.", result.Description);
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteProduct()
+        {
+            // Arrange
+            _repository.DeleteProduct(3);
+
+            var sut = CreateProductInteractor();
+
+            // Act
+            sut.Delete(3);
+
+            // Assert
+            Assert.IsTrue(true);
         }
 
         [TestMethod]
@@ -124,17 +140,16 @@ namespace ApplicationLayerTests.Services
         public void TestShouldUpdateProductFromId()
         {
             // Arrange
-            _model.Get(3).Returns(i => i.Id == 3);
-
-            _repository.UpdateProduct(SampleProducts.CreateProduct());
+            _repository.UpdateProduct(SampleProducts.CreateProduct(3));
+            _repository.GetProduct(3).Returns(SampleProducts.CreateProduct(3));
 
             var sut = CreateProductInteractor();
 
             // Act
-            sut.Update(SampleProducts.CreateProduct(3));
+            var result = sut.Update(3, "FirstProduct", "This is the first product.");
 
             // Assert
-            Assert.IsTrue(true);
+            Assert.AreEqual("FirstProduct", result.Name);
         }
 
         private ProductInteractor CreateProductInteractor()

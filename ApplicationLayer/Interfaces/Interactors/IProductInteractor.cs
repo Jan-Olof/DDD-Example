@@ -12,7 +12,12 @@ namespace ApplicationLayer.Interfaces.Interactors
         /// <summary>
         /// Create a new product.
         /// </summary>
-        Product Create(Product product);
+        Product Create(string name, string description = "");
+
+        /// <summary>
+        /// Delete a product.
+        /// </summary>
+        void Delete(int id);
 
         /// <summary>
         /// Get product by name.
@@ -37,6 +42,6 @@ namespace ApplicationLayer.Interfaces.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        Product Update(Product product);
+        Product Update(int id, string name, string description = "");
     }
 }

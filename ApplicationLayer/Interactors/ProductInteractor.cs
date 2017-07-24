@@ -4,6 +4,7 @@ using System.Linq;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Factories;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
@@ -33,13 +34,31 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Create a new product.
         /// </summary>
-        public Product Create(Product product)
+        public Product Create(string name, string description = "")
         {
             try
             {
+                var product = ProductFactory.CreateProduct(name, description);
+
                 var insertedProduct = _repository.InsertProduct(product);
 
                 return insertedProduct;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(ProductEventId(), e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a product.
+        /// </summary>
+        public void Delete(int id)
+        {
+            try
+            {
+                _repository.DeleteProduct(id);
             }
             catch (Exception e)
             {
@@ -123,10 +142,12 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        public Product Update(Product product)
+        public Product Update(int id, string name, string description = "")
         {
             try
             {
+                var product = ProductFactory.CreateProduct(name, description, id);
+
                 _repository.UpdateProduct(product);
 
                 return _repository.GetProduct(product.Id);

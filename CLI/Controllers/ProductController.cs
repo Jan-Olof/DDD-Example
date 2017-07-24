@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces.Interactors;
-using DomainLayer.Factories;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,14 +18,12 @@ namespace CLI.Controllers
 
         public Product CreateProduct(string name, string description = "")
         {
-            var product = ProductFactory.CreateProduct(name, description);
-
-            return _productInteractor.Create(product);
+            return _productInteractor.Create(name, description);
         }
 
-        public Product DeleteProduct(int id)
+        public void DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            _productInteractor.Delete(id);
         }
 
         /// <summary>
@@ -37,14 +34,11 @@ namespace CLI.Controllers
             _productInteractor?.Dispose();
         }
 
-        public Product GetProduct(int id)
+        public Product GetProduct(string input)
         {
-            return _productInteractor.Get(id);
-        }
-
-        public Product GetProduct(string name)
-        {
-            return _productInteractor.Get(name).SingleOrDefault();
+            return int.TryParse(input, out int id)
+                ? _productInteractor.Get(id)
+                : _productInteractor.Get(input).SingleOrDefault();
         }
 
         public IList<Product> GetProducts()
@@ -59,59 +53,7 @@ namespace CLI.Controllers
 
         public Product UpdateProduct(int id, string name, string description = "")
         {
-            var product = ProductFactory.CreateProduct(name, description, id);
-
-            return _productInteractor.Update(product);
+            return _productInteractor.Update(id, name, description);
         }
-
-        //private void UpdateProduct()
-        //{
-        //    Console.WriteLine("Id of product to update?");
-        //    string idEntered = Console.ReadLine();
-
-        //    bool ok = int.TryParse(idEntered, out int id);
-
-        //    if (!ok)
-        //    {
-        //        Console.WriteLine("Failed to parse entered id.");
-        //        return;
-        //    }
-
-        //    var product = _productInteractor.Get(id);
-
-        //    if (product == null)
-        //    {
-        //        Console.WriteLine("Failed to get product from id.");
-        //        return;
-        //    }
-
-        //    Console.WriteLine($"Old description: {product.Description}");
-        //    Console.WriteLine("Enter new description:");
-        //    string description = Console.ReadLine();
-
-        //    product.Description = description;
-        //    _productInteractor.Update(product);
-
-        //    Console.WriteLine("New description entered.");
-        //}
-
-        //private void ViewProducts()
-        //{
-        //    var products = _productInteractor.Get();
-
-        //    if (products == null || !products.Any())
-        //    {
-        //        Console.WriteLine("There are no products.");
-        //        return;
-        //    }
-
-        //    Console.WriteLine("Showing all products:/n");
-
-        //    foreach (var product in products)
-        //    {
-        //        Console.WriteLine($"Id: {product.Id}, Name: {product.Name}, Description: {product.Description}");
-        //        Console.WriteLine();
-        //    }
-        //}
     }
 }

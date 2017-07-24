@@ -53,37 +53,47 @@ namespace CLI.UserInterface
         {
             var productUi = new ProductUi(_dependencyScope);
 
-            if (input.Contains(Add))
+            try
             {
-                productUi.AddProduct();
-            }
+                if (input.Contains(Add))
+                {
+                    productUi.AddProduct();
+                }
 
-            if (input.Contains(Update))
+                if (input.Contains(Update))
+                {
+                    productUi.UpdateProduct();
+                }
+
+                if (input.Contains(Delete))
+                {
+                    productUi.DeleteProduct();
+                }
+
+                if (input.Contains(One))
+                {
+                    productUi.GetProduct();
+                }
+
+                if (input.Contains(All))
+                {
+                    productUi.GetProducts();
+                }
+
+                if (input.Contains(Search))
+                {
+                    productUi.SearchProducts();
+                }
+            }
+            catch (Exception e)
             {
-                productUi.UpdateProduct();
+                Console.WriteLine();
+                Console.WriteLine($"A product command failed with the following error meassage: {e.Message}");
             }
-
-            if (input.Contains(Delete))
+            finally
             {
-                throw new NotImplementedException();
+                productUi.Dispose();
             }
-
-            if (input.Contains(One))
-            {
-                productUi.GetProduct();
-            }
-
-            if (input.Contains(All))
-            {
-                productUi.GetProducts();
-            }
-
-            if (input.Contains(Search))
-            {
-                productUi.SearchProducts();
-            }
-
-            productUi.Dispose();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
 
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete)));
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete), IgnoreReferenced()));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
                 SaveChanges("No changes in context when deleting object.");
 
-                _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete)));//TODO: Fix!
+                _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete), IgnoreReferenced()));
             }
             catch (InvalidOperationException ex)
             {
@@ -117,7 +117,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             SaveChanges("No changes in context when adding new object.");
 
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Create)));
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Create), IgnoreReferenced()));
 
             return entity;
         }
@@ -133,7 +133,18 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             SaveChanges($"No changes in context after SaveChanges when updating id {entity.Id}.");
 
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Update)));
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Update), IgnoreReferenced()));
+        }
+
+        /// <summary>
+        /// Set JSON serielizer to ignore referenced object.
+        /// </summary>
+        private static JsonSerializerSettings IgnoreReferenced()
+        {
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
 
         /// <summary>

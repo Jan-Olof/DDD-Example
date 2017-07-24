@@ -8,11 +8,9 @@ namespace CLI.Controllers
     {
         Product CreateProduct(string name, string description = "");
 
-        Product DeleteProduct(int id);
+        void DeleteProduct(int id);
 
-        Product GetProduct(int id);
-
-        Product GetProduct(string name);
+        Product GetProduct(string input);
 
         IList<Product> GetProducts();
 
