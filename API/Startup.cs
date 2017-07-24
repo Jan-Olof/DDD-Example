@@ -3,17 +3,26 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace API
 {
+    /// <summary>
+    /// The startup class for ASP.NET Core.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -24,6 +33,9 @@ namespace API
             Configuration = builder.Build();
         }
 
+        /// <summary>
+        /// Gets the configuration.
+        /// </summary>
         public IConfigurationRoot Configuration { get; }
 
         /// <summary>
@@ -34,7 +46,18 @@ namespace API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
+            app.UseStaticFiles();
+
+            app.UseMvcWithDefaultRoute();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DDD-Example API V1");
+            });
         }
 
         /// <summary>
@@ -48,6 +71,23 @@ namespace API
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            // Register the Swagger generator, defining one or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "DDD-Example API",
+                    Version = "v1",
+                    Description = "This is the API for the DDD-Example",
+                    TermsOfService = "None"
+                });
+
+                //Set the comments path for the swagger json and ui.
+                string basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                string xmlPath = Path.Combine(basePath, "API.xml");
+                c.IncludeXmlComments(xmlPath);
+            });
         }
     }
 }
