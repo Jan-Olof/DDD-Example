@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace API
@@ -69,17 +68,24 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });
+            services.AddMvc();
+            //.AddJsonOptions(options =>
+            //{
+            //    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //});
 
             services.AddLogging(); // TODO: Add NLog.
 
             // TODO: Add DI here!
 
-            // Register the Swagger generator, defining one or more Swagger documents
+            ConfigureSwagger(services);
+        }
+
+        /// <summary>
+        /// Register the Swagger generator, defining one or more Swagger documents.
+        /// </summary>
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

@@ -1,5 +1,5 @@
 ﻿using System;
-using API.Dtos;
+using API.Models;
 
 namespace API.Factories
 {

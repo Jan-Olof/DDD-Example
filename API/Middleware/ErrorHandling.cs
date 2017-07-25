@@ -3,7 +3,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using ApplicationLayer.Exceptions;
 using ApplicationLayer.Factories;
 using API.Factories;
 using Microsoft.AspNetCore.Http;
@@ -66,8 +65,7 @@ namespace API.Middleware
             var code = HttpStatusCode.InternalServerError;
 
             // Here you can set status code depending on exception thrown.
-            if (exception is NotFoundException) code = HttpStatusCode.NotFound;
-            else if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
+            if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
 
             return code;
         }

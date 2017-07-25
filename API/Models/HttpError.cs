@@ -1,4 +1,4 @@
-﻿namespace API.Dtos
+﻿namespace API.Models
 {
     /// <summary>
     /// This class is used to deliver an exception over HTTP.
