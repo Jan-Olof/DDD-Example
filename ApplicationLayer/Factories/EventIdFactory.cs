@@ -8,6 +8,14 @@ namespace ApplicationLayer.Factories
     public static class EventIdFactory
     {
         /// <summary>
+        /// Build EventId number 5.
+        /// </summary>
+        public static EventId ApiEventId()
+        {
+            return new EventId(5, "Application Programming Interface Event");
+        }
+
+        /// <summary>
         /// Build EventId number 4.
         /// </summary>
         public static EventId PersistenceEventId()

@@ -4,6 +4,7 @@
 // ReSharper disable UnusedParameter.Global
 
 using System.IO;
+using API.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,8 @@ namespace API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseErrorHandling(loggerFactory.CreateLogger(typeof(ErrorHandling)));
+
             app.UseStaticFiles();
 
             app.UseMvcWithDefaultRoute();
@@ -71,6 +74,10 @@ namespace API
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+
+            services.AddLogging(); // TODO: Add NLog.
+
+            // TODO: Add DI here!
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
