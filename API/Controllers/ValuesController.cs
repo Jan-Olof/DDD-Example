@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -33,6 +34,15 @@ namespace API.Controllers
         public string Get(int id)
         {
             return "value";
+        }
+
+        /// <summary>
+        /// GET api/values/NotImplemented
+        /// </summary>
+        [HttpGet("NotImplemented")]
+        public IEnumerable<string> GetNotImplemented()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace API.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(EventIdFactory.ApiEventId(), ex, ex.Message);
+                LogErrors(ex);
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -80,6 +80,19 @@ namespace API.Middleware
             response.StatusCode = (int)statusCode;
 
             return response.WriteAsync(JsonConvert.SerializeObject(HttpErrorFactory.CreateHttpError(exception)));
+        }
+
+        /// <summary>
+        /// Log exception and all inner exceptions.
+        /// </summary>
+        private void LogErrors(Exception ex, string baseMsg = "")
+        {
+            _logger.LogError(EventIdFactory.ApiEventId(), ex, $"{baseMsg}{ex.Message}");
+
+            if (ex.InnerException != null)
+            {
+                LogErrors(ex.InnerException, "Inner exception: ");
+            }
         }
     }
 }

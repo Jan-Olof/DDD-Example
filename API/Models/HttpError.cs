@@ -31,6 +31,11 @@
         public int HResult { get; set; }
 
         /// <summary>
+        /// Gets or sets the inner error..
+        /// </summary>
+        public HttpError InnerError { get; set; }
+
+        /// <summary>
         /// Gets or sets the stack trace.
         /// </summary>
         public string StackTrace { get; set; }
