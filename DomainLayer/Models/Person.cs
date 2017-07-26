@@ -7,7 +7,7 @@ namespace DomainLayer.Models
     /// <summary>
     /// This is the person domain model.
     /// </summary>
-    public sealed class Person : Entity<Person>, IPerson
+    public class Person : Entity<Person>, IPerson
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Person"/> class.
@@ -32,7 +32,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets the name of the person. Gets first and last name.
         /// </summary>
-        public override string Name
+        public sealed override string Name
         {
             get => $"{FirstName} {LastName}"; set => SetName(value);
         }

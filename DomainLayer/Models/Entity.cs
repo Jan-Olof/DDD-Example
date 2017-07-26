@@ -17,7 +17,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets or sets the name. This is the name of the entity.
         /// </summary>
-        public virtual string Name { get; set; }
+        public abstract string Name { get; set; }
 
         /// <summary>
         /// Defines how to get entities by id.

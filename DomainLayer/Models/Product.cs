@@ -6,7 +6,7 @@ namespace DomainLayer.Models
     /// <summary>
     /// This is the product domain model.
     /// </summary>
-    public sealed class Product : Entity<Product>, IProduct
+    public class Product : Entity<Product>, IProduct
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Product"/> class.
@@ -22,6 +22,11 @@ namespace DomainLayer.Models
         /// Gets or sets the description. A text field that describes the product.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name. This is the name of the entity.
+        /// </summary>
+        public sealed override string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the ProductPersons.
