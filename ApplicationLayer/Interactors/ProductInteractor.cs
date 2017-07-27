@@ -40,7 +40,7 @@ namespace ApplicationLayer.Interactors
             {
                 var product = ProductFactory.CreateProduct(name, description);
 
-                var insertedProduct = _repository.InsertProduct(product);
+                var insertedProduct = _repository.AddProduct(product);
 
                 return insertedProduct;
             }
@@ -58,7 +58,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                _repository.DeleteProduct(id);
+                _repository.RemoveProduct(id);
             }
             catch (Exception e)
             {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DomainLayer.Interfaces;
 using DomainLayer.Models;
 
 namespace InfrastructureLayer.DataAccess.Daos

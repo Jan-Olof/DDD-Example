@@ -6,7 +6,6 @@ using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
-using InfrastructureLayerTests.TestObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -50,7 +49,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var person = sut.GetPersons(p => p.FirstName == "First").Single();
 
                 // Act
-                sut.DeletePerson(person.Id);
+                sut.RemovePerson(person.Id);
             }
 
             // Assert
@@ -77,7 +76,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var product = sut.GetProducts(p => p.Name == "No2").Single();
 
                 // Act
-                sut.DeleteProduct(product.Id);
+                sut.RemoveProduct(product.Id);
             }
 
             // Assert
@@ -216,7 +215,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertPerson(SamplePersons.CreatePerson());
+                var result = sut.AddPerson(SamplePersons.CreatePerson());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -243,7 +242,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertPerson(SamplePersons.CreatePerson(0, "Fourth", "Human"));
+                var result = sut.AddPerson(SamplePersons.CreatePerson(0, "Fourth", "Human"));
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -268,7 +267,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertProduct(SampleProducts.CreateProduct());
+                var result = sut.AddProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);
@@ -295,7 +294,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertProduct(SampleProducts.CreateProduct());
+                var result = sut.AddProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.IsTrue(result.Id > 0);

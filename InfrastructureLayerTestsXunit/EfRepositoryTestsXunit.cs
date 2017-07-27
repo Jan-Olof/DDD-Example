@@ -38,7 +38,7 @@ namespace InfrastructureLayerTestsXunit
                 var person = sut.GetPersons(p => p.FirstName == "Second").Single();
 
                 // Act
-                sut.DeletePerson(person.Id);
+                sut.RemovePerson(person.Id);
             }
 
             // Assert
@@ -66,7 +66,7 @@ namespace InfrastructureLayerTestsXunit
                 var product = sut.GetProducts(p => p.Name == "No2").Single();
 
                 // Act
-                sut.DeleteProduct(product.Id);
+                sut.RemoveProduct(product.Id);
             }
 
             // Assert
@@ -215,7 +215,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertPerson(SamplePersons.CreatePerson(0, "Fourth", "Human"));
+                var result = sut.AddPerson(SamplePersons.CreatePerson(0, "Fourth", "Human"));
 
                 // Assert
                 Assert.True(result.Id > 0);
@@ -241,7 +241,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertPerson(SamplePersons.CreatePerson());
+                var result = sut.AddPerson(SamplePersons.CreatePerson());
 
                 // Assert
                 Assert.True(result.Id > 0);
@@ -267,7 +267,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertProduct(SampleProducts.CreateProduct());
+                var result = sut.AddProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.True(result.Id > 0);
@@ -295,7 +295,7 @@ namespace InfrastructureLayerTestsXunit
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.InsertProduct(SampleProducts.CreateProduct());
+                var result = sut.AddProduct(SampleProducts.CreateProduct());
 
                 // Assert
                 Assert.True(result.Id > 0);

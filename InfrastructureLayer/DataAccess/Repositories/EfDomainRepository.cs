@@ -4,9 +4,8 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Enums;
 using DomainLayer.Models;
-using InfrastructureLayer.DataAccess.Daos;
+using InfrastructureLayer.Factories;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
@@ -24,27 +23,23 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Delete a person.
+        /// Insert a person.
         /// </summary>
-        public void DeletePerson(int id)
+        public Person AddPerson(Person person)
         {
-            Delete<Person>(id);
+            var personDao = PersonFactory.CreatePersonDao(person);
+
+            personDao = Insert(personDao);
+
+            return PersonFactory.CreatePerson(personDao);
         }
 
         /// <summary>
-        /// Delete a product.
+        /// Insert a product.
         /// </summary>
-        public void DeleteProduct(int id)
+        public Product AddProduct(Product product)
         {
-            Delete<Product>(id);
-        }
-
-        /// <summary>
-        /// Fill the data set with data from the data store.
-        /// EF don't support this behaviour.
-        /// </summary>
-        public void FillDataSet()
-        {
+            return Insert(product);
         }
 
         /// <summary>
@@ -100,27 +95,19 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Insert a person.
+        /// Delete a person.
         /// </summary>
-        public Person InsertPerson(Person person)
+        public void RemovePerson(int id)
         {
-            return Insert(person);
+            Delete<Person>(id);
         }
 
         /// <summary>
-        /// Insert a product.
+        /// Delete a product.
         /// </summary>
-        public Product InsertProduct(Product product)
+        public void RemoveProduct(int id)
         {
-            return Insert(product);
-        }
-
-        /// <summary>
-        /// Persist data to the data store.
-        /// EF don't support this behaviour.
-        /// </summary>
-        public void PersistData()
-        {
+            Delete<Product>(id);
         }
 
         /// <summary>

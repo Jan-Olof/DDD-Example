@@ -11,6 +11,6 @@ namespace DomainLayer.Interfaces
         /// <summary>
         /// Gets or sets the products that belong to a person.
         /// </summary>
-        IList<Product> Products { get; set; }
+        IList<ProductInPerson> Products { get; set; }
     }
 }

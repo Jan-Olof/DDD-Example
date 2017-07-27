@@ -15,7 +15,7 @@ namespace DomainLayer.Models
         {
             Name = string.Empty;
             Description = string.Empty;
-            Persons = new List<Person>();
+            Persons = new List<PersonInProduct>();
         }
 
         /// <summary>
@@ -26,6 +26,6 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets or sets the persons belonging to the product.
         /// </summary>
-        public IList<Person> Persons { get; set; }
+        public IList<PersonInProduct> Persons { get; set; }
     }
 }

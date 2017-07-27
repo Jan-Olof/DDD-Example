@@ -1,10 +1,10 @@
-﻿using System;
+﻿// ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable UnusedMember.Global
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using InfrastructureLayer.DataAccess.SqlServer;
-using DomainLayer.Enums;
 
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {

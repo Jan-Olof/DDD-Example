@@ -5,9 +5,7 @@ using System.Linq.Expressions;
 using ApplicationLayer.EventLogging;
 using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Enums;
 using DomainLayer.Models;
-using InfrastructureLayer.DataAccess.Daos;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -32,7 +30,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void DeletePerson(int id)
+        public void RemovePerson(int id)
         {
             throw new NotImplementedException();
         }
@@ -40,7 +38,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void DeleteProduct(int id)
+        public void RemoveProduct(int id)
         {
             var item = _products.SingleOrDefault(e => e.Id == id);
 
@@ -101,7 +99,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return _products.Where(condition.Compile());
         }
 
-        public Person InsertPerson(Person person)
+        public Person AddPerson(Person person)
         {
             throw new NotImplementedException();
         }
@@ -109,7 +107,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert a product.
         /// </summary>
-        public Product InsertProduct(Product product)
+        public Product AddProduct(Product product)
         {
             product.Id = GetNextId();
             _products.Add(product);

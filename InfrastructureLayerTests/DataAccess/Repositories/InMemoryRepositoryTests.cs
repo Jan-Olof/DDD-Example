@@ -6,7 +6,6 @@ using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationLayer.Interfaces.Infrastructure;
 using InfrastructureLayer.Files;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -39,7 +38,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            sut.DeleteProduct(1);
+            sut.RemoveProduct(1);
 
             // Assert
             Assert.AreEqual(2, sut.GetProducts().Count());
@@ -93,7 +92,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut = CreateInMemoryRepository();
 
             // Act
-            var result = sut.InsertProduct(SampleProducts.CreateProduct());
+            var result = sut.AddProduct(SampleProducts.CreateProduct());
 
             // Assert
             Assert.AreEqual(1, result.Id);
@@ -107,7 +106,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             var sut = CreateInMemoryRepository(SampleProducts.CreateProducts());
 
             // Act
-            var result = sut.InsertProduct(SampleProducts.CreateProduct());
+            var result = sut.AddProduct(SampleProducts.CreateProduct());
 
             // Assert
             Assert.AreEqual(4, result.Id);
@@ -144,20 +143,20 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             Assert.AreEqual("Updated description.", sut.GetProducts(e => e.Id == 2).Single().Description);
         }
 
-        private IDomainRepository CreateInMemoryRepository()
+        private InMemoryRepository CreateInMemoryRepository()
         {
             return new InMemoryRepository(
                 new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()),
                 _logger);
         }
 
-        private IDomainRepository CreateInMemoryRepository(IList<Product> products)
+        private InMemoryRepository CreateInMemoryRepository(IList<Product> products)
         {
             var repository = CreateInMemoryRepository();
 
             foreach (var product in products)
             {
-                repository.InsertProduct(product);
+                repository.AddProduct(product);
             }
 
             return repository;

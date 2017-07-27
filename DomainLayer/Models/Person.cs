@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DomainLayer.Interfaces;
 
 namespace DomainLayer.Models
@@ -16,12 +15,12 @@ namespace DomainLayer.Models
         {
             FirstName = string.Empty;
             LastName = string.Empty;
-            Products = new List<Product>();
+            Products = new List<ProductInPerson>();
         }
 
         /// <summary>
         /// Gets or sets the products that belong to a person.
         /// </summary>
-        public IList<Product> Products { get; set; }
+        public IList<ProductInPerson> Products { get; set; }
     }
 }

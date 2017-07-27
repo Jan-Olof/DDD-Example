@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using DomainLayer.Enums;
 using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Infrastructure
@@ -12,19 +11,14 @@ namespace ApplicationLayer.Interfaces.Infrastructure
     public interface IDomainRepository : IDisposable
     {
         /// <summary>
-        /// Delete a person.
+        /// Insert a person.
         /// </summary>
-        void DeletePerson(int id);
+        Person AddPerson(Person person);
 
         /// <summary>
-        /// Delete a product.
+        /// Insert a product.
         /// </summary>
-        void DeleteProduct(int id);
-
-        /// <summary>
-        /// Fill the data set with data from the data store.
-        /// </summary>
-        void FillDataSet();
+        Product AddProduct(Product product);
 
         /// <summary>
         /// Get person from primary key.
@@ -57,19 +51,14 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition);
 
         /// <summary>
-        /// Insert a person.
+        /// Delete a person.
         /// </summary>
-        Person InsertPerson(Person person);
+        void RemovePerson(int id);
 
         /// <summary>
-        /// Insert a product.
+        /// Delete a product.
         /// </summary>
-        Product InsertProduct(Product product);
-
-        /// <summary>
-        /// Persist data to the data store.
-        /// </summary>
-        void PersistData();
+        void RemoveProduct(int id);
 
         /// <summary>
         /// Update a person.

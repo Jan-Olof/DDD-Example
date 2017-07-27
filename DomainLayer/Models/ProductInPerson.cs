@@ -1,22 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using DomainLayer.Enums;
 using DomainLayer.Interfaces;
-using DomainLayer.Models;
 
-namespace InfrastructureLayer.Dtos
+namespace DomainLayer.Models
 {
     /// <summary>
-    /// The product data transfer object.
+    /// A product that belongs to a person.
     /// </summary>
-    public class ProductDto : IProductDto
+    public class ProductInPerson : IProductPerson
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductDto"/> class.
+        /// Initializes a new instance of the <see cref="ProductInPerson"/> class.
         /// </summary>
-        public ProductDto()
+        public ProductInPerson()
         {
             Description = string.Empty;
             Name = string.Empty;
-            Persons = new List<PersonInProduct>();
         }
 
         /// <summary>
@@ -35,8 +33,8 @@ namespace InfrastructureLayer.Dtos
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the persons.
+        /// Gets or sets the role.
         /// </summary>
-        public IList<PersonInProduct> Persons { get; set; }
+        public Role Role { get; set; }
     }
 }

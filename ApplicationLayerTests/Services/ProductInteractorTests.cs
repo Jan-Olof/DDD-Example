@@ -35,7 +35,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldCreateProduct()
         {
             // Arrange
-            _repository.InsertProduct(SampleProducts.CreateProduct())
+            _repository.AddProduct(SampleProducts.CreateProduct())
                 .ReturnsForAnyArgs(SampleProducts.CreateProduct(1));
 
             var sut = CreateProductInteractor();
@@ -52,7 +52,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldDeleteProduct()
         {
             // Arrange
-            _repository.DeleteProduct(3);
+            _repository.RemoveProduct(3);
 
             var sut = CreateProductInteractor();
 

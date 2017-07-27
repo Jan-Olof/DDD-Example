@@ -1,5 +1,4 @@
-﻿using DomainLayer.Models;
-using InfrastructureLayer.DataAccess.Daos;
+﻿using InfrastructureLayer.DataAccess.Daos;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.SqlServer
