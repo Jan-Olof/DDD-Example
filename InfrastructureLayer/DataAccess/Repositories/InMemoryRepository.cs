@@ -7,6 +7,7 @@ using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Enums;
 using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -46,11 +47,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
             int index = _products.IndexOf(item);
             _products.RemoveAt(index);
             _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(item, EventType.Delete)));
-        }
-
-        public void DeleteProductPerson(int productid, int personId, Role role)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -121,11 +117,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(product, EventType.Create)));
 
             return product;
-        }
-
-        public ProductPerson InsertProductPerson(ProductPerson productPerson)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

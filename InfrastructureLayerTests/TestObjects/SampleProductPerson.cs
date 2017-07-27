@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using DomainLayer.Enums;
-using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 
-namespace DomainLayerTests.TestObjects
+namespace InfrastructureLayerTests.TestObjects
 {
     public static class SampleProductPerson
     {

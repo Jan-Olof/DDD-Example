@@ -22,11 +22,6 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         void DeleteProduct(int id);
 
         /// <summary>
-        /// Delete a productperson.
-        /// </summary>
-        void DeleteProductPerson(int productid, int personId, Role role);
-
-        /// <summary>
         /// Fill the data set with data from the data store.
         /// </summary>
         void FillDataSet();
@@ -70,11 +65,6 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         /// Insert a product.
         /// </summary>
         Product InsertProduct(Product product);
-
-        /// <summary>
-        /// Insert a productperson.
-        /// </summary>
-        ProductPerson InsertProductPerson(ProductPerson productPerson);
 
         /// <summary>
         /// Persist data to the data store.

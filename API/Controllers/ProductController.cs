@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using API.Models;
+using InfrastructureLayer.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

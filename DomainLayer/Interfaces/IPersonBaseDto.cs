@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using DomainLayer.Models;
-
-namespace DomainLayer.Interfaces
+﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// The person properties interface.
     /// </summary>
-    public interface IPersonProps : IIdentifier, IName
+    public interface IPersonBaseDto : IIdentifier, IName
     {
         /// <summary>
         /// Gets or sets the first name of the person.
@@ -17,10 +14,5 @@ namespace DomainLayer.Interfaces
         /// Gets or sets the last name of the person.
         /// </summary>
         string LastName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ProductPersons.
-        /// </summary>
-        List<ProductPerson> ProductPersons { get; set; }
     }
 }

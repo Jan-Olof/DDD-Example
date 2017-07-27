@@ -9,7 +9,7 @@ using DomainLayer.Enums;
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     [DbContext(typeof(ExampleContext))]
-    [Migration("20170717140803_Initial")]
+    [Migration("20170727082733_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DomainLayer.Models.Person", b =>
+            modelBuilder.Entity("InfrastructureLayer.DataAccess.Daos.PersonDao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -34,7 +34,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("DomainLayer.Models.Product", b =>
+            modelBuilder.Entity("InfrastructureLayer.DataAccess.Daos.ProductDao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -50,7 +50,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+            modelBuilder.Entity("InfrastructureLayer.DataAccess.Daos.ProductPerson", b =>
                 {
                     b.Property<int>("PersonId");
 
@@ -65,14 +65,14 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                     b.ToTable("ProductPersons");
                 });
 
-            modelBuilder.Entity("DomainLayer.Models.ProductPerson", b =>
+            modelBuilder.Entity("InfrastructureLayer.DataAccess.Daos.ProductPerson", b =>
                 {
-                    b.HasOne("DomainLayer.Models.Person", "Person")
+                    b.HasOne("InfrastructureLayer.DataAccess.Daos.PersonDao", "Person")
                         .WithMany("ProductPersons")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("DomainLayer.Models.Product", "Product")
+                    b.HasOne("InfrastructureLayer.DataAccess.Daos.ProductDao", "Product")
                         .WithMany("ProductPersons")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);

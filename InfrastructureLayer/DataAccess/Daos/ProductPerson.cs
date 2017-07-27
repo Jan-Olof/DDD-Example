@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Linq.Expressions;
 using DomainLayer.Enums;
-using DomainLayer.Interfaces;
 
-namespace DomainLayer.Models
+namespace InfrastructureLayer.DataAccess.Daos
 {
     /// <summary>
-    /// Handle relations between product and person.
+    /// Handle many-to-many relations between product and person.
     /// </summary>
-    public class ProductPerson : IProductPerson
+    public class ProductPerson
     {
         /// <summary>
         /// Gets or sets the person.
         /// </summary>
-        public Person Person { get; set; }
+        public PersonDao Person { get; set; }
 
         /// <summary>
         /// Gets or sets the person id.
@@ -23,7 +22,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets or sets the product.
         /// </summary>
-        public Product Product { get; set; }
+        public ProductDao Product { get; set; }
 
         /// <summary>
         /// Gets or sets the product id.

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Enums;
 using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
@@ -39,14 +40,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Delete a product person.
-        /// </summary>
-        public void DeleteProductPerson(int productid, int personId, Role role)
-        {
-            Delete(new ProductPerson().Get(productid, personId, role)); //TODO: Test
-        }
-
-        /// <summary>
         /// Fill the data set with data from the data store.
         /// EF don't support this behaviour.
         /// </summary>
@@ -67,8 +60,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Person> GetPersons()
         {
-            return Get<Person>()
-                .Include(p => p.ProductPersons);
+            return Get<Person>();
+            //.Include(p => p.ProductPersons);
         }
 
         /// <summary>
@@ -76,8 +69,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
         {
-            return Get(condition)
-                .Include(p => p.ProductPersons);
+            return Get(condition);
+            //.Include(p => p.ProductPersons);
         }
 
         /// <summary>
@@ -93,8 +86,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts()
         {
-            return Get<Product>()
-                .Include(p => p.ProductPersons);
+            return Get<Product>();
+            //.Include(p => p.ProductPersons);
         }
 
         /// <summary>
@@ -102,8 +95,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
         {
-            return Get(condition)
-                .Include(p => p.ProductPersons);
+            return Get(condition);
+            //.Include(p => p.ProductPersons);
         }
 
         /// <summary>
@@ -120,14 +113,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public Product InsertProduct(Product product)
         {
             return Insert(product);
-        }
-
-        /// <summary>
-        /// Insert a product person.
-        /// </summary>
-        public ProductPerson InsertProductPerson(ProductPerson productPerson)
-        {
-            return Insert(productPerson);
         }
 
         /// <summary>

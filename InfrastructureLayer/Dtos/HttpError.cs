@@ -1,12 +1,12 @@
-﻿namespace API.Models
+﻿namespace InfrastructureLayer.Dtos
 {
     /// <summary>
-    /// This class is used to deliver an exception over HTTP.
+    /// This class is used to deliver an exception as a DTO.
     /// </summary>
     public class HttpError
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// Initializes a new instance of the <see cref="HttpError"/> class.
         /// </summary>
         public HttpError()
         {

@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using ApplicationLayer.Factories;
-using API.Factories;
+using InfrastructureLayer.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

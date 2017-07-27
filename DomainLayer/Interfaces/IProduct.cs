@@ -1,9 +1,11 @@
-﻿namespace DomainLayer.Interfaces
+﻿using DomainLayer.Models;
+
+namespace DomainLayer.Interfaces
 {
     /// <summary>
     /// The product interface.
     /// </summary>
-    public interface IProduct : IProductFunctions, IProductProps
+    public interface IProduct : IProductBase<Product>, IProductDto
     {
     }
 }

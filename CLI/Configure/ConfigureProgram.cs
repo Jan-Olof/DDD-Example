@@ -5,6 +5,7 @@ using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
 using InfrastructureLayer.Files;
@@ -26,22 +27,17 @@ namespace CLI.Configure
         /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
-            services.AddTransient<IProductFunctions, Product>();
-            services.AddTransient<IProductProps, Product>();
+            //services.AddTransient<IProductFunctions, Product>();
+            services.AddTransient<IProductDto, Product>();
             services.AddTransient<IProduct, Product>();
             services.AddTransient<IList<Product>, List<Product>>();
             services.AddTransient<IUpdateMapper<Product>, Product>();
 
-            services.AddTransient<IPersonFunctions, Person>();
-            services.AddTransient<IPersonProps, Person>();
+            //services.AddTransient<IPersonFunctions, Person>();
+            services.AddTransient<IPersonDto, Person>();
             services.AddTransient<IPerson, Person>();
             services.AddTransient<IList<Person>, List<Person>>();
             services.AddTransient<IUpdateMapper<Person>, Person>();
-
-            services.AddTransient<IProductPersonFunctions, ProductPerson>();
-            services.AddTransient<IProductPersonProps, ProductPerson>();
-            services.AddTransient<IProductPerson, ProductPerson>();
-            services.AddTransient<IList<ProductPerson>, List<ProductPerson>>();
 
             services.AddTransient<IProductInteractor, ProductInteractor>();
 

@@ -99,7 +99,7 @@ namespace CLI.UserInterface
             Console.WriteLine();
         }
 
-        private static string GetDescriptionForUpdate(IProductProps product)
+        private static string GetDescriptionForUpdate(IProductDto product)
         {
             Console.Write("New description? ");
             string description = Console.ReadLine();
@@ -122,7 +122,7 @@ namespace CLI.UserInterface
             return name;
         }
 
-        private static string HandleEmptyDescription(IProductProps product)
+        private static string HandleEmptyDescription(IProductDto product)
         {
             string description = product.Description;
 

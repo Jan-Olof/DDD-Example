@@ -5,6 +5,7 @@ using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
+using InfrastructureLayerTests.TestObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -76,35 +77,6 @@ namespace InfrastructureLayerTestsXunit
                 Assert.Equal(2, result.Count);
                 Assert.Equal("Desc1", result.Single(p => p.Name == "No1").Description);
                 Assert.Equal("Desc3", result.Single(p => p.Name == "No3").Description);
-            }
-        }
-
-        [Fact]
-        public void TestShouldDeleteProductPerson()
-        {
-            // Arrange
-            var options = SetDbContextOptions();
-            SeedDatabase(options);
-
-            using (var context = new ExampleContext(options))
-            {
-                var sut = CreateEfRepository(context);
-
-                int prodId = sut.GetProducts(new Product().Get("No1")).Single().Id;
-                int persId = sut.GetPersons(new Person().Get("First Person")).Single().Id;
-
-                // Act
-                sut.DeleteProductPerson(prodId, persId, Role.Actor);
-            }
-
-            // Assert
-            using (var context = new ExampleContext(options))
-            {
-                var result = context.ProductPersons.ToList();
-
-                Assert.Equal(2, result.Count);
-                Assert.Equal(Role.Actor, result.Single(p => p.Role == Role.Actor).Role);
-                Assert.Equal(Role.Director, result.Single(p => p.Role == Role.Director).Role);
             }
         }
 
@@ -282,33 +254,6 @@ namespace InfrastructureLayerTestsXunit
 
                 Assert.Equal(1, result.Count);
                 Assert.Equal("First Person", result.Single().Name);
-            }
-        }
-
-        [Fact]
-        public void TestShouldInsertProductPerson()
-        {
-            // Arrange
-            var options = SetDbContextOptions();
-            SeedDatabase(options);
-
-            using (var context = new ExampleContext(options))
-            {
-                var sut = CreateEfRepository(context);
-
-                // Act
-                var result = sut.InsertProductPerson(SampleProductPerson.CreateProductPerson(3, 3, Role.Producer));
-
-                // Assert
-                Assert.Equal(Role.Producer, result.Role);
-            }
-
-            using (var context = new ExampleContext(options))
-            {
-                var result = context.ProductPersons.ToList();
-
-                Assert.Equal(4, result.Count);
-                Assert.Equal(Role.Producer, result.Single(p => p.ProductId == 3).Role);
             }
         }
 

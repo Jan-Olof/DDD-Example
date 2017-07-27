@@ -1,6 +1,5 @@
-﻿// ReSharper disable UnusedMember.Global
-// ReSharper disable RedundantArgumentDefaultValue
-
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -8,18 +7,6 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {
     public partial class Initial : Migration
     {
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "ProductPersons");
-
-            migrationBuilder.DropTable(
-                name: "Persons");
-
-            migrationBuilder.DropTable(
-                name: "Products");
-        }
-
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -79,6 +66,18 @@ namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
                 name: "IX_ProductPersons_ProductId",
                 table: "ProductPersons",
                 column: "ProductId");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ProductPersons");
+
+            migrationBuilder.DropTable(
+                name: "Persons");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }

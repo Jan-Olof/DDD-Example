@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.SqlServer
@@ -13,19 +14,19 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// </summary>
         public static void Configure(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<PersonDao>()
                 .HasKey(person => person.Id);
 
-            modelBuilder.Entity<Person>()
-                .Ignore(person => person.Name);
-
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<PersonDao>()
                 .Property(person => person.FirstName)
                 .HasMaxLength(50);
 
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<PersonDao>()
                 .Property(person => person.LastName)
                 .HasMaxLength(50);
+
+            modelBuilder.Entity<PersonDao>()
+               .Ignore(person => person.Name);
         }
     }
 }

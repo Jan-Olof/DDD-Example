@@ -42,12 +42,12 @@ namespace InfrastructureLayerTests.TestObjects
             {
                 context.Database.EnsureDeleted();
 
-                context.Products.Add(SampleProducts.CreateProduct(0, "No1", "Desc1"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No2", "Desc2"));
-                context.Products.Add(SampleProducts.CreateProduct(0, "No3", "Desc3"));
-                context.Persons.Add(SamplePersons.CreatePerson());
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Second"));
-                context.Persons.Add(SamplePersons.CreatePerson(0, "Third"));
+                context.Products.Add(SampleProductDaos.CreateProduct(0, "No1", "Desc1"));
+                context.Products.Add(SampleProductDaos.CreateProduct(0, "No2", "Desc2"));
+                context.Products.Add(SampleProductDaos.CreateProduct(0, "No3", "Desc3"));
+                context.Persons.Add(SamplePersonDaos.CreatePerson());
+                context.Persons.Add(SamplePersonDaos.CreatePerson(0, "Second"));
+                context.Persons.Add(SamplePersonDaos.CreatePerson(0, "Third"));
 
                 context.SaveChanges();
 

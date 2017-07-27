@@ -1,7 +1,7 @@
 ﻿using System;
-using API.Models;
+using InfrastructureLayer.Dtos;
 
-namespace API.Factories
+namespace InfrastructureLayer.Factories
 {
     /// <summary>
     /// Class that builds HttpError objects.

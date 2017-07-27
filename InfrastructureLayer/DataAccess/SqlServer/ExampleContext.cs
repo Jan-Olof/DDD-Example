@@ -1,7 +1,7 @@
 ﻿// ReSharper disable ObjectCreationAsStatement
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.SqlServer
@@ -29,7 +29,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// <summary>
         /// Gets or sets the persons.
         /// </summary>
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<PersonDao> Persons { get; set; }
 
         /// <summary>
         /// Gets or sets the productpersons.
@@ -39,7 +39,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// <summary>
         /// Gets or sets the products.
         /// </summary>
-        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductDao> Products { get; set; }
 
         /// <summary>
         /// Override this method to configure the database (and other options) to be used
