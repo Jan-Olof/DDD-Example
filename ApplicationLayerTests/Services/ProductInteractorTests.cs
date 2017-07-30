@@ -7,8 +7,6 @@ using NSubstitute;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Interfaces;
 
-// ReSharper disable UnusedMember.Global
-
 namespace ApplicationLayerTests.Services
 {
     [TestClass]
@@ -83,11 +81,8 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetProductFromId()
         {
             // Arrange
-            _model.Get(3)
-                .Returns(i => i.Id == 3);
-
             _repository.GetProduct(3)
-                .Returns(SampleProducts.CreateProduct(3, "ThirdProduct"));
+                .ReturnsForAnyArgs(SampleProducts.CreateProduct(3, "ThirdProduct"));
 
             var sut = CreateProductInteractor();
 
@@ -102,10 +97,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetProductFromName()
         {
             // Arrange
-            _model.Get("ThirdProduct")
-                .Returns(i => i.Name == "ThirdProduct");
-
-            _repository.GetProducts(i => i.Name == "ThirdProduct")
+            _repository.GetProducts("ThirdProduct")
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -121,10 +113,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldSearchProductFromName()
         {
             // Arrange
-            _model.Search("Third")
-                .Returns(i => i.Name == "Third");
-
-            _repository.GetProducts(i => i.Name.Contains("Third"))
+            _repository.GetProducts("Third", true)
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -141,7 +130,7 @@ namespace ApplicationLayerTests.Services
         {
             // Arrange
             _repository.UpdateProduct(SampleProducts.CreateProduct(3));
-            _repository.GetProduct(3).Returns(SampleProducts.CreateProduct(3));
+            _repository.GetProduct(3).ReturnsForAnyArgs(SampleProducts.CreateProduct(3));
 
             var sut = CreateProductInteractor();
 

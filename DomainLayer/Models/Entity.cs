@@ -22,7 +22,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Defines how to get entities by id.
         /// </summary>
-        public Expression<Func<T, bool>> Get(int id)
+        public static Expression<Func<T, bool>> Get(int id)
         {
             return entity => entity.Id == id;
         }
@@ -30,7 +30,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Defines how to get entities by name.
         /// </summary>
-        public Expression<Func<T, bool>> Get(string name)
+        public static Expression<Func<T, bool>> Get(string name)
         {
             return entity => entity.Name == name;
         }
@@ -38,7 +38,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Defines how to search entities by name.
         /// </summary>
-        public Expression<Func<T, bool>> Search(string name)
+        public static Expression<Func<T, bool>> Search(string name)
         {
             return entity => entity.Name.ToLower().Contains(name.ToLower());
         }

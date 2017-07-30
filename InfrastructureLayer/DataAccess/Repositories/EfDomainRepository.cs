@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ApplicationLayer.EventLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Daos;
 using InfrastructureLayer.Factories;
 
 namespace InfrastructureLayer.DataAccess.Repositories
@@ -39,15 +40,18 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public Product AddProduct(Product product)
         {
-            return Insert(product);
+            var productDao = ProductFactory.CreateProductDao(product);
+
+            productDao = Insert(productDao);
+
+            return ProductFactory.CreateProduct(productDao);
         }
 
-        /// <summary>
-        /// Get person from primary key.
-        /// </summary>
         public Person GetPerson(int id)
         {
-            return Get<Person>(id);
+            var personDao = Get<PersonDao>(id);
+
+            return PersonFactory.CreatePerson(personDao);
         }
 
         /// <summary>
@@ -55,25 +59,30 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Person> GetPersons()
         {
-            return Get<Person>();
-            //.Include(p => p.ProductPersons);
+            var personDaos = Get<PersonDao>()
+                .Include(p => p.ProductPersons)
+                .ThenInclude(p => p.Product);
+
+            return personDaos.Select(PersonFactory.CreatePerson);
         }
 
         /// <summary>
         /// Get persons based on a condition.
         /// </summary>
-        public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
+        public IEnumerable<Person> GetPersons(string name, bool isSearch = false)
         {
-            return Get(condition);
-            //.Include(p => p.ProductPersons);
+            var personDaos = Get(isSearch ? PersonDao.Search(name) : PersonDao.Get(name))
+                .Include(p => p.ProductPersons)
+                .ThenInclude(p => p.Product);
+
+            return personDaos.Select(PersonFactory.CreatePerson);
         }
 
-        /// <summary>
-        /// Get product from primary key.
-        /// </summary>
         public Product GetProduct(int id)
         {
-            return Get<Product>(id);
+            var productDao = Get<ProductDao>(id);
+
+            return ProductFactory.CreateProduct(productDao);
         }
 
         /// <summary>
@@ -81,17 +90,23 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts()
         {
-            return Get<Product>();
-            //.Include(p => p.ProductPersons);
+            var productDaos = Get<ProductDao>()
+                .Include(p => p.ProductPersons)
+                .ThenInclude(p => p.Person);
+
+            return productDaos.Select(ProductFactory.CreateProduct);
         }
 
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
-        public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
+        public IEnumerable<Product> GetProducts(string name, bool isSearch = false)
         {
-            return Get(condition);
-            //.Include(p => p.ProductPersons);
+            var productDaos = Get(isSearch ? ProductDao.Search(name) : ProductDao.Get(name))
+                .Include(p => p.ProductPersons)
+                .ThenInclude(p => p.Person);
+
+            return productDaos.Select(ProductFactory.CreateProduct);
         }
 
         /// <summary>
@@ -99,7 +114,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void RemovePerson(int id)
         {
-            Delete<Person>(id);
+            Delete<PersonDao>(id);
         }
 
         /// <summary>
@@ -107,7 +122,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void RemoveProduct(int id)
         {
-            Delete<Product>(id);
+            Delete<ProductDao>(id);
         }
 
         /// <summary>
@@ -115,7 +130,13 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void UpdatePerson(Person person)
         {
-            Update(person);
+            var personDao = PersonFactory.CreatePersonDao(person);
+
+            var daoFromDb = Update(personDao);
+
+            daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, personDao.ProductPersons);
+
+            SaveChanges(personDao, EventType.Update);
         }
 
         /// <summary>
@@ -123,7 +144,28 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void UpdateProduct(Product product)
         {
-            Update(product);
+            var productDao = ProductFactory.CreateProductDao(product);
+
+            var daoFromDb = Update(productDao);
+
+            daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, productDao.ProductPersons);
+
+            SaveChanges(productDao, EventType.Update);
+        }
+
+        private static List<ProductPerson> UpdateProductPerson(List<ProductPerson> fromDb, List<ProductPerson> updated)
+        {
+            var notInUpdated = fromDb.Except(updated).ToList();
+            var notInDb = updated.Except(fromDb).ToList();
+
+            foreach (var remove in notInUpdated)
+            {
+                fromDb.Remove(remove);
+            }
+
+            fromDb.AddRange(notInDb);
+
+            return fromDb;
         }
     }
 }

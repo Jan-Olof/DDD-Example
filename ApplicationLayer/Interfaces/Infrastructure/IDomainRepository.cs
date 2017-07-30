@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Infrastructure
@@ -31,9 +30,9 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         IEnumerable<Person> GetPersons();
 
         /// <summary>
-        /// Get persons based on a condition.
+        /// Get or search persons from name.
         /// </summary>
-        IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition);
+        IEnumerable<Person> GetPersons(string name, bool isSearch = false);
 
         /// <summary>
         /// Get product from primary key.
@@ -46,9 +45,9 @@ namespace ApplicationLayer.Interfaces.Infrastructure
         IEnumerable<Product> GetProducts();
 
         /// <summary>
-        /// Get products based on a condition.
+        /// Get products from name.
         /// </summary>
-        IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition);
+        IEnumerable<Product> GetProducts(string name, bool isSearch = false);
 
         /// <summary>
         /// Delete a person.

@@ -14,13 +14,13 @@ namespace DomainLayerTests.Models
         public void TestShouldGetProductFromId()
         {
             // Arrange
-            var sut = CreateProduct();
+            var products = SampleProducts.CreateProducts();
 
             // Act
-            var result = sut.Get(2);
+            var result = Product.Get(2);
 
             // Assert
-            var product = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());
+            var product = products.SingleOrDefault(result.Compile());
 
             Assert.AreEqual("SecondProduct", product.Name);
         }
@@ -29,13 +29,13 @@ namespace DomainLayerTests.Models
         public void TestShouldGetProductFromName()
         {
             // Arrange
-            var sut = CreateProduct();
+            var products = SampleProducts.CreateProducts();
 
             // Act
-            var result = sut.Get("SecondProduct");
+            var result = Product.Get("SecondProduct");
 
             // Assert
-            var product = SampleProducts.CreateProducts().SingleOrDefault(result.Compile());
+            var product = products.SingleOrDefault(result.Compile());
 
             Assert.AreEqual(2, product.Id);
         }
@@ -59,13 +59,13 @@ namespace DomainLayerTests.Models
         public void TestShouldSearchProductFromName()
         {
             // Arrange
-            var sut = CreateProduct();
+            var allProducts = SampleProducts.CreateProducts();
 
             // Act
-            var result = sut.Search("Second");
+            var result = Product.Search("Second");
 
             // Assert
-            var products = SampleProducts.CreateProducts().Where(result.Compile());
+            var products = allProducts.Where(result.Compile());
 
             Assert.AreEqual(2, products.Single().Id);
         }

@@ -3,7 +3,6 @@ using System.Linq;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Daos;
 using InfrastructureLayer.Dtos;
-using static InfrastructureLayer.Factories.ProductPersonFactory;
 
 namespace InfrastructureLayer.Factories
 {
@@ -36,7 +35,7 @@ namespace InfrastructureLayer.Factories
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                ProductPersons = CreateProductPersons(product)
+                ProductPersons = CreateProductPersons(product.Persons, product.Id)
             };
         }
 
@@ -56,12 +55,12 @@ namespace InfrastructureLayer.Factories
 
         private static IList<PersonInProduct> CreatePersonsInProduct(IEnumerable<ProductPerson> productPersons)
         {
-            return productPersons.Select(CreatePersonInProduct).ToList();
+            return productPersons.Select(ProductPersonFactory.CreatePersonInProduct).ToList();
         }
 
-        private static List<ProductPerson> CreateProductPersons(Product product)
+        private static List<ProductPerson> CreateProductPersons(IEnumerable<PersonInProduct> personsInProduct, int productId)
         {
-            return product.Persons.Select(p => CreateProductPerson(p, product.Id)).ToList();
+            return personsInProduct.Select(p => ProductPersonFactory.CreateProductPerson(p, productId)).ToList();
         }
     }
 }

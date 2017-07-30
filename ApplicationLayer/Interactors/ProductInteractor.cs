@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Factories;
@@ -100,10 +99,10 @@ namespace ApplicationLayer.Interactors
             {
                 return _repository.GetProduct(id);
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
                 _logger.LogError(ProductEventId(), e, e.Message);
-                throw new TooManyFoundException(e.Message, e);
+                throw;
             }
         }
 
@@ -114,7 +113,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.GetProducts(_model.Get(name)).ToList();
+                return _repository.GetProducts(name).ToList();
             }
             catch (Exception e)
             {
@@ -130,7 +129,7 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                return _repository.GetProducts(_model.Search(name)).ToList();
+                return _repository.GetProducts(name, true).ToList();
             }
             catch (Exception e)
             {

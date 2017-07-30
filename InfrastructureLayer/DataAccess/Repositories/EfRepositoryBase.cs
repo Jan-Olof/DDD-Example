@@ -52,7 +52,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
             _context.Remove(entity);
 
-            SaveChanges($"No changes in context when deleting object with id {entity.Id}.");
+            SaveChanges(entity, EventType.Delete);
 
             _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete), IgnoreReferenced()));
         }
@@ -60,7 +60,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Delete an entity.
         /// </summary>
-        protected void Delete<T>(Expression<Func<T, bool>> condition) where T : class
+        protected void Delete<T>(Expression<Func<T, bool>> condition) where T : class, IIdentifier
         {
             try
             {
@@ -73,7 +73,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
 
                 _context.Remove(entity);
 
-                SaveChanges("No changes in context when deleting object.");
+                SaveChanges(entity, EventType.Delete);
 
                 _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Delete), IgnoreReferenced()));
             }
@@ -111,11 +111,11 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Insert a new entity.
         /// </summary>
-        protected T Insert<T>(T entity) where T : class
+        protected T Insert<T>(T entity) where T : class, IIdentifier
         {
             _context.Add(entity);
 
-            SaveChanges("No changes in context when adding new object.");
+            SaveChanges(entity, EventType.Create);
 
             _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Create), IgnoreReferenced()));
 
@@ -123,17 +123,43 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Update an entity object. This is based on a condition defining how to find the object and a update mapping.
+        /// Save change, handle exceptions that it might cause and log the event.
         /// </summary>
-        protected void Update<T>(T entity) where T : class, IIdentifier, IUpdateMapper<T>
+        protected void SaveChanges<T>(T entity, EventType eventType) where T : class, IIdentifier
+        {
+            try
+            {
+                int changes = _context.SaveChanges();
+
+                if (changes == 0)
+                {
+                    throw new NoChangesException($"No changes in context after SaveChanges when doing {eventType}. Type: {typeof(T)} Id: {entity.Id}.");
+                }
+
+                _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, eventType), IgnoreReferenced()));
+            }
+            catch (DbUpdateException ex)
+            {
+                LogExceptionWithInnerException(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update an entity object, and maybe save changes in the database.
+        /// </summary>
+        protected T Update<T>(T entity, bool saveChanges = false) where T : class, IIdentifier, IUpdateMapper<T>
         {
             var entityToUpdate = FindEntity<T>(entity.Id);
 
             entity.MapUpdate(entity, entityToUpdate);
 
-            SaveChanges($"No changes in context after SaveChanges when updating id {entity.Id}.");
+            if (saveChanges)
+            {
+                SaveChanges(entityToUpdate, EventType.Update);
+            }
 
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<T>.CreateEventObject(entity, EventType.Update), IgnoreReferenced()));
+            return entityToUpdate;
         }
 
         /// <summary>
@@ -152,47 +178,28 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         private T FindEntity<T>(int id) where T : class
         {
-            var entityToUpdate = _context.Set<T>().Find(id);
+            var entity = _context.Set<T>().Find(id);
 
-            if (entityToUpdate == null)
+            if (entity == null)
             {
                 throw new NotFoundException($"Could not find an object with id {id}.");
             }
 
-            return entityToUpdate;
+            return entity;
         }
 
         /// <summary>
-        /// Log an exception and include an inner exception.
+        /// Log an exception and include all inner exception.
         /// </summary>
         private void LogExceptionWithInnerException(Exception ex)
         {
             _logger.LogError(EventIdFactory.PersistenceEventId(), ex, ex.Message);
 
-            if (ex.InnerException != null)
+            var iex = ex.InnerException;
+            while (iex != null)
             {
-                _logger.LogError(EventIdFactory.PersistenceEventId(), ex.InnerException, $"Inner exception message: {ex.InnerException.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Save change and handle exceptions that it might cause.
-        /// </summary>
-        private void SaveChanges(string noChangesExceptionMsg = "No changes in context after SaveChanges.")
-        {
-            try
-            {
-                int changes = _context.SaveChanges();
-
-                if (changes == 0)
-                {
-                    throw new NoChangesException(noChangesExceptionMsg);
-                }
-            }
-            catch (DbUpdateException ex)
-            {
-                LogExceptionWithInnerException(ex);
-                throw;
+                _logger.LogError(EventIdFactory.PersistenceEventId(), iex, $"Inner exception message: {iex.Message}");
+                iex = iex.InnerException;
             }
         }
     }

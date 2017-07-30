@@ -28,14 +28,13 @@ namespace DomainLayerTests.Models
         public void TestShouldGetPersonFromId()
         {
             // Arrange
-
-            var sut = CreatePerson();
+            var persons = SamplePersons.CreatePersons();
 
             // Act
-            var result = sut.Get(2);
+            var result = Person.Get(2);
 
             // Assert
-            var person = SamplePersons.CreatePersons().SingleOrDefault(result.Compile());
+            var person = persons.SingleOrDefault(result.Compile());
 
             Assert.AreEqual("Second Person", person.Name);
         }
@@ -44,14 +43,13 @@ namespace DomainLayerTests.Models
         public void TestShouldGetPersonFromName()
         {
             // Arrange
-
-            var sut = CreatePerson();
+            var persons = SamplePersons.CreatePersons();
 
             // Act
-            var result = sut.Get("Second Person");
+            var result = Person.Get("Second Person");
 
             // Assert
-            var person = SamplePersons.CreatePersons().SingleOrDefault(result.Compile());
+            var person = persons.SingleOrDefault(result.Compile());
 
             Assert.AreEqual(2, person.Id);
         }
@@ -76,13 +74,13 @@ namespace DomainLayerTests.Models
         public void TestShouldSearchPersonFromName()
         {
             // Arrange
-            var sut = CreatePerson();
+            var allPersons = SamplePersons.CreatePersons();
 
             // Act
-            var result = sut.Search("Sec");
+            var result = Person.Search("Sec");
 
             // Assert
-            var persons = SamplePersons.CreatePersons().Where(result.Compile());
+            var persons = allPersons.Where(result.Compile());
 
             Assert.AreEqual(2, persons.Single().Id);
         }

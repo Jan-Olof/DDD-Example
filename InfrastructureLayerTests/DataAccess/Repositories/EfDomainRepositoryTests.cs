@@ -1,8 +1,5 @@
-// ReSharper disable UnusedMember.Global
-
 using System;
 using System.Linq;
-using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
@@ -46,7 +43,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var person = sut.GetPersons(p => p.FirstName == "First").Single();
+                var person = sut.GetPersons("First", true).Single();
 
                 // Act
                 sut.RemovePerson(person.Id);
@@ -73,7 +70,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.GetProducts(p => p.Name == "No2").Single();
+                var product = sut.GetProducts("No2").Single();
 
                 // Act
                 sut.RemoveProduct(product.Id);
@@ -138,7 +135,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var person = sut.GetPersons(p => p.FirstName == "First").Single();
+                var person = sut.GetPersons("First", true).Single();
 
                 // Act
                 var result = sut.GetPerson(person.Id);
@@ -159,7 +156,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.GetPersons(p => p.FirstName == "Second").ToList();
+                var result = sut.GetPersons("Second", true).ToList();
 
                 // Assert
                 Assert.AreEqual(1, result.Count);
@@ -177,7 +174,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.GetProducts(p => p.Name == "No1").Single();
+                var product = sut.GetProducts("No1").Single();
 
                 // Act
                 var result = sut.GetProduct(product.Id);
@@ -198,7 +195,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 var sut = CreateEfRepository(context);
 
                 // Act
-                var result = sut.GetProducts(p => p.Name == "No2").ToList();
+                var result = sut.GetProducts("No2").ToList();
 
                 // Assert
                 Assert.AreEqual(1, result.Count);
@@ -322,7 +319,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var person = sut.GetPersons(p => p.FirstName == "Second").Single();
+                var person = sut.GetPersons("Second", true).Single();
                 id = person.Id;
 
                 // Act
@@ -349,7 +346,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                int id = sut.GetProducts(new Product().Get("No2")).Single().Id;
+                int id = sut.GetProducts("No2").Single().Id;
 
                 // Act
                 sut.UpdateProduct(SampleProducts.CreateProduct(id, "No2", "Updated description."));

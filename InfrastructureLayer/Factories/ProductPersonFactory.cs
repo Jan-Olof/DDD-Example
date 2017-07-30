@@ -24,6 +24,20 @@ namespace InfrastructureLayer.Factories
         }
 
         /// <summary>
+        /// Build a ProductInPerson from a ProductPerson.
+        /// </summary>
+        public static ProductInPerson CreateProductInPerson(ProductPerson productPerson)
+        {
+            return new ProductInPerson
+            {
+                Id = productPerson.Product.Id,
+                Name = productPerson.Product.Name,
+                Description = productPerson.Product.Description,
+                Role = productPerson.Role
+            };
+        }
+
+        /// <summary>
         /// Build a ProductPerson from a PersonInProduct.
         /// </summary>
         public static ProductPerson CreateProductPerson(PersonInProduct personInProduct, int productId)
@@ -33,6 +47,19 @@ namespace InfrastructureLayer.Factories
                 PersonId = personInProduct.Id,
                 ProductId = productId,
                 Role = personInProduct.Role
+            };
+        }
+
+        /// <summary>
+        /// Build a ProductPerson from a PersonInProduct.
+        /// </summary>
+        public static ProductPerson CreateProductPerson(ProductInPerson productInPerson, int personId)
+        {
+            return new ProductPerson
+            {
+                PersonId = productInPerson.Id,
+                ProductId = personId,
+                Role = productInPerson.Role
             };
         }
     }

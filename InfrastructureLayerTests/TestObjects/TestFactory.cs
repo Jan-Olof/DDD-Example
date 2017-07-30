@@ -56,9 +56,9 @@ namespace InfrastructureLayerTests.TestObjects
                 int pers1Id = context.Persons.Single(p => p.FirstName == "First").Id;
                 int pers2Id = context.Persons.Single(p => p.FirstName == "Second").Id;
 
-                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod1Id, pers1Id, Role.Actor));
-                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod2Id, pers1Id, Role.Actor));
-                context.ProductPersons.Add(SampleProductPerson.CreateProductPerson(prod2Id, pers2Id, Role.Director));
+                context.ProductPersons.Add(SampleProductPersons.CreateProductPerson(prod1Id, pers1Id, Role.Actor));
+                context.ProductPersons.Add(SampleProductPersons.CreateProductPerson(prod2Id, pers1Id, Role.Actor));
+                context.ProductPersons.Add(SampleProductPersons.CreateProductPerson(prod2Id, pers2Id, Role.Director));
 
                 context.SaveChanges();
             }

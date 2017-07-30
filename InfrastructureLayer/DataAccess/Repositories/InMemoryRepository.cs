@@ -14,7 +14,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository.
     /// </summary>
-    public class InMemoryRepository : IDomainRepository // TODO: Add person.
+    public class InMemoryRepository : IDomainRepository // TODO: Fix NotImplementedException and remove not used!.
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
         private readonly ILogger _logger;
@@ -30,21 +30,22 @@ namespace InfrastructureLayer.DataAccess.Repositories
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void RemovePerson(int id)
+        public Person AddPerson(Person person)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Delete a product.
+        /// Insert a product.
         /// </summary>
-        public void RemoveProduct(int id)
+        public Product AddProduct(Product product)
         {
-            var item = _products.SingleOrDefault(e => e.Id == id);
+            product.Id = GetNextId();
+            _products.Add(product);
 
-            int index = _products.IndexOf(item);
-            _products.RemoveAt(index);
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(item, EventType.Delete)));
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(product, EventType.Create)));
+
+            return product;
         }
 
         /// <summary>
@@ -73,12 +74,22 @@ namespace InfrastructureLayer.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Person> GetPersons(string name, bool isSearch = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
         public Product GetProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetProducts(string name, bool isSearch = false)
         {
             throw new NotImplementedException();
         }
@@ -99,30 +110,29 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return _products.Where(condition.Compile());
         }
 
-        public Person AddPerson(Person person)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Insert a product.
-        /// </summary>
-        public Product AddProduct(Product product)
-        {
-            product.Id = GetNextId();
-            _products.Add(product);
-
-            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(product, EventType.Create)));
-
-            return product;
-        }
-
         /// <summary>
         /// Persist data to the data store.
         /// </summary>
         public void PersistData()
         {
             _fileHandler.Write(_products);
+        }
+
+        public void RemovePerson(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Delete a product.
+        /// </summary>
+        public void RemoveProduct(int id)
+        {
+            var item = _products.SingleOrDefault(e => e.Id == id);
+
+            int index = _products.IndexOf(item);
+            _products.RemoveAt(index);
+            _logger.LogInformation(JsonConvert.SerializeObject(EventObjectFactory<Product>.CreateEventObject(item, EventType.Delete)));
         }
 
         public void UpdatePerson(Person person)
@@ -135,7 +145,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public void UpdateProduct(Product product)
         {
-            var toUpdate = _products.SingleOrDefault(product.Get(product.Id).Compile());
+            var toUpdate = _products.SingleOrDefault(Product.Get(product.Id).Compile());
 
             product.MapUpdate(product, toUpdate);
 
