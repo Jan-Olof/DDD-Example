@@ -15,9 +15,9 @@ namespace API.Controllers
         /// Get all products.
         /// </summary>
         [HttpGet]
-        public IEnumerable<ProductDto> GetProduct()
+        public IEnumerable<ProductDto> GetProducts()
         {
-            return new List<ProductDto>();
+            throw new NotImplementedException();
         }
     }
 }

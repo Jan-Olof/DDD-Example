@@ -86,7 +86,7 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        private static IList<PersonInProduct> CreatePersonsInProduct(int id = 0, Role role = Role.Actor, string name = "")
+        private static List<PersonInProduct> CreatePersonsInProduct(int id = 0, Role role = Role.Actor, string name = "")
         {
             return new List<PersonInProduct>
             {

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Enums;
 using DomainLayer.Factories;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
@@ -31,9 +33,52 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
+        /// Add a person to a product.
+        /// </summary>
+        public void AddPersonToProduct(int personId, int productId, Role role)
+        {
+            try
+            {
+                var person = _repository.GetPerson(personId);
+
+                if (person == null)
+                {
+                    throw new NotFoundException($"There is no person with id {personId}.");
+                }
+
+                var product = _repository.GetProduct(productId);
+
+                if (product == null)
+                {
+                    throw new NotFoundException($"There is no product with id {productId}.");
+                }
+
+                if (product.Persons.SingleOrDefault(p => p.Id == personId && p.Role == role) != null)
+                {
+                    throw new TooManyFoundException(
+                        $"There is already a person with id {personId} and role {role} in product {productId}.");
+                }
+
+                product.Persons.Add(PersonFactory.CreatePersonInProduct(personId, person.Name, role));
+
+                _repository.UpdateProduct(product);
+            }
+            catch (Exception ex) when (ex is NotFoundException || ex is TooManyFoundException)
+            {
+                _logger.LogWarning($"AddPersonToProduct failed: {ex.Message}");
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(ProductEventId(), e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Create a new product.
         /// </summary>
-        public Product Create(string name, string description = "")
+        public Product CreateProduct(string name, string description = "")
         {
             try
             {
@@ -53,7 +98,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Delete a product.
         /// </summary>
-        public void Delete(int id)
+        public void DeleteProduct(int id)
         {
             try
             {
@@ -75,25 +120,9 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
-        /// Get all products.
-        /// </summary>
-        public IList<Product> Get()
-        {
-            try
-            {
-                return _repository.GetProducts().ToList();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get product by id.
         /// </summary>
-        public Product Get(int id)
+        public Product GetProduct(int id)
         {
             try
             {
@@ -107,9 +136,25 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
+        /// Get all products.
+        /// </summary>
+        public IList<Product> GetProducts()
+        {
+            try
+            {
+                return _repository.GetProducts().ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(ProductEventId(), e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get product by name.
         /// </summary>
-        public IList<Product> Get(string name)
+        public IList<Product> GetProducts(string name)
         {
             try
             {
@@ -123,9 +168,46 @@ namespace ApplicationLayer.Interactors
         }
 
         /// <summary>
+        /// Remove a person from a product.
+        /// </summary>
+        public void RemovePersonFromProduct(int personId, int productId, Role role)
+        {
+            try
+            {
+                var product = _repository.GetProduct(productId);
+
+                if (product == null)
+                {
+                    throw new NotFoundException($"There is no product with id {productId}.");
+                }
+
+                var personInProduct = product.Persons.SingleOrDefault(p => p.Id == personId && p.Role == role);
+
+                if (personInProduct == null)
+                {
+                    throw new NotFoundException($"There is no person with id {personId} and role {role} in product {productId}.");
+                }
+
+                product.Persons.Remove(personInProduct);
+
+                _repository.UpdateProduct(product);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogWarning($"RemovePersonFromProduct failed: {ex.Message}");
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(ProductEventId(), e, e.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Search product by name.
         /// </summary>
-        public IList<Product> Search(string name)
+        public IList<Product> SearchProducts(string name)
         {
             try
             {
@@ -141,7 +223,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Update a product.
         /// </summary>
-        public Product Update(int id, string name, string description = "")
+        public Product UpdateProduct(int id, string name, string description = "")
         {
             try
             {

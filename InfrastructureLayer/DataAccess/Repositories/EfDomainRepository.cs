@@ -47,9 +47,12 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return ProductFactory.CreateProduct(productDao);
         }
 
+        /// <summary>
+        /// Get a person from Id.
+        /// </summary>
         public Person GetPerson(int id)
         {
-            var personDao = Get<PersonDao>(id);
+            var personDao = Get<PersonDao>(id, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Product));
 
             return PersonFactory.CreatePerson(personDao);
         }
@@ -78,9 +81,12 @@ namespace InfrastructureLayer.DataAccess.Repositories
             return personDaos.Select(PersonFactory.CreatePerson);
         }
 
+        /// <summary>
+        /// Get a product from Id.
+        /// </summary>
         public Product GetProduct(int id)
         {
-            var productDao = Get<ProductDao>(id);
+            var productDao = Get<ProductDao>(id, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Person));
 
             return ProductFactory.CreateProduct(productDao);
         }
@@ -132,7 +138,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var personDao = PersonFactory.CreatePersonDao(person);
 
-            var daoFromDb = Update(personDao);
+            var daoFromDb = Update(personDao, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Product));
 
             daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, personDao.ProductPersons);
 
@@ -146,7 +152,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var productDao = ProductFactory.CreateProductDao(product);
 
-            var daoFromDb = Update(productDao);
+            var daoFromDb = Update(productDao, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Person));
 
             daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, productDao.ProductPersons);
 

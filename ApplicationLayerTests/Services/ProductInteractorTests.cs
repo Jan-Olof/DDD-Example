@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interactors;
 using DomainLayerTests.TestObjects;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Enums;
 using DomainLayer.Interfaces;
 
 namespace ApplicationLayerTests.Services
@@ -30,6 +32,66 @@ namespace ApplicationLayerTests.Services
         }
 
         [TestMethod]
+        public void TestShouldAddPersonToProduct()
+        {
+            // Arrange
+            _repository.GetPerson(1)
+                .Returns(SamplePersons.CreatePerson(1));
+
+            _repository.GetProduct(1)
+                .Returns(SampleProducts.CreateProduct(1));
+
+            _repository.UpdateProduct(SampleProducts.CreateProduct(1));
+
+            var sut = CreateProductInteractor();
+
+            // Act
+            sut.AddPersonToProduct(1, 1, Role.Actor);
+
+            // Assert
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void TestShouldAddPersonToProductAndNotFindPerson()
+        {
+            // Arrange
+            var sut = CreateProductInteractor();
+
+            // Act & Assert
+            Assert.ThrowsException<NotFoundException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
+        }
+
+        [TestMethod]
+        public void TestShouldAddPersonToProductAndNotFindProduct()
+        {
+            _repository.GetPerson(1)
+                .Returns(SamplePersons.CreatePerson(1));
+
+            // Arrange
+            var sut = CreateProductInteractor();
+
+            // Act & Assert
+            Assert.ThrowsException<NotFoundException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
+        }
+
+        [TestMethod]
+        public void TestShouldAddPersonToProductAndPersonAlreadyExist()
+        {
+            _repository.GetPerson(1)
+                .Returns(SamplePersons.CreatePerson(1));
+
+            _repository.GetProduct(1)
+                .Returns(SampleProducts.CreateProductWithPersons(1, "", "", 1));
+
+            // Arrange
+            var sut = CreateProductInteractor();
+
+            // Act & Assert
+            Assert.ThrowsException<TooManyFoundException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
+        }
+
+        [TestMethod]
         public void TestShouldCreateProduct()
         {
             // Arrange
@@ -39,7 +101,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Create("FirstProduct", "This is the first product.");
+            var result = sut.CreateProduct("FirstProduct", "This is the first product.");
 
             // Assert
             Assert.AreEqual(1, result.Id);
@@ -55,7 +117,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            sut.Delete(3);
+            sut.DeleteProduct(3);
 
             // Assert
             Assert.IsTrue(true);
@@ -71,7 +133,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Get();
+            var result = sut.GetProducts();
 
             // Assert
             Assert.AreEqual(3, result.Count);
@@ -87,7 +149,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Get(3);
+            var result = sut.GetProduct(3);
 
             // Assert
             Assert.AreEqual("ThirdProduct", result.Name);
@@ -103,10 +165,53 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Get("ThirdProduct");
+            var result = sut.GetProducts("ThirdProduct");
 
             // Assert
             Assert.AreEqual(3, result.Single().Id);
+        }
+
+        [TestMethod]
+        public void TestShouldRemovePersonFromProduct()
+        {
+            // Arrange
+            _repository.GetProduct(1)
+                .Returns(SampleProducts.CreateProductWithPersons(1, "", "", 1));
+
+            _repository.UpdateProduct(SampleProducts.CreateProductWithPersons(1, "", "", 1));
+
+            var sut = CreateProductInteractor();
+
+            // Act
+            sut.RemovePersonFromProduct(1, 1, Role.Actor);
+
+            // Assert
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void TestShouldRemovePersonFromProductAndNotFindPersonInProduct()
+        {
+            _repository.GetProduct(1)
+                .Returns(SampleProducts.CreateProduct(1));
+
+            _repository.UpdateProduct(SampleProducts.CreateProduct(1));
+
+            // Arrange
+            var sut = CreateProductInteractor();
+
+            // Act & Assert
+            Assert.ThrowsException<NotFoundException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
+        }
+
+        [TestMethod]
+        public void TestShouldRemovePersonFromProductAndNotFindProduct()
+        {
+            // Arrange
+            var sut = CreateProductInteractor();
+
+            // Act & Assert
+            Assert.ThrowsException<NotFoundException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
         }
 
         [TestMethod]
@@ -119,7 +224,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Search("Third");
+            var result = sut.SearchProducts("Third");
 
             // Assert
             Assert.AreEqual(3, result.Single().Id);
@@ -135,7 +240,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act
-            var result = sut.Update(3, "FirstProduct", "This is the first product.");
+            var result = sut.UpdateProduct(3, "FirstProduct", "This is the first product.");
 
             // Assert
             Assert.AreEqual("FirstProduct", result.Name);

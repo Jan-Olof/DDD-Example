@@ -6,9 +6,11 @@ namespace CLI.UserInterface
     internal class BaseUi
     {
         private const string Add = "add-";
+        private const string AddPerson = "addperson-";
         private const string All = "all-";
         private const string Delete = "delete-";
         private const string One = "one-";
+        private const string RemovePerson = "removeperson-";
         private const string Search = "search-";
         private const string Update = "update-";
 
@@ -83,6 +85,16 @@ namespace CLI.UserInterface
                 if (input.Contains(Search))
                 {
                     productUi.SearchProducts();
+                }
+
+                if (input.Contains(AddPerson))
+                {
+                    productUi.AddPerson();
+                }
+
+                if (input.Contains(RemovePerson))
+                {
+                    productUi.RemovePerson();
                 }
             }
             catch (Exception e)

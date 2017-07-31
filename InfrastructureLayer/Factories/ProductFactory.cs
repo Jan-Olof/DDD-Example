@@ -53,7 +53,7 @@ namespace InfrastructureLayer.Factories
             };
         }
 
-        private static IList<PersonInProduct> CreatePersonsInProduct(IEnumerable<ProductPerson> productPersons)
+        private static List<PersonInProduct> CreatePersonsInProduct(IEnumerable<ProductPerson> productPersons)
         {
             return productPersons.Select(ProductPersonFactory.CreatePersonInProduct).ToList();
         }

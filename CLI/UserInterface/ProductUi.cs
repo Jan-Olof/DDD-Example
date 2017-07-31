@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CLI.Configure;
 using CLI.Controllers;
+using DomainLayer.Factories;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 
@@ -16,6 +17,40 @@ namespace CLI.UserInterface
             _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
         }
 
+        public void AddPerson()
+        {
+            try
+            {
+                Console.Write("Product id? ");
+                if (!int.TryParse(Console.ReadLine(), out int prodId))
+                {
+                    Console.WriteLine("Bad product id!");
+                    return;
+                }
+
+                Console.Write("Person id? ");
+                if (!int.TryParse(Console.ReadLine(), out int persId))
+                {
+                    Console.WriteLine("Bad person id!");
+                    return;
+                }
+
+                Console.Write("Role? ");
+                var role = RoleFactory.CreateRole(Console.ReadLine());
+
+                _controller.AddPerson(prodId, persId, role);
+
+                Console.WriteLine();
+                Console.WriteLine("The person has been added.");
+                Console.WriteLine();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine();
+                Console.WriteLine(e);
+            }
+        }
+
         public void AddProduct()
         {
             Console.Write("Name? ");
@@ -26,6 +61,7 @@ namespace CLI.UserInterface
 
             var product = _controller.CreateProduct(name, description);
 
+            Console.WriteLine();
             Console.WriteLine($"Product created with id { product.Id}.");
             Console.WriteLine();
         }
@@ -75,6 +111,40 @@ namespace CLI.UserInterface
             ShowProducts(products);
         }
 
+        public void RemovePerson()
+        {
+            try
+            {
+                Console.Write("Product id? ");
+                if (!int.TryParse(Console.ReadLine(), out int prodId))
+                {
+                    Console.WriteLine("Bad product id!");
+                    return;
+                }
+
+                Console.Write("Person id? ");
+                if (!int.TryParse(Console.ReadLine(), out int persId))
+                {
+                    Console.WriteLine("Bad person id!");
+                    return;
+                }
+
+                Console.Write("Role? ");
+                var role = RoleFactory.CreateRole(Console.ReadLine());
+
+                _controller.RemovePerson(prodId, persId, role);
+
+                Console.WriteLine();
+                Console.WriteLine("The person has been removed.");
+                Console.WriteLine();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine();
+                Console.WriteLine(e);
+            }
+        }
+
         public void SearchProducts()
         {
             Console.Write("Name to search? ");
@@ -95,6 +165,8 @@ namespace CLI.UserInterface
             string description = GetDescriptionForUpdate(product);
 
             _controller.UpdateProduct(product.Id, name, description);
+
+            Console.WriteLine();
             Console.WriteLine("The product has been updated.");
             Console.WriteLine();
         }

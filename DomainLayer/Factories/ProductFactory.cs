@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.Enums;
+using DomainLayer.Models;
 
 namespace DomainLayer.Factories
 {
@@ -17,6 +18,20 @@ namespace DomainLayer.Factories
                 Id = id,
                 Name = name,
                 Description = description
+            };
+        }
+
+        /// <summary>
+        /// Build a product in a person.
+        /// </summary>
+        public static ProductInPerson CreateProductInPerson(int id, string name, string description, Role role)
+        {
+            return new ProductInPerson
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+                Role = role
             };
         }
     }

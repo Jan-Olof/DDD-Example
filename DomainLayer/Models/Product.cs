@@ -26,6 +26,6 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets or sets the persons belonging to the product.
         /// </summary>
-        public IList<PersonInProduct> Persons { get; set; }
+        public List<PersonInProduct> Persons { get; set; }
     }
 }

@@ -93,6 +93,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Get entity from primary key.
+        /// </summary>
+        protected T Get<T>(int id, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class, IIdentifier
+        {
+            return FindEntity(id, includeMembers);
+        }
+
+        /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class
@@ -163,6 +171,23 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Update an entity object, and maybe save changes in the database.
+        /// </summary>
+        protected T Update<T>(T entity, Func<IQueryable<T>, IQueryable<T>> includeMembers, bool saveChanges = false) where T : class, IIdentifier, IUpdateMapper<T>
+        {
+            var entityToUpdate = FindEntity(entity.Id, includeMembers);
+
+            entity.MapUpdate(entity, entityToUpdate);
+
+            if (saveChanges)
+            {
+                SaveChanges(entityToUpdate, EventType.Update);
+            }
+
+            return entityToUpdate;
+        }
+
+        /// <summary>
         /// Set JSON serielizer to ignore referenced object.
         /// </summary>
         private static JsonSerializerSettings IgnoreReferenced()
@@ -186,6 +211,31 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
 
             return entity;
+        }
+
+        /// <summary>
+        /// Find an entity and handle null exception.
+        /// </summary>
+        private T FindEntity<T>(int id, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class, IIdentifier
+        {
+            try
+            {
+                var entity =
+                    includeMembers(_context.Set<T>())
+                    .SingleOrDefault(arg => arg.Id == id);
+
+                if (entity == null)
+                {
+                    throw new NotFoundException($"Could not find an object with id {id}.");
+                }
+
+                return entity;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LogExceptionWithInnerExceptions(ex);
+                throw new TooManyFoundException(ex.Message, ex);
+            }
         }
 
         /// <summary>

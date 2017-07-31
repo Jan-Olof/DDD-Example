@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Interactors
@@ -10,38 +11,48 @@ namespace ApplicationLayer.Interfaces.Interactors
     public interface IProductInteractor : IDisposable
     {
         /// <summary>
+        /// Add a person to a product.
+        /// </summary>
+        void AddPersonToProduct(int personId, int productId, Role role);
+
+        /// <summary>
         /// Create a new product.
         /// </summary>
-        Product Create(string name, string description = "");
+        Product CreateProduct(string name, string description = "");
 
         /// <summary>
         /// Delete a product.
         /// </summary>
-        void Delete(int id);
-
-        /// <summary>
-        /// Get product by name.
-        /// </summary>
-        IList<Product> Get(string name);
-
-        /// <summary>
-        /// Get all products.
-        /// </summary>
-        IList<Product> Get();
+        void DeleteProduct(int id);
 
         /// <summary>
         /// Get product by id.
         /// </summary>
-        Product Get(int id);
+        Product GetProduct(int id);
+
+        /// <summary>
+        /// Get product by name.
+        /// </summary>
+        IList<Product> GetProducts(string name);
+
+        /// <summary>
+        /// Get all products.
+        /// </summary>
+        IList<Product> GetProducts();
+
+        /// <summary>
+        /// Remove a person from a product.
+        /// </summary>
+        void RemovePersonFromProduct(int personId, int productId, Role role);
 
         /// <summary>
         /// Search product by name.
         /// </summary>
-        IList<Product> Search(string name);
+        IList<Product> SearchProducts(string name);
 
         /// <summary>
         /// Update a product.
         /// </summary>
-        Product Update(int id, string name, string description = "");
+        Product UpdateProduct(int id, string name, string description = "");
     }
 }

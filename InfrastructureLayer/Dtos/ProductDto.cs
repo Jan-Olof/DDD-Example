@@ -37,6 +37,6 @@ namespace InfrastructureLayer.Dtos
         /// <summary>
         /// Gets or sets the persons.
         /// </summary>
-        public IList<PersonInProduct> Persons { get; set; }
+        public List<PersonInProduct> Persons { get; set; }
     }
 }

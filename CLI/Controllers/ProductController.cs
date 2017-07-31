@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces.Interactors;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,14 +17,19 @@ namespace CLI.Controllers
             _productInteractor = serviceProvider.GetService<IProductInteractor>();
         }
 
+        public void AddPerson(int prodId, int persId, Role role)
+        {
+            _productInteractor.AddPersonToProduct(persId, prodId, role);
+        }
+
         public Product CreateProduct(string name, string description = "")
         {
-            return _productInteractor.Create(name, description);
+            return _productInteractor.CreateProduct(name, description);
         }
 
         public void DeleteProduct(int id)
         {
-            _productInteractor.Delete(id);
+            _productInteractor.DeleteProduct(id);
         }
 
         /// <summary>
@@ -37,23 +43,28 @@ namespace CLI.Controllers
         public Product GetProduct(string input)
         {
             return int.TryParse(input, out int id)
-                ? _productInteractor.Get(id)
-                : _productInteractor.Get(input).SingleOrDefault();
+                ? _productInteractor.GetProduct(id)
+                : _productInteractor.GetProducts(input).SingleOrDefault();
         }
 
         public IList<Product> GetProducts()
         {
-            return _productInteractor.Get();
+            return _productInteractor.GetProducts();
+        }
+
+        public void RemovePerson(int prodId, int persId, Role role)
+        {
+            _productInteractor.RemovePersonFromProduct(persId, prodId, role);
         }
 
         public IList<Product> SearchProducts(string name)
         {
-            return _productInteractor.Search(name);
+            return _productInteractor.SearchProducts(name);
         }
 
         public Product UpdateProduct(int id, string name, string description = "")
         {
-            return _productInteractor.Update(id, name, description);
+            return _productInteractor.UpdateProduct(id, name, description);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DomainLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.Daos
 {
@@ -22,5 +25,15 @@ namespace InfrastructureLayer.DataAccess.Daos
         /// Gets or sets the ProductPersons.
         /// </summary>
         public List<ProductPerson> ProductPersons { get; set; }
+
+        /// <summary>
+        /// Members to include for ProductDao. (ProductPersons and then Person.)
+        /// </summary>
+        public static Func<IQueryable<ProductDao>, IQueryable<ProductDao>> IncludeMembers()
+        {
+            return productDaos => productDaos
+                .Include(productDao => productDao.ProductPersons)
+                .ThenInclude(p => p.Person);
+        }
     }
 }

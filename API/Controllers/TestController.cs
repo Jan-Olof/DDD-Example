@@ -8,7 +8,7 @@ namespace API.Controllers
     /// TODO: Remove this example controller.
     /// </summary>
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class TestController : Controller
     {
         /// <summary>
         ///  DELETE api/values/5
