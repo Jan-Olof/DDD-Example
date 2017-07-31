@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using DomainLayer.Enums;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
@@ -142,6 +143,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 // Assert
                 Assert.AreEqual("First Person", result.Name);
+                Assert.AreEqual(2, result.Products.Count);
             }
         }
 
@@ -181,6 +183,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
                 // Assert
                 Assert.AreEqual("No1", result.Name);
+                Assert.AreEqual(1, result.Persons.Count);
             }
         }
 
@@ -329,10 +332,44 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Persons.ToList();
+                var sut = CreateEfRepository(context);
+                var result = sut.GetPersons().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated Human", result.Single(p => p.Id == id).Name);
+                Assert.AreEqual(0, result.Single(p => p.Id == id).Products.Count);
+            }
+        }
+
+        [TestMethod]
+        public void TestShouldUpdatePersonWithProductRelations()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            int id;
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                id = sut.GetPersons("Second", true).Single().Id;
+                int productid = sut.GetProducts("No2").Single().Id;
+
+                // Act
+                sut.UpdatePerson(SamplePersons.CreatePersonWithProducts(id, "Updated", "Human", productid, Role.Producer));
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+                var result = sut.GetPersons().ToList();
+
+                Assert.AreEqual(3, result.Count);
+                Assert.AreEqual("Updated Human", result.Single(p => p.Id == id).Name);
+                Assert.AreEqual(1, result.Single(p => p.Id == id).Products.Count);
+                Assert.AreEqual(Role.Producer, result.Single(p => p.Id == id).Products.Single().Role);
             }
         }
 
@@ -355,10 +392,42 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var result = context.Products.ToList();
+                var sut = CreateEfRepository(context);
+                var result = sut.GetProducts().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated description.", result.Single(p => p.Name == "No2").Description);
+                Assert.AreEqual(0, result.Single(p => p.Name == "No2").Persons.Count);
+            }
+        }
+
+        [TestMethod]
+        public void TestShouldUpdateProductWithPersonRelations()
+        {
+            // Arrange
+            SeedDatabase(_options);
+
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+
+                int id = sut.GetProducts("No2").Single().Id;
+                int personid = sut.GetPersons("Second", true).Single().Id;
+
+                // Act
+                sut.UpdateProduct(SampleProducts.CreateProductWithPersons(id, "No2", "Updated description.", personid, Role.Writer));
+            }
+
+            // Assert
+            using (var context = new ExampleContext(_options))
+            {
+                var sut = CreateEfRepository(context);
+                var result = sut.GetProducts().ToList();
+
+                Assert.AreEqual(3, result.Count);
+                Assert.AreEqual("Updated description.", result.Single(p => p.Name == "No2").Description);
+                Assert.AreEqual(1, result.Single(p => p.Name == "No2").Persons.Count);
+                Assert.AreEqual(Role.Writer, result.Single(p => p.Name == "No2").Persons.Single().Role);
             }
         }
 

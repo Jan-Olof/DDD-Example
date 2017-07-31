@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 
 namespace DomainLayerTests.TestObjects
@@ -59,6 +60,36 @@ namespace DomainLayerTests.TestObjects
             {
                 CreatePerson(3, "Third"),
                 CreatePerson(3, "Third")
+            };
+        }
+
+        public static Person CreatePersonWithProducts(int id = 0, string firstName = "First", string lastName = "Person", int productId = 0, Role role = Role.Actor)
+        {
+            return new Person
+            {
+                Id = id,
+                FirstName = firstName,
+                LastName = lastName,
+                Products = CreateProductsInPerson(productId, role)
+            };
+        }
+
+        private static ProductInPerson CreateProductInPerson(int id = 0, Role role = Role.Actor, string name = "", string description = "")
+        {
+            return new ProductInPerson
+            {
+                Id = id,
+                Name = name,
+                Role = role,
+                Description = description
+            };
+        }
+
+        private static IList<ProductInPerson> CreateProductsInPerson(int id = 0, Role role = Role.Actor, string name = "", string description = "")
+        {
+            return new List<ProductInPerson>
+            {
+                CreateProductInPerson(id, role, name, description)
             };
         }
     }

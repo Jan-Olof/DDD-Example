@@ -79,7 +79,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (InvalidOperationException ex)
             {
-                LogExceptionWithInnerException(ex);
+                LogExceptionWithInnerExceptions(ex);
                 throw new TooManyFoundException(ex.Message, ex);
             }
         }
@@ -140,7 +140,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (DbUpdateException ex)
             {
-                LogExceptionWithInnerException(ex);
+                LogExceptionWithInnerExceptions(ex);
                 throw;
             }
         }
@@ -191,7 +191,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Log an exception and include all inner exception.
         /// </summary>
-        private void LogExceptionWithInnerException(Exception ex)
+        private void LogExceptionWithInnerExceptions(Exception ex)
         {
             _logger.LogError(EventIdFactory.PersistenceEventId(), ex, ex.Message);
 
