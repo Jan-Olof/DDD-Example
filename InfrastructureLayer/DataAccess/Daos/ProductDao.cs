@@ -33,7 +33,7 @@ namespace InfrastructureLayer.DataAccess.Daos
         {
             return productDaos => productDaos
                 .Include(productDao => productDao.ProductPersons)
-                .ThenInclude(p => p.Person);
+                .ThenInclude(productPerson => productPerson.Person);
         }
     }
 }

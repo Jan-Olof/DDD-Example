@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interactors;
 using DomainLayerTests.TestObjects;
@@ -59,7 +60,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act & Assert
-            Assert.ThrowsException<NotFoundException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
+            Assert.ThrowsException<ArgumentNullException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
         }
 
         [TestMethod]
@@ -72,7 +73,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act & Assert
-            Assert.ThrowsException<NotFoundException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
+            Assert.ThrowsException<ArgumentNullException>(() => sut.AddPersonToProduct(1, 1, Role.Actor));
         }
 
         [TestMethod]
@@ -201,7 +202,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act & Assert
-            Assert.ThrowsException<NotFoundException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
+            Assert.ThrowsException<ArgumentNullException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
         }
 
         [TestMethod]
@@ -211,7 +212,7 @@ namespace ApplicationLayerTests.Services
             var sut = CreateProductInteractor();
 
             // Act & Assert
-            Assert.ThrowsException<NotFoundException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
+            Assert.ThrowsException<ArgumentNullException>(() => sut.RemovePersonFromProduct(1, 1, Role.Actor));
         }
 
         [TestMethod]

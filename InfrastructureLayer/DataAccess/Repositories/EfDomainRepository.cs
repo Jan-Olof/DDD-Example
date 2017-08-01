@@ -52,7 +52,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public Person GetPerson(int id)
         {
-            var personDao = Get<PersonDao>(id, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Product));
+            var personDao = Get(id, PersonDao.IncludeMembers());
 
             return PersonFactory.CreatePerson(personDao);
         }
@@ -62,9 +62,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Person> GetPersons()
         {
-            var personDaos = Get<PersonDao>()
-                .Include(p => p.ProductPersons)
-                .ThenInclude(p => p.Product);
+            var personDaos = Get(PersonDao.IncludeMembers());
 
             return personDaos.Select(PersonFactory.CreatePerson);
         }
@@ -74,9 +72,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Person> GetPersons(string name, bool isSearch = false)
         {
-            var personDaos = Get(isSearch ? PersonDao.Search(name) : PersonDao.Get(name))
-                .Include(p => p.ProductPersons)
-                .ThenInclude(p => p.Product);
+            var personDaos = Get(isSearch ? PersonDao.Search(name) : PersonDao.Get(name), PersonDao.IncludeMembers());
 
             return personDaos.Select(PersonFactory.CreatePerson);
         }
@@ -86,7 +82,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public Product GetProduct(int id)
         {
-            var productDao = Get<ProductDao>(id, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Person));
+            var productDao = Get(id, ProductDao.IncludeMembers());
 
             return ProductFactory.CreateProduct(productDao);
         }
@@ -96,9 +92,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts()
         {
-            var productDaos = Get<ProductDao>()
-                .Include(p => p.ProductPersons)
-                .ThenInclude(p => p.Person);
+            var productDaos = Get(ProductDao.IncludeMembers());
 
             return productDaos.Select(ProductFactory.CreateProduct);
         }
@@ -108,9 +102,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// </summary>
         public IEnumerable<Product> GetProducts(string name, bool isSearch = false)
         {
-            var productDaos = Get(isSearch ? ProductDao.Search(name) : ProductDao.Get(name))
-                .Include(p => p.ProductPersons)
-                .ThenInclude(p => p.Person);
+            var productDaos = Get(isSearch ? ProductDao.Search(name) : ProductDao.Get(name), ProductDao.IncludeMembers());
 
             return productDaos.Select(ProductFactory.CreateProduct);
         }
@@ -138,7 +130,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var personDao = PersonFactory.CreatePersonDao(person);
 
-            var daoFromDb = Update(personDao, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Product));
+            var daoFromDb = Update(personDao, PersonDao.IncludeMembers());
 
             daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, personDao.ProductPersons);
 
@@ -152,7 +144,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         {
             var productDao = ProductFactory.CreateProductDao(product);
 
-            var daoFromDb = Update(productDao, daos => daos.Include(dao => dao.ProductPersons).ThenInclude(p => p.Person));
+            var daoFromDb = Update(productDao, ProductDao.IncludeMembers());
 
             daoFromDb.ProductPersons = UpdateProductPerson(daoFromDb.ProductPersons, productDao.ProductPersons);
 

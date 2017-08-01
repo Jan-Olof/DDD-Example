@@ -109,11 +109,27 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         /// <summary>
+        /// Get all entities of a certain type.
+        /// </summary>
+        protected IQueryable<T> Get<T>(Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
+        {
+            return includeMembers(_context.Set<T>());
+        }
+
+        /// <summary>
         /// Get all entities of a certain type based on a condition.
         /// </summary>
         protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition) where T : class
         {
             return _context.Set<T>().Where(condition);
+        }
+
+        /// <summary>
+        /// Get all entities of a certain type based on a condition.
+        /// </summary>
+        protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
+        {
+            return includeMembers(_context.Set<T>().Where(condition));
         }
 
         /// <summary>

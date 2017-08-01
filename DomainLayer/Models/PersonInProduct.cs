@@ -1,4 +1,5 @@
-﻿using DomainLayer.Enums;
+﻿using System;
+using DomainLayer.Enums;
 using DomainLayer.Interfaces;
 
 namespace DomainLayer.Models
@@ -42,5 +43,13 @@ namespace DomainLayer.Models
         /// Gets or sets the role.
         /// </summary>
         public Role Role { get; set; }
+
+        /// <summary>
+        /// Defines how to get a person in a product.
+        /// </summary>
+        public static Func<PersonInProduct, bool> Get(int personId, Role role)
+        {
+            return p => p.Id == personId && p.Role == role;
+        }
     }
 }
