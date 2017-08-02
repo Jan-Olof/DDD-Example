@@ -1,8 +1,6 @@
 ﻿using System;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Enums;
-using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ApplicationLayer.Interactors
@@ -27,7 +25,6 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Throw TooManyFoundException if the object is not null.
         /// </summary>
-        // ReSharper disable once UnusedParameter.Global
         protected static void CheckNotNull<T>(T entity)
         {
             if (entity != null)

@@ -33,12 +33,12 @@ namespace ApplicationLayer.Interfaces.Interactors
         /// <summary>
         /// Get product by name.
         /// </summary>
-        IList<Product> GetProducts(string name);
+        List<Product> GetProducts(string name);
 
         /// <summary>
         /// Get all products.
         /// </summary>
-        IList<Product> GetProducts();
+        List<Product> GetProducts();
 
         /// <summary>
         /// Remove a person from a product.
@@ -48,7 +48,7 @@ namespace ApplicationLayer.Interfaces.Interactors
         /// <summary>
         /// Search product by name.
         /// </summary>
-        IList<Product> SearchProducts(string name);
+        List<Product> SearchProducts(string name);
 
         /// <summary>
         /// Update a product.

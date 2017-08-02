@@ -127,7 +127,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Get all products.
         /// </summary>
-        public IList<Product> GetProducts()
+        public List<Product> GetProducts()
         {
             try
             {
@@ -143,7 +143,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Get product by name.
         /// </summary>
-        public IList<Product> GetProducts(string name)
+        public List<Product> GetProducts(string name)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace ApplicationLayer.Interactors
         /// <summary>
         /// Search product by name.
         /// </summary>
-        public IList<Product> SearchProducts(string name)
+        public List<Product> SearchProducts(string name)
         {
             try
             {

@@ -1,16 +1,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ApplicationLayer.Interfaces.Interactors;
+using API.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
 
 namespace InterfacesTests.ApiTests
 {
     [TestClass]
     public class ProductControllerTests
     {
-        //private ILogger<EfDomainRepository> _logger;
+        private IProductInteractor _productInteractor;
 
         [TestInitialize]
         public void SetUp()
         {
-            //_logger = Substitute.For<ILogger<EfDomainRepository>>();
+            _productInteractor = Substitute.For<IProductInteractor>();
         }
 
         [TestCleanup]
@@ -22,10 +26,18 @@ namespace InterfacesTests.ApiTests
         public void TestShouldGetProducts()
         {
             // Arrange
+            var sut = CreateProductController();
 
             // Act
+            var result = sut.GetProducts();
 
             // Assert
+            var okResult = (OkObjectResult)result; //TODO: HERE!
+        }
+
+        private ProductController CreateProductController()
+        {
+            return new ProductController(_productInteractor);
         }
     }
 }

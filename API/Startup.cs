@@ -4,10 +4,18 @@
 // ReSharper disable UnusedParameter.Global
 
 using System.IO;
+using ApplicationLayer.Interactors;
+using ApplicationLayer.Interfaces.Infrastructure;
+using ApplicationLayer.Interfaces.Interactors;
 using API.Middleware;
+using DomainLayer.Interfaces;
+using DomainLayer.Models;
+using InfrastructureLayer.DataAccess.Repositories;
+using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -90,7 +98,11 @@ namespace API
             //call this in case you need aspnet-user-authtype/aspnet-user-identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // TODO: Add DI here!
+            // Dependency injection
+            services.AddTransient<DbContext, ExampleContext>();
+            services.AddTransient<IDomainRepository, EfDomainRepository>();
+            services.AddTransient<IProduct, Product>();
+            services.AddTransient<IProductInteractor, ProductInteractor>();
 
             ConfigureSwagger(services);
         }
