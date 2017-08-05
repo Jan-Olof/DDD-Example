@@ -64,8 +64,17 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
+        public static IList<Product> CreateProductsEmpty()
+        {
+            return new List<Product>();
+        }
+
         public static Product CreateProductWithPersons(
-                                                    int id = 0, string name = "FirstProduct", string description = "This is the first product.", int personId = 0, Role role = Role.Actor)
+            int id = 0,
+            string name = "FirstProduct",
+            string description = "This is the first product.",
+            int personId = 0,
+            Role role = Role.Actor)
         {
             return new Product
             {
@@ -76,7 +85,8 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        private static PersonInProduct CreatePersonInProduct(int id = 0, Role role = Role.Actor, string name = "")
+        private static PersonInProduct CreatePersonInProduct(
+            int id = 0, Role role = Role.Actor, string name = "")
         {
             return new PersonInProduct
             {
@@ -86,7 +96,8 @@ namespace DomainLayerTests.TestObjects
             };
         }
 
-        private static List<PersonInProduct> CreatePersonsInProduct(int id = 0, Role role = Role.Actor, string name = "")
+        private static List<PersonInProduct> CreatePersonsInProduct(
+            int id = 0, Role role = Role.Actor, string name = "")
         {
             return new List<PersonInProduct>
             {
