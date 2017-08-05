@@ -32,8 +32,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            var products = _productInteractor.GetProducts();
-            return Ok(products);
+            return Ok(_productInteractor.GetProducts());
         }
     }
 }

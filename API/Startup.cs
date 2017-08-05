@@ -95,6 +95,9 @@ namespace API
 
             services.AddLogging();
 
+            string connection = Configuration["database:connectionstring"];
+            services.AddDbContext<ExampleContext>(options => options.UseSqlServer(connection));
+
             //call this in case you need aspnet-user-authtype/aspnet-user-identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

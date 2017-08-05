@@ -30,10 +30,10 @@ namespace InfrastructureLayer.Files
         /// </summary>
         public void Serialize<T>(T value, Stream stream)
         {
-            using (StreamWriter writer = new StreamWriter(stream))
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+            using (var writer = new StreamWriter(stream))
+            using (var jsonWriter = new JsonTextWriter(writer))
             {
-                JsonSerializer ser = new JsonSerializer();
+                var ser = new JsonSerializer();
                 ser.Serialize(jsonWriter, value);
                 jsonWriter.Flush();
             }
