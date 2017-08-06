@@ -5,8 +5,18 @@ namespace InfrastructureLayerTests.TestObjects
 {
     public static class SampleProductDtos
     {
+        public static ProductCreate CreateProductCreate(
+            string name = "FirstProduct", string description = "This is the first product.")
+        {
+            return new ProductCreate
+            {
+                Description = description,
+                Name = name
+            };
+        }
+
         public static ProductDto CreateProductDto(
-            int id = 0, string name = "FirstProduct", string description = "This is the first product.")
+                    int id = 0, string name = "FirstProduct", string description = "This is the first product.")
         {
             return new ProductDto
             {

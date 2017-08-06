@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Interactors;
-using DomainLayer.Models;
+using DomainLayer.Interfaces;
 using InfrastructureLayer.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +14,7 @@ namespace API.Controllers
     /// The product controller.
     /// </summary>
     [Route("api/[controller]")]
-    public class ProductController : Controller
+    public class ProductController : Controller //TODO: Update
     {
         private readonly IProductInteractor _productInteractor;
 
@@ -27,9 +27,41 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Create a new product.
+        /// </summary>
+        [ProducesResponseType(typeof(IProductDto), (int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
+        [HttpPost]
+        public IActionResult CreateProduct([FromBody] ProductCreate product)
+        {
+            if (product == null)
+            {
+                return BadRequest();
+            }
+
+            var createdProduct = _productInteractor.CreateProduct(product.Name, product.Description);
+
+            return CreatedAtRoute("GetProduct", new { id = createdProduct.Id }, createdProduct);
+        }
+
+        /// <summary>
+        /// Delete a product.
+        /// </summary>
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(int id)
+        {
+            _productInteractor.DeleteProduct(id);
+
+            return new NoContentResult();
+        }
+
+        /// <summary>
         /// Get one product from id.
         /// </summary>
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IProductDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("{id}", Name = "GetProduct")]
@@ -55,7 +87,7 @@ namespace API.Controllers
         /// <summary>
         /// Get all products.
         /// </summary>
-        [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<IProductDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
         public IActionResult GetProducts()
@@ -68,7 +100,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="name">Search for everything that contains this string.</param>
         /// <returns>All products that have a name that contains the search string.</returns>
-        [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<IProductDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("name/{name}")]

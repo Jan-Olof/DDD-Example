@@ -1,9 +1,9 @@
 ﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
-    /// The person properties interface.
+    /// The interface of what you need when you create a person.
     /// </summary>
-    public interface IPersonBaseDto : IIdentifier, IName
+    public interface IPersonCreate
     {
         /// <summary>
         /// Gets or sets the first name of the person.

@@ -18,14 +18,12 @@ namespace InfrastructureLayer.Factories
                 return null;
             }
 
-            return new HttpError
-            {
-                ExceptionMessage = exception.Message,
-                ExceptionType = exception.GetType().FullName,
-                StackTrace = exception.StackTrace,
-                HResult = exception.HResult,
-                InnerError = CreateHttpError(exception.InnerException)
-            };
+            return new HttpError(
+                exception.Message,
+                exception.GetType().FullName,
+                exception.HResult,
+                CreateHttpError(exception.InnerException),
+                exception.StackTrace);
         }
     }
 }

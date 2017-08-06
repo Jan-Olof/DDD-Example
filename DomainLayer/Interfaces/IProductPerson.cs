@@ -5,7 +5,7 @@ namespace DomainLayer.Interfaces
     /// <summary>
     /// A product that a person is in.
     /// </summary>
-    public interface IProductPerson : IProductBaseDto
+    public interface IProductPerson : IProductCreate
     {
         /// <summary>
         /// Gets or sets the role in the product.

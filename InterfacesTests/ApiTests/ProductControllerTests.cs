@@ -7,6 +7,7 @@ using ApplicationLayer.Interfaces.Interactors;
 using API.Controllers;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
+using InfrastructureLayerTests.TestObjects;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -30,10 +31,61 @@ namespace InterfacesTests.ApiTests
         }
 
         [TestMethod]
+        public void TestShouldCreateProduct()
+        {
+            // Arrange
+            _productInteractor.CreateProduct("FirstProduct", "This is the first product.")
+                .Returns(SampleProducts.CreateProduct(1));
+
+            var sut = CreateProductController();
+
+            // Act
+            var result = sut.CreateProduct(SampleProductDtos.CreateProductCreate());
+
+            // Assert
+            var createdResult = (CreatedAtRouteResult)result;
+            var value = (Product)createdResult.Value;
+
+            Assert.AreEqual((int)HttpStatusCode.Created, createdResult.StatusCode);
+            Assert.AreEqual("FirstProduct", value.Name);
+        }
+
+        [TestMethod]
+        public void TestShouldCreateProductAndGetBadRequest()
+        {
+            // Arrange
+            var sut = CreateProductController();
+
+            // Act
+            var result = sut.CreateProduct(null);
+
+            // Assert
+            var createdResult = (BadRequestResult)result;
+
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, createdResult.StatusCode);
+        }
+
+        [TestMethod]
+        public void TestShouldDeleteProduct()
+        {
+            // Arrange
+            var sut = CreateProductController();
+
+            // Act
+            var result = sut.DeleteProduct(1);
+
+            // Assert
+            var createdResult = (NoContentResult)result;
+
+            Assert.AreEqual((int)HttpStatusCode.NoContent, createdResult.StatusCode);
+        }
+
+        [TestMethod]
         public void TestShouldGetProductFromId()
         {
             // Arrange
-            _productInteractor.GetProduct(1).Returns(SampleProducts.CreateProduct(1));
+            _productInteractor.GetProduct(1)
+                .Returns(SampleProducts.CreateProduct(1));
 
             var sut = CreateProductController();
 
@@ -52,7 +104,8 @@ namespace InterfacesTests.ApiTests
         public void TestShouldGetProductFromIdAndFindNone()
         {
             // Arrange
-            _productInteractor.GetProduct(1).Throws(new NotFoundException());
+            _productInteractor.GetProduct(1)
+                .Throws(new NotFoundException());
 
             var sut = CreateProductController();
 
@@ -84,7 +137,8 @@ namespace InterfacesTests.ApiTests
         public void TestShouldGetProducts()
         {
             // Arrange
-            _productInteractor.GetProducts().Returns(SampleProducts.CreateProducts4());
+            _productInteractor.GetProducts()
+                .Returns(SampleProducts.CreateProducts4());
 
             var sut = CreateProductController();
 
@@ -104,7 +158,8 @@ namespace InterfacesTests.ApiTests
         public void TestShouldGetProductsFromName()
         {
             // Arrange
-            _productInteractor.SearchProducts("Product").Returns(SampleProducts.CreateProducts4());
+            _productInteractor.SearchProducts("Product")
+                .Returns(SampleProducts.CreateProducts4());
 
             var sut = CreateProductController();
 
@@ -124,7 +179,8 @@ namespace InterfacesTests.ApiTests
         public void TestShouldGetProductsFromNameAndFindsNone()
         {
             // Arrange
-            _productInteractor.SearchProducts("Persons").Returns(SampleProducts.CreateProductsEmpty());
+            _productInteractor.SearchProducts("Persons")
+                .Returns(SampleProducts.CreateProductsEmpty());
 
             var sut = CreateProductController();
 

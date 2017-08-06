@@ -6,7 +6,7 @@ namespace DomainLayer.Interfaces
     /// <summary>
     /// The person properties interface.
     /// </summary>
-    public interface IPersonDto : IPersonBaseDto
+    public interface IPersonDto : IIdentifier, IName, IPersonCreate
     {
         /// <summary>
         /// Gets or sets the products that belong to a person.

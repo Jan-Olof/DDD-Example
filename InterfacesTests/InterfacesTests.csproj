@@ -15,6 +15,7 @@
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\ApplicationLayer\ApplicationLayer.csproj" />
     <ProjectReference Include="..\DomainLayerTests\DomainLayerTests.csproj" />
+    <ProjectReference Include="..\InfrastructureLayerTests\InfrastructureLayerTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
