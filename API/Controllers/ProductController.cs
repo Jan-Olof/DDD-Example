@@ -14,7 +14,7 @@ namespace API.Controllers
     /// The product controller.
     /// </summary>
     [Route("api/[controller]")]
-    public class ProductController : Controller //TODO: Update
+    public class ProductController : Controller
     {
         private readonly IProductInteractor _productInteractor;
 
@@ -29,6 +29,7 @@ namespace API.Controllers
         /// <summary>
         /// Create a new product.
         /// </summary>
+        /// <param name="product">An object containing the new product to create.</param>
         [ProducesResponseType(typeof(IProductDto), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
@@ -48,6 +49,7 @@ namespace API.Controllers
         /// <summary>
         /// Delete a product.
         /// </summary>
+        /// <param name="id">The id of the product to delete.</param>
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
         [HttpDelete("{id}")]
@@ -61,6 +63,7 @@ namespace API.Controllers
         /// <summary>
         /// Get one product from id.
         /// </summary>
+        /// <param name="id">The id of the product to get.</param>
         [ProducesResponseType(typeof(IProductDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
@@ -114,6 +117,21 @@ namespace API.Controllers
             }
 
             return Ok(products);
+        }
+
+        /// <summary>
+        /// Update a customer.
+        /// </summary>
+        /// <param name="product">An object containing the new values of the product to update.</param>
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
+        [HttpPut]
+        public IActionResult UpdateProduct([FromBody] ProductUpdate product)
+        {
+            _productInteractor.UpdateProduct(product.Id, product.Name, product.Description);
+
+            return new NoContentResult();
         }
     }
 }

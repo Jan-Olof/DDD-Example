@@ -193,6 +193,21 @@ namespace InterfacesTests.ApiTests
             Assert.AreEqual((int)HttpStatusCode.NoContent, noContentResult.StatusCode);
         }
 
+        [TestMethod]
+        public void TestShouldUpdateProduct()
+        {
+            // Arrange
+            var sut = CreateProductController();
+
+            // Act
+            var result = sut.UpdateProduct(SampleProductDtos.CreateProductUpdate());
+
+            // Assert
+            var createdResult = (NoContentResult)result;
+
+            Assert.AreEqual((int)HttpStatusCode.NoContent, createdResult.StatusCode);
+        }
+
         private ProductController CreateProductController()
         {
             return new ProductController(_productInteractor);

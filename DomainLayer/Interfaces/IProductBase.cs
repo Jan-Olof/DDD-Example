@@ -3,7 +3,7 @@
     /// <summary>
     /// The product model base interface.
     /// </summary>
-    public interface IProductBase<T> : IUpdateMapper<T>, IProductCreate, IIdentifier where T : IIdentifier, IName
+    public interface IProductBase<T> : IUpdateMapper<T>, IProductUpdate where T : IIdentifier, IName
     {
     }
 }

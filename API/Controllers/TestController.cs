@@ -11,54 +11,21 @@ namespace API.Controllers
     public class TestController : Controller
     {
         /// <summary>
-        ///  DELETE api/values/5
-        /// </summary>
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        /// <summary>
-        /// GET api/values
+        /// Test that you get an answer.
         /// </summary>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new[] { "value1", "value2" };
+            return "This is OK.";
         }
 
         /// <summary>
-        /// GET api/values/5
-        /// </summary>
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        /// <summary>
-        /// GET api/values/NotImplemented
+        /// Test is not implemented error.
         /// </summary>
         [HttpGet("NotImplemented")]
         public IEnumerable<string> GetNotImplemented()
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// POST api/values
-        /// </summary>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        /// <summary>
-        /// PUT api/values/5
-        /// </summary>
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
         }
     }
 }

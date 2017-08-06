@@ -8,7 +8,7 @@ namespace ApplicationLayer.Interactors
     /// <summary>
     /// Base interactor class.
     /// </summary>
-    public abstract class BaseInteractor
+    public abstract class BaseInteractor : IDisposable
     {
         protected readonly ILogger Logger;
         protected readonly IDomainRepository Repository;
@@ -20,6 +20,14 @@ namespace ApplicationLayer.Interactors
         {
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Repository?.Dispose();
         }
 
         /// <summary>

@@ -1,9 +1,9 @@
 ﻿namespace DomainLayer.Interfaces
 {
     /// <summary>
-    /// The person model functions interface.
+    /// The person model base interface.
     /// </summary>
-    public interface IPersonBase<T> : IUpdateMapper<T>, IPersonCreate, IIdentifier, IName where T : IIdentifier, IName
+    public interface IPersonBase<T> : IUpdateMapper<T>, IPersonUpdate, IName where T : IIdentifier, IName
     {
     }
 }

@@ -16,7 +16,7 @@ namespace InfrastructureLayerTests.TestObjects
         }
 
         public static ProductDto CreateProductDto(
-                    int id = 0, string name = "FirstProduct", string description = "This is the first product.")
+            int id = 0, string name = "FirstProduct", string description = "This is the first product.")
         {
             return new ProductDto
             {
@@ -50,6 +50,17 @@ namespace InfrastructureLayerTests.TestObjects
             return new List<ProductDto>
             {
                 CreateProductDto(3, "ThirdProduct", "This is the third product.")
+            };
+        }
+
+        public static ProductUpdate CreateProductUpdate(
+                                            int id = 0, string name = "FirstProduct", string description = "This is the first product.")
+        {
+            return new ProductUpdate
+            {
+                Description = description,
+                Id = id,
+                Name = name
             };
         }
     }

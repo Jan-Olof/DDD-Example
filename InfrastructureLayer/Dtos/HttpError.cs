@@ -30,27 +30,27 @@ namespace InfrastructureLayer.Dtos
         }
 
         /// <summary>
-        /// Gets or sets the exception message.
+        /// Gets the exception message.
         /// </summary>
         public string ExceptionMessage { get; }
 
         /// <summary>
-        /// Gets or sets the exception type.
+        /// Gets the exception type.
         /// </summary>
         public string ExceptionType { get; }
 
         /// <summary>
-        /// Gets or sets the HResult.
+        /// Gets the HResult.
         /// </summary>
         public int HResult { get; }
 
         /// <summary>
-        /// Gets or sets the inner error..
+        /// Gets the inner error..
         /// </summary>
         public HttpError InnerError { get; }
 
         /// <summary>
-        /// Gets or sets the stack trace.
+        /// Gets the stack trace.
         /// </summary>
         public string StackTrace { get; }
     }
