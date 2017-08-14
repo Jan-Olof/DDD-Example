@@ -111,17 +111,13 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// Delete a person.
         /// </summary>
         public void RemovePerson(int id)
-        {
-            Delete<PersonDao>(id);
-        }
+            => Delete<PersonDao>(id);
 
         /// <summary>
         /// Delete a product.
         /// </summary>
         public void RemoveProduct(int id)
-        {
-            Delete<ProductDao>(id);
-        }
+            => Delete<ProductDao>(id);
 
         /// <summary>
         /// Update a person.

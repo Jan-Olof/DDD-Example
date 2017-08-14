@@ -51,14 +51,12 @@ namespace CLI.Configure
         /// Configure the logging for the application.
         /// </summary>
         public static void ConfigureLogging(IServiceProvider serviceProvider)
-        {
-            serviceProvider
-                 .GetService<ILoggerFactory>()
+            => serviceProvider
+                .GetService<ILoggerFactory>()
                 //.AddConsole()
                 .AddDebug(LogLevel.Trace)
                 .AddNLog()
                 .ConfigureNLog("nlog.config");
-        }
 
         /// <summary>
         /// Add and configure extension services with dependency injection.
@@ -80,8 +78,6 @@ namespace CLI.Configure
         /// Create the service provider.
         /// </summary>
         public static IServiceProvider CreateServiceProvider(IServiceCollection services)
-        {
-            return services.BuildServiceProvider();
-        }
+            => services.BuildServiceProvider();
     }
 }

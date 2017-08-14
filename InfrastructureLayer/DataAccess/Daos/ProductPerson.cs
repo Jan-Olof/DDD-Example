@@ -57,8 +57,6 @@ namespace InfrastructureLayer.DataAccess.Daos
         /// NOTE: ReSharper disable NonReadonlyMemberInGetHashCode
         /// </summary>
         public override int GetHashCode()
-        {
-            return PersonId.GetHashCode() + ProductId.GetHashCode() + Role.GetHashCode();
-        }
+            => PersonId.GetHashCode() + ProductId.GetHashCode() + Role.GetHashCode();
     }
 }

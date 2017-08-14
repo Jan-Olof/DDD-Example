@@ -23,24 +23,18 @@ namespace DomainLayer.Models
         /// Defines how to get entities by id.
         /// </summary>
         public static Expression<Func<T, bool>> Get(int id)
-        {
-            return entity => entity.Id == id;
-        }
+            => entity => entity.Id == id;
 
         /// <summary>
         /// Defines how to get entities by name.
         /// </summary>
         public static Expression<Func<T, bool>> Get(string name)
-        {
-            return entity => entity.Name == name;
-        }
+            => entity => entity.Name == name;
 
         /// <summary>
         /// Defines how to search entities by name.
         /// </summary>
         public static Expression<Func<T, bool>> Search(string name)
-        {
-            return entity => entity.Name.ToLower().Contains(name.ToLower());
-        }
+            => entity => entity.Name.ToLower().Contains(name.ToLower());
     }
 }

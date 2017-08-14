@@ -25,9 +25,7 @@ namespace ApplicationLayer.Interactors
         /// </summary>
         public ProductInteractor(IDomainRepository repository, IProduct model, ILogger<ProductInteractor> logger)
             : base(logger, repository)
-        {
-            _model = model ?? throw new ArgumentNullException(nameof(model));
-        }
+                => _model = model ?? throw new ArgumentNullException(nameof(model));
 
         /// <summary>
         /// Add a person to a product.

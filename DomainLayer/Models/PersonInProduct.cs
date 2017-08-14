@@ -48,8 +48,6 @@ namespace DomainLayer.Models
         /// Defines how to get a person in a product.
         /// </summary>
         public static Func<PersonInProduct, bool> Get(int personId, Role role)
-        {
-            return p => p.Id == personId && p.Role == role;
-        }
+            => p => p.Id == personId && p.Role == role;
     }
 }

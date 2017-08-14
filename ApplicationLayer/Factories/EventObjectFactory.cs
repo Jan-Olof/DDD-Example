@@ -10,14 +10,7 @@ namespace ApplicationLayer.Factories
         /// <summary>
         /// Build an event object from an entity.
         /// </summary>
-        public static EventObject CreateEventObject(T person, EventType eventType)
-        {
-            return new EventObject
-            {
-                Entity = person,
-                EntityName = typeof(T).ToString(),
-                Type = eventType.ToString()
-            };
-        }
+        public static EventObject CreateEventObject(T entity, EventType eventType)
+            => new EventObject(entity, typeof(T).ToString(), eventType.ToString());
     }
 }

@@ -15,9 +15,7 @@ namespace InfrastructureLayer.DataAccess.Daos
         /// Initializes a new instance of the <see cref="PersonDao"/> class.
         /// </summary>
         public PersonDao()
-        {
-            ProductPersons = new List<ProductPerson>();
-        }
+            => ProductPersons = new List<ProductPerson>();
 
         /// <summary>
         /// Gets or sets the ProductPersons.
@@ -28,10 +26,8 @@ namespace InfrastructureLayer.DataAccess.Daos
         /// Members to include for PersonDao. (ProductPersons and then Product.)
         /// </summary>
         public static Func<IQueryable<PersonDao>, IQueryable<PersonDao>> IncludeMembers()
-        {
-            return personDaos => personDaos
+            => personDaos => personDaos
                 .Include(personDao => personDao.ProductPersons)
                 .ThenInclude(productPerson => productPerson.Product);
-        }
     }
 }

@@ -2,8 +2,15 @@
 {
     public class EventObject
     {
-        public object Entity { get; set; }
-        public string EntityName { get; set; }
-        public string Type { get; set; }
+        public EventObject(object entity, string entityName, string type)
+        {
+            Entity = entity;
+            EntityName = entityName;
+            Type = type;
+        }
+
+        public object Entity { get; }
+        public string EntityName { get; }
+        public string Type { get; }
     }
 }

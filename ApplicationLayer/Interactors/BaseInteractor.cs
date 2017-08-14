@@ -26,9 +26,7 @@ namespace ApplicationLayer.Interactors
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
-        {
-            Repository?.Dispose();
-        }
+            => Repository?.Dispose();
 
         /// <summary>
         /// Throw TooManyFoundException if the object is not null.

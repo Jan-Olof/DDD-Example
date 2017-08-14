@@ -15,36 +15,31 @@ namespace InfrastructureLayer.Factories
         /// Build a Person from a PersonDao.
         /// </summary>
         public static Person CreatePerson(PersonDao productDao)
-        {
-            return new Person
+            => new Person
             {
                 Id = productDao.Id,
                 FirstName = productDao.FirstName,
                 LastName = productDao.LastName,
                 Products = CreateProductsInPerson(productDao.ProductPersons)
             };
-        }
 
         /// <summary>
         /// Build a PersonDao from a Person.
         /// </summary>
         public static PersonDao CreatePersonDao(Person person)
-        {
-            return new PersonDao
+            => new PersonDao
             {
                 Id = person.Id,
                 FirstName = person.FirstName,
                 LastName = person.LastName,
                 ProductPersons = CreateProductPersons(person.Products, person.Id)
             };
-        }
 
         /// <summary>
         /// Build a PersonDto from a Person.
         /// </summary>
         public static PersonDto CreatePersonDto(Person person)
-        {
-            return new PersonDto
+            => new PersonDto
             {
                 Id = person.Id,
                 FirstName = person.FirstName,
@@ -52,16 +47,15 @@ namespace InfrastructureLayer.Factories
                 Name = person.Name,
                 Products = person.Products
             };
-        }
 
         private static List<ProductPerson> CreateProductPersons(IEnumerable<ProductInPerson> personProducts, int personId)
-        {
-            return personProducts.Select(p => ProductPersonFactory.CreateProductPerson(p, personId)).ToList();
-        }
+            => personProducts
+                .Select(p => ProductPersonFactory.CreateProductPerson(p, personId))
+                .ToList();
 
         private static IList<ProductInPerson> CreateProductsInPerson(IEnumerable<ProductPerson> productPersons)
-        {
-            return productPersons.Select(ProductPersonFactory.CreateProductInPerson).ToList();
-        }
+            => productPersons
+                .Select(ProductPersonFactory.CreateProductInPerson)
+                .ToList();
     }
 }

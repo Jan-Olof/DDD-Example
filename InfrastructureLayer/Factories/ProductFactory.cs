@@ -15,52 +15,46 @@ namespace InfrastructureLayer.Factories
         /// Build a Product from a ProductDao.
         /// </summary>
         public static Product CreateProduct(ProductDao productDao)
-        {
-            return new Product
+            => new Product
             {
                 Id = productDao.Id,
                 Name = productDao.Name,
                 Description = productDao.Description,
                 Persons = CreatePersonsInProduct(productDao.ProductPersons)
             };
-        }
 
         /// <summary>
         /// Build a ProductDao from a Product.
         /// </summary>
         public static ProductDao CreateProductDao(Product product)
-        {
-            return new ProductDao
+            => new ProductDao
             {
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 ProductPersons = CreateProductPersons(product.Persons, product.Id)
             };
-        }
 
         /// <summary>
         /// Build a ProductDto from a Product.
         /// </summary>
         public static ProductDto CreateProductDto(Product product)
-        {
-            return new ProductDto
+            => new ProductDto
             {
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 Persons = product.Persons
             };
-        }
 
         private static List<PersonInProduct> CreatePersonsInProduct(IEnumerable<ProductPerson> productPersons)
-        {
-            return productPersons.Select(ProductPersonFactory.CreatePersonInProduct).ToList();
-        }
+            => productPersons
+                .Select(ProductPersonFactory.CreatePersonInProduct)
+                .ToList();
 
         private static List<ProductPerson> CreateProductPersons(IEnumerable<PersonInProduct> personsInProduct, int productId)
-        {
-            return personsInProduct.Select(p => ProductPersonFactory.CreateProductPerson(p, productId)).ToList();
-        }
+            => personsInProduct
+                .Select(p => ProductPersonFactory.CreateProductPerson(p, productId))
+                .ToList();
     }
 }

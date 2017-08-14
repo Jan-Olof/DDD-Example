@@ -39,9 +39,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
-        {
-            _context?.Dispose();
-        }
+            => _context?.Dispose();
 
         /// <summary>
         /// Delete an entity.
@@ -88,49 +86,37 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// Get entity from primary key.
         /// </summary>
         protected T Get<T>(int id) where T : class, IIdentifier
-        {
-            return FindEntity<T>(id);
-        }
+            => FindEntity<T>(id);
 
         /// <summary>
         /// Get entity from primary key.
         /// </summary>
         protected T Get<T>(int id, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class, IIdentifier
-        {
-            return FindEntity(id, includeMembers);
-        }
+            => FindEntity(id, includeMembers);
 
         /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>() where T : class
-        {
-            return _context.Set<T>();
-        }
+            => _context.Set<T>();
 
         /// <summary>
         /// Get all entities of a certain type.
         /// </summary>
         protected IQueryable<T> Get<T>(Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
-        {
-            return includeMembers(_context.Set<T>());
-        }
+            => includeMembers(_context.Set<T>());
 
         /// <summary>
         /// Get all entities of a certain type based on a condition.
         /// </summary>
         protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition) where T : class
-        {
-            return _context.Set<T>().Where(condition);
-        }
+            => _context.Set<T>().Where(condition);
 
         /// <summary>
         /// Get all entities of a certain type based on a condition.
         /// </summary>
         protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
-        {
-            return includeMembers(_context.Set<T>().Where(condition));
-        }
+            => includeMembers(_context.Set<T>().Where(condition));
 
         /// <summary>
         /// Insert a new entity.
@@ -207,12 +193,10 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// Set JSON serielizer to ignore referenced object.
         /// </summary>
         private static JsonSerializerSettings IgnoreReferenced()
-        {
-            return new JsonSerializerSettings
+            => new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
-        }
 
         /// <summary>
         /// Find an entity and handle null exception.

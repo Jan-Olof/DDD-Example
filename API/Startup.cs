@@ -114,8 +114,7 @@ namespace API
         /// Register the Swagger generator, defining one or more Swagger documents.
         /// </summary>
         private static void ConfigureSwagger(IServiceCollection services)
-        {
-            services.AddSwaggerGen(c =>
+            => services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
                 {
@@ -130,6 +129,5 @@ namespace API
                 string xmlPath = Path.Combine(basePath, "API.xml");
                 c.IncludeXmlComments(xmlPath);
             });
-        }
     }
 }
