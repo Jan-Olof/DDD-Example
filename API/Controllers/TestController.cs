@@ -15,17 +15,13 @@ namespace API.Controllers
         /// </summary>
         [HttpGet]
         public string Get()
-        {
-            return "This is OK.";
-        }
+            => "This is OK.";
 
         /// <summary>
         /// Test is not implemented error.
         /// </summary>
         [HttpGet("NotImplemented")]
         public IEnumerable<string> GetNotImplemented()
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
     }
 }

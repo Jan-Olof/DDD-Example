@@ -22,9 +22,7 @@ namespace API.Controllers
         /// Initializes a new instance of the <see cref="ProductController"/> class.
         /// </summary>
         public ProductController(IProductInteractor productInteractor)
-        {
-            _productInteractor = productInteractor ?? throw new ArgumentNullException(nameof(productInteractor));
-        }
+            => _productInteractor = productInteractor ?? throw new ArgumentNullException(nameof(productInteractor));
 
         /// <summary>
         /// Create a new product.
@@ -94,9 +92,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(HttpError), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
         public IActionResult GetProducts()
-        {
-            return Ok(_productInteractor.GetProducts());
-        }
+            => Ok(_productInteractor.GetProducts());
 
         /// <summary>
         /// Search products for a certain name.
