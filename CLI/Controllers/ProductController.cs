@@ -13,58 +13,38 @@ namespace CLI.Controllers
         private readonly IProductInteractor _productInteractor;
 
         public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-            _productInteractor = serviceProvider.GetService<IProductInteractor>();
-        }
+            => _productInteractor = serviceProvider.GetService<IProductInteractor>();
 
         public void AddPerson(int prodId, int persId, Role role)
-        {
-            _productInteractor.AddPersonToProduct(persId, prodId, role);
-        }
+            => _productInteractor.AddPersonToProduct(persId, prodId, role);
 
         public Product CreateProduct(string name, string description = "")
-        {
-            return _productInteractor.CreateProduct(name, description);
-        }
+            => _productInteractor.CreateProduct(name, description);
 
         public void DeleteProduct(int id)
-        {
-            _productInteractor.DeleteProduct(id);
-        }
+            => _productInteractor.DeleteProduct(id);
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public override void Dispose()
-        {
-            _productInteractor?.Dispose();
-        }
+            => _productInteractor?.Dispose();
 
         public Product GetProduct(string input)
-        {
-            return int.TryParse(input, out int id)
+            => int.TryParse(input, out int id)
                 ? _productInteractor.GetProduct(id)
                 : _productInteractor.GetProducts(input).SingleOrDefault();
-        }
 
         public IList<Product> GetProducts()
-        {
-            return _productInteractor.GetProducts();
-        }
+            => _productInteractor.GetProducts();
 
         public void RemovePerson(int prodId, int persId, Role role)
-        {
-            _productInteractor.RemovePersonFromProduct(persId, prodId, role);
-        }
+            => _productInteractor.RemovePersonFromProduct(persId, prodId, role);
 
         public IList<Product> SearchProducts(string name)
-        {
-            return _productInteractor.SearchProducts(name);
-        }
+            => _productInteractor.SearchProducts(name);
 
         public Product UpdateProduct(int id, string name, string description = "")
-        {
-            return _productInteractor.UpdateProduct(id, name, description);
-        }
+            => _productInteractor.UpdateProduct(id, name, description);
     }
 }

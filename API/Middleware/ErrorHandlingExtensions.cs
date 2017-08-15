@@ -12,8 +12,6 @@ namespace API.Middleware
         /// Use the ErrorHandling middleware.
         /// </summary>
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder builder, ILogger logger)
-        {
-            return builder.UseMiddleware<ErrorHandling>(logger);
-        }
+            => builder.UseMiddleware<ErrorHandling>(logger);
     }
 }

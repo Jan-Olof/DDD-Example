@@ -13,16 +13,12 @@ namespace CLI.Configure
         private readonly IServiceProvider _serviceProvider;
 
         public DependencyScope()
-        {
-            _serviceProvider = BasicConfiguration();
-        }
+            => _serviceProvider = BasicConfiguration();
 
         public ILogger<Program> CreateLogger()
-        {
-            return _serviceProvider
+            => _serviceProvider
                 .GetService<ILoggerFactory>()
                 .CreateLogger<Program>();
-        }
 
         public BaseController GetService(Type serviceType)
         {

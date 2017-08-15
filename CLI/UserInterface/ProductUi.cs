@@ -13,9 +13,7 @@ namespace CLI.UserInterface
         private readonly ProductController _controller;
 
         public ProductUi(DependencyScope dependencyScope)
-        {
-            _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
-        }
+            => _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
 
         public void AddPerson()
         {
@@ -89,9 +87,7 @@ namespace CLI.UserInterface
         }
 
         public void Dispose()
-        {
-            _controller?.Dispose();
-        }
+            => _controller?.Dispose();
 
         public Product GetProduct()
         {
