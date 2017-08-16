@@ -12,6 +12,9 @@ namespace CLI.Configure
     {
         private readonly IServiceProvider _serviceProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DependencyScope"/> class.
+        /// </summary>
         public DependencyScope()
             => _serviceProvider = BasicConfiguration();
 

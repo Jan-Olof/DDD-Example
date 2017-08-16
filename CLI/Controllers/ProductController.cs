@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApplicationLayer.Interfaces.Interactors;
-using DomainLayer.Enums;
 using DomainLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
+using DomainLayer.Factories;
 
 namespace CLI.Controllers
 {
@@ -12,11 +12,14 @@ namespace CLI.Controllers
     {
         private readonly IProductInteractor _productInteractor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductController"/> class.
+        /// </summary>
         public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
             => _productInteractor = serviceProvider.GetService<IProductInteractor>();
 
-        public void AddPerson(int prodId, int persId, Role role)
-            => _productInteractor.AddPersonToProduct(persId, prodId, role);
+        public void AddPerson(int prodId, int persId, string role)
+            => _productInteractor.AddPersonToProduct(persId, prodId, RoleFactory.CreateRole(role));
 
         public Product CreateProduct(string name, string description = "")
             => _productInteractor.CreateProduct(name, description);
@@ -38,8 +41,8 @@ namespace CLI.Controllers
         public IList<Product> GetProducts()
             => _productInteractor.GetProducts();
 
-        public void RemovePerson(int prodId, int persId, Role role)
-            => _productInteractor.RemovePersonFromProduct(persId, prodId, role);
+        public void RemovePerson(int prodId, int persId, string role)
+            => _productInteractor.RemovePersonFromProduct(persId, prodId, RoleFactory.CreateRole(role));
 
         public IList<Product> SearchProducts(string name)
             => _productInteractor.SearchProducts(name);

@@ -5,6 +5,7 @@ using CLI.Controllers;
 using DomainLayer.Factories;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
+using InfrastructureLayer.Utilities;
 
 namespace CLI.UserInterface
 {
@@ -12,6 +13,9 @@ namespace CLI.UserInterface
     {
         private readonly ProductController _controller;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductUi"/> class.
+        /// </summary>
         public ProductUi(DependencyScope dependencyScope)
             => _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
 
@@ -20,23 +24,23 @@ namespace CLI.UserInterface
             try
             {
                 Console.Write("Product id? ");
-                if (!int.TryParse(Console.ReadLine(), out int prodId))
+                var parsedProdId = Console.ReadLine().Parser();
+                if (!parsedProdId.isSuccess)
                 {
                     Console.WriteLine("Bad product id!");
                     return;
                 }
 
                 Console.Write("Person id? ");
-                if (!int.TryParse(Console.ReadLine(), out int persId))
+                var parsedPersId = Console.ReadLine().Parser();
+                if (!parsedPersId.isSuccess)
                 {
                     Console.WriteLine("Bad person id!");
                     return;
                 }
 
                 Console.Write("Role? ");
-                var role = RoleFactory.CreateRole(Console.ReadLine());
-
-                _controller.AddPerson(prodId, persId, role);
+                _controller.AddPerson(parsedProdId.parsedValue, parsedPersId.parsedValue, Console.ReadLine());
 
                 Console.WriteLine();
                 Console.WriteLine("The person has been added.");
@@ -112,23 +116,23 @@ namespace CLI.UserInterface
             try
             {
                 Console.Write("Product id? ");
-                if (!int.TryParse(Console.ReadLine(), out int prodId))
+                var parsedProdId = Console.ReadLine().Parser();
+                if (!parsedProdId.isSuccess)
                 {
                     Console.WriteLine("Bad product id!");
                     return;
                 }
 
                 Console.Write("Person id? ");
-                if (!int.TryParse(Console.ReadLine(), out int persId))
+                var parsedPersId = Console.ReadLine().Parser();
+                if (!parsedPersId.isSuccess)
                 {
                     Console.WriteLine("Bad person id!");
                     return;
                 }
 
                 Console.Write("Role? ");
-                var role = RoleFactory.CreateRole(Console.ReadLine());
-
-                _controller.RemovePerson(prodId, persId, role);
+                _controller.RemovePerson(parsedProdId.parsedValue, parsedPersId.parsedValue, Console.ReadLine());
 
                 Console.WriteLine();
                 Console.WriteLine("The person has been removed.");

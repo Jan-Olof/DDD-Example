@@ -16,10 +16,11 @@ namespace CLI.UserInterface
 
         private readonly DependencyScope _dependencyScope;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseUi"/> class.
+        /// </summary>
         public BaseUi(DependencyScope dependencyScope)
-        {
-            _dependencyScope = dependencyScope ?? throw new ArgumentNullException(nameof(dependencyScope));
-        }
+            => _dependencyScope = dependencyScope ?? throw new ArgumentNullException(nameof(dependencyScope));
 
         public void Flow()
         {
