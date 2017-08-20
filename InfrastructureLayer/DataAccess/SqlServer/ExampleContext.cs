@@ -14,13 +14,6 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// <summary>
         /// Initializes a new instance of the <see cref="ExampleContext"/> class.
         /// </summary>
-        public ExampleContext()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExampleContext"/> class.
-        /// </summary>
         public ExampleContext(DbContextOptions<ExampleContext> options)
             : base(options)
         {
@@ -53,8 +46,8 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         {
             if (optionsBuilder.IsConfigured) return;
 
-            string connection = @"Server=localhost\sql2016;Database=DDD-Example;Trusted_Connection=True;";
-            optionsBuilder.UseSqlServer(connection);
+            // string connection = @"Server=localhost\sql2016;Database=DDD-Example;Trusted_Connection=True;";
+            // optionsBuilder.UseSqlServer(connection);
         }
 
         /// <summary>

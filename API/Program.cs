@@ -3,28 +3,28 @@
 
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
 
 namespace API
 {
     /// <summary>
     /// Program is the start class for .NET Core.
     /// </summary>
-    public class Program
+    public static class Program
     {
+        /// <summary>
+        /// Builds the WebHost instance.
+        /// This method is used (by convention) by EF Core to access the application's service provider at design time.
+        /// </summary>
+        public static IWebHost BuildWebHost(string[] args)
+            => WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
+
         /// <summary>
         /// The main method.
         /// </summary>
         public static void Main(string[] args)
-        {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
-
-            host.Run();
-        }
+            => BuildWebHost(args).Run();
     }
 }

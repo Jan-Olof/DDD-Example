@@ -53,7 +53,6 @@ namespace CLI.Configure
         public static void ConfigureLogging(IServiceProvider serviceProvider)
             => serviceProvider
                 .GetService<ILoggerFactory>()
-                //.AddConsole()
                 .AddDebug(LogLevel.Trace)
                 .AddNLog()
                 .ConfigureNLog("nlog.config");
