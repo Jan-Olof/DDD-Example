@@ -1,7 +1,7 @@
 ﻿// ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedParameter.Global
+// ReSharper disable MemberCanBePrivate.Global
 
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
 

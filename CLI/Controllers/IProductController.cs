@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DomainLayer.Models;
-using DomainLayer.Enums;
 
 namespace CLI.Controllers
 {

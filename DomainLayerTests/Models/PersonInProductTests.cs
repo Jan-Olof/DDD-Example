@@ -21,6 +21,7 @@ namespace DomainLayerTests.Models
             // Assert
             var person = persons.SingleOrDefault(result);
 
+            Assert.IsNotNull(person);
             Assert.AreEqual("First Person", person.Name);
         }
 

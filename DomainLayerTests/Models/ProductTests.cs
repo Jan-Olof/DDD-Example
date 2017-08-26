@@ -22,6 +22,7 @@ namespace DomainLayerTests.Models
             // Assert
             var product = products.SingleOrDefault(result.Compile());
 
+            Assert.IsNotNull(product);
             Assert.AreEqual("SecondProduct", product.Name);
         }
 
@@ -37,6 +38,7 @@ namespace DomainLayerTests.Models
             // Assert
             var product = products.SingleOrDefault(result.Compile());
 
+            Assert.IsNotNull(product);
             Assert.AreEqual(2, product.Id);
         }
 

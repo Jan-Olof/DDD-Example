@@ -36,6 +36,7 @@ namespace DomainLayerTests.Models
             // Assert
             var person = persons.SingleOrDefault(result.Compile());
 
+            Assert.IsNotNull(person);
             Assert.AreEqual("Second Person", person.Name);
         }
 
@@ -51,6 +52,7 @@ namespace DomainLayerTests.Models
             // Assert
             var person = persons.SingleOrDefault(result.Compile());
 
+            Assert.IsNotNull(person);
             Assert.AreEqual(2, person.Id);
         }
 

@@ -8,7 +8,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Enums;
-using DomainLayer.Interfaces;
 
 namespace ApplicationLayerTests.Services
 {
@@ -16,14 +15,12 @@ namespace ApplicationLayerTests.Services
     public class ProductInteractorTests
     {
         private ILogger<ProductInteractor> _logger;
-        private IProduct _model;
         private IDomainRepository _repository;
 
         [TestInitialize]
         public void SetUp()
         {
             _repository = Substitute.For<IDomainRepository>();
-            _model = Substitute.For<IProduct>();
             _logger = Substitute.For<ILogger<ProductInteractor>>();
         }
 
@@ -248,8 +245,6 @@ namespace ApplicationLayerTests.Services
         }
 
         private ProductInteractor CreateProductInteractor()
-        {
-            return new ProductInteractor(_repository, _model, _logger);
-        }
+            => new ProductInteractor(_repository, _logger);
     }
 }

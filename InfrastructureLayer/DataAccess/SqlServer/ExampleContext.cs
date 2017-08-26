@@ -44,7 +44,7 @@ namespace InfrastructureLayer.DataAccess.SqlServer
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured) return;
+            // if (optionsBuilder.IsConfigured) return;
 
             // string connection = @"Server=localhost\sql2016;Database=DDD-Example;Trusted_Connection=True;";
             // optionsBuilder.UseSqlServer(connection);
