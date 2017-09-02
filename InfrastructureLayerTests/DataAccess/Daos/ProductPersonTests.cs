@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using DomainLayer.Enums;
+﻿using DomainLayer.Enums;
 using InfrastructureLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace InfrastructureLayerTests.DataAccess.Daos
 {

@@ -1,7 +1,7 @@
 ﻿// ReSharper disable NonReadonlyMemberInGetHashCode
 
-using System;
 using DomainLayer.Enums;
+using System;
 
 namespace InfrastructureLayer.DataAccess.Daos
 {

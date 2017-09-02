@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using DomainLayer.Interfaces;
+﻿using DomainLayer.Interfaces;
 using DomainLayer.Models;
+using System.Collections.Generic;
 
 namespace InfrastructureLayer.Dtos
 {

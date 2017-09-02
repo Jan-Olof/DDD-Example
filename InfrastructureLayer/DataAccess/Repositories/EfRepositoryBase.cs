@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using ApplicationLayer.EventLogging;
+﻿using ApplicationLayer.EventLogging;
 using ApplicationLayer.Exceptions;
 using ApplicationLayer.Factories;
 using DomainLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

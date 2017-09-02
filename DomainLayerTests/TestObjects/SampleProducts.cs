@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using DomainLayer.Enums;
+﻿using DomainLayer.Enums;
 using DomainLayer.Models;
+using System.Collections.Generic;
 
 namespace DomainLayerTests.TestObjects
 {

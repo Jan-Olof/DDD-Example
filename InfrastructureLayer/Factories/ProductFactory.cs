@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DomainLayer.Models;
+﻿using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Daos;
 using InfrastructureLayer.Dtos;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InfrastructureLayer.Factories
 {

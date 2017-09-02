@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ApplicationLayer.EventLogging;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using ApplicationLayer.EventLogging;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Daos;
 using InfrastructureLayer.Factories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

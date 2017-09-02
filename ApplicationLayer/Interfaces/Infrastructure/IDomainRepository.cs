@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DomainLayer.Models;
+using System;
 using System.Collections.Generic;
-using DomainLayer.Models;
 
 namespace ApplicationLayer.Interfaces.Infrastructure
 {

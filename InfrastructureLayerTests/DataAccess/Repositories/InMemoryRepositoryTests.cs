@@ -1,14 +1,14 @@
 // ReSharper disable UnusedMember.Global
 
-using System.Collections.Generic;
-using System.Linq;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using InfrastructureLayer.Files;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System.Collections.Generic;
+using System.Linq;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories

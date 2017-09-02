@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using ApplicationLayer.Exceptions;
+﻿using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interactors;
+using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Enums;
 using DomainLayerTests.TestObjects;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using ApplicationLayer.Interfaces.Infrastructure;
-using DomainLayer.Enums;
+using System;
+using System.Linq;
 
 namespace ApplicationLayerTests.Services
 {

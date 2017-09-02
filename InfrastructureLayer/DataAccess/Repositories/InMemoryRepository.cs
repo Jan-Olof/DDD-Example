@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using ApplicationLayer.EventLogging;
+﻿using ApplicationLayer.EventLogging;
 using ApplicationLayer.Factories;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {

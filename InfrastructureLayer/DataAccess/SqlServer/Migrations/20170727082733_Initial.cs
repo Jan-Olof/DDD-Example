@@ -1,8 +1,8 @@
 ﻿// ReSharper disable UnusedMember.Global
 // ReSharper disable RedundantArgumentDefaultValue
 
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InfrastructureLayer.DataAccess.SqlServer.Migrations
 {

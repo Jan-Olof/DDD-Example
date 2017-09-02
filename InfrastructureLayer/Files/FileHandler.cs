@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using ApplicationLayer.Interfaces.Infrastructure;
+using InfrastructureLayer.Configure;
+using Microsoft.Extensions.Options;
 using System;
 using System.IO;
-using ApplicationLayer.Interfaces.Infrastructure;
-using InfrastructureLayer.Configure;
 
 namespace InfrastructureLayer.Files
 {

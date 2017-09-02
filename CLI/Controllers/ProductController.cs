@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ApplicationLayer.Interfaces.Interactors;
+using CLI.Interfaces;
+using DomainLayer.Factories;
+using DomainLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApplicationLayer.Interfaces.Interactors;
-using DomainLayer.Models;
-using Microsoft.Extensions.DependencyInjection;
-using DomainLayer.Factories;
 
 namespace CLI.Controllers
 {
@@ -15,8 +15,8 @@ namespace CLI.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductController"/> class.
         /// </summary>
-        public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
-            => _productInteractor = serviceProvider.GetService<IProductInteractor>();
+        public ProductController(IProductInteractor productInteractor)
+            => _productInteractor = productInteractor ?? throw new ArgumentNullException(nameof(productInteractor));
 
         public void AddPerson(int prodId, int persId, string role)
             => _productInteractor.AddPersonToProduct(persId, prodId, RoleFactory.CreateRole(role));

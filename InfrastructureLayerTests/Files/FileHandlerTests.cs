@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.Configure;
@@ -8,6 +6,8 @@ using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InfrastructureLayerTests.Files
 {

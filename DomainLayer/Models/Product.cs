@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DomainLayer.Interfaces;
+﻿using DomainLayer.Interfaces;
+using System.Collections.Generic;
 
 namespace DomainLayer.Models
 {

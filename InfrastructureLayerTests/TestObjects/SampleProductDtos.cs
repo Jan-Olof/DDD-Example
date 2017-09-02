@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using InfrastructureLayer.Dtos;
+﻿using InfrastructureLayer.Dtos;
+using System.Collections.Generic;
 
 namespace InfrastructureLayerTests.TestObjects
 {

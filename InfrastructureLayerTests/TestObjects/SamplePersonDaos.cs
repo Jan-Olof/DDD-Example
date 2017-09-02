@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using InfrastructureLayer.DataAccess.Daos;
+﻿using InfrastructureLayer.DataAccess.Daos;
+using System.Collections.Generic;
 
 namespace InfrastructureLayerTests.TestObjects
 {

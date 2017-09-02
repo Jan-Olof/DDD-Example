@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DomainLayer.Models;
+using System;
 using System.Collections.Generic;
-using DomainLayer.Models;
 
-namespace CLI.Controllers
+namespace CLI.Interfaces
 {
     public interface IProductController : IDisposable
     {

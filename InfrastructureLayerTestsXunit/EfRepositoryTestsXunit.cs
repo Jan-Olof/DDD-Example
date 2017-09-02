@@ -1,13 +1,12 @@
-using System;
-using System.Linq;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using System;
+using System.Linq;
 using Xunit;
-
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTestsXunit

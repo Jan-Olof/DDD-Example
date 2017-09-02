@@ -1,5 +1,5 @@
-﻿using System;
-using InfrastructureLayer.Dtos;
+﻿using InfrastructureLayer.Dtos;
+using System;
 
 namespace InfrastructureLayer.Factories
 {

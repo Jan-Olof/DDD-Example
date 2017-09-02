@@ -2,8 +2,8 @@
 // ReSharper disable UnusedParameter.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace API
 {

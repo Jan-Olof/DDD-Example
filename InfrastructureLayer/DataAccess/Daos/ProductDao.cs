@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DomainLayer.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using DomainLayer.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayer.DataAccess.Daos
 {

@@ -1,8 +1,8 @@
-using System.Linq;
 using DomainLayer.Enums;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace DomainLayerTests.Models
 {

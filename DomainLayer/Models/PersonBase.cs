@@ -1,5 +1,5 @@
-﻿using System;
-using DomainLayer.Interfaces;
+﻿using DomainLayer.Interfaces;
+using System;
 
 namespace DomainLayer.Models
 {

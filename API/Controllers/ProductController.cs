@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using ApplicationLayer.Exceptions;
+﻿using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Interfaces;
 using InfrastructureLayer.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace API.Controllers
 {

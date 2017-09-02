@@ -3,11 +3,10 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
-using System.IO;
+using API.Middleware;
 using ApplicationLayer.Interactors;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
-using API.Middleware;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -23,6 +22,7 @@ using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace API
 {

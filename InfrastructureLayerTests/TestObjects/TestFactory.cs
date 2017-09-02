@@ -1,14 +1,14 @@
 ﻿using ApplicationLayer.Interfaces.Infrastructure;
+using DomainLayer.Enums;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
+using InfrastructureLayer.Configure;
+using InfrastructureLayer.DataAccess.SqlServer;
 using InfrastructureLayer.Files;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
-using DomainLayer.Enums;
-using InfrastructureLayer.Configure;
-using InfrastructureLayer.DataAccess.SqlServer;
-using Microsoft.EntityFrameworkCore;
 
 namespace InfrastructureLayerTests.TestObjects
 {

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using ApplicationLayer.Interactors;
+﻿using ApplicationLayer.Interactors;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
+using CLI.Controllers;
+using CLI.Interfaces;
+using CLI.Views;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 
 namespace CLI.Configure
 {
@@ -26,6 +29,9 @@ namespace CLI.Configure
         /// </summary>
         public static IServiceCollection ConfigureDependencyInjection(IServiceCollection services)
         {
+            services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
+            services.AddTransient<ILogger<BaseView>, Logger<BaseView>>();
+
             services.AddTransient<IProductDto, Product>();
             services.AddTransient<IProduct, Product>();
             services.AddTransient<IList<Product>, List<Product>>();
@@ -36,13 +42,17 @@ namespace CLI.Configure
 
             services.AddTransient<IProductInteractor, ProductInteractor>();
 
-            services.AddTransient<ILogger<ProductInteractor>, Logger<ProductInteractor>>();
             services.AddTransient<IJsonSerialization, JsonSerialization>();
             services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
 
             services.AddTransient<DbContext, ExampleContext>();
             services.AddTransient<IDomainRepository, EfDomainRepository>();
             //services.AddTransient<IDomainRepository, InMemoryRepository>();
+
+            services.AddTransient<IProductView, ProductView>();
+            services.AddTransient<IProductController, ProductController>();
+
+            services.AddTransient(typeof(BaseView));
 
             return services;
         }
@@ -76,7 +86,7 @@ namespace CLI.Configure
         /// <summary>
         /// Create the service provider.
         /// </summary>
-        public static IServiceProvider CreateServiceProvider(IServiceCollection services)
+        public static ServiceProvider CreateServiceProvider(IServiceCollection services)
             => services.BuildServiceProvider();
     }
 }

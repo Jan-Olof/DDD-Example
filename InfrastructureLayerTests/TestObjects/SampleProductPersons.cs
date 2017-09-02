@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using DomainLayer.Enums;
+﻿using DomainLayer.Enums;
 using InfrastructureLayer.DataAccess.Daos;
+using System.Collections.Generic;
 
 namespace InfrastructureLayerTests.TestObjects
 {

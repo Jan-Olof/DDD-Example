@@ -1,5 +1,5 @@
-﻿using System;
-using DomainLayer.Enums;
+﻿using DomainLayer.Enums;
+using System;
 
 namespace DomainLayer.Factories
 {

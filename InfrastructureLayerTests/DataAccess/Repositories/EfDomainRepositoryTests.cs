@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using DomainLayer.Enums;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
@@ -8,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-
+using System;
+using System.Linq;
 using static InfrastructureLayerTests.TestObjects.TestFactory;
 
 namespace InfrastructureLayerTests.DataAccess.Repositories

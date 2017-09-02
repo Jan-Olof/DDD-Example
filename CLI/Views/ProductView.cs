@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using CLI.Configure;
-using CLI.Controllers;
+﻿using CLI.Interfaces;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.Utilities;
+using System;
+using System.Collections.Generic;
 
-namespace CLI.UserInterface
+namespace CLI.Views
 {
-    internal class ProductUi : IDisposable
+    internal class ProductView : IProductView
     {
-        private readonly ProductController _controller;
+        private readonly IProductController _controller;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductUi"/> class.
+        /// Initializes a new instance of the <see cref="ProductView"/> class.
         /// </summary>
-        public ProductUi(DependencyScope dependencyScope)
-            => _controller = (ProductController)dependencyScope.GetService(typeof(ProductController));
+        public ProductView(IProductController productController)
+            => _controller = productController ?? throw new ArgumentNullException(nameof(productController));
 
         public void AddPerson()
         {

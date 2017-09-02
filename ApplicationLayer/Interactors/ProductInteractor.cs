@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ApplicationLayer.Exceptions;
+﻿using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Enums;
 using DomainLayer.Factories;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using static ApplicationLayer.Factories.EventIdFactory;
 
 namespace ApplicationLayer.Interactors

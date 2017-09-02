@@ -1,13 +1,13 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-using System;
-using System.Net;
-using System.Threading.Tasks;
 using ApplicationLayer.Factories;
 using InfrastructureLayer.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace API.Middleware
 {

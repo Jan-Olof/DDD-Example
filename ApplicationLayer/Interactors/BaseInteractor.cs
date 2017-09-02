@@ -1,7 +1,7 @@
-﻿using System;
-using ApplicationLayer.Exceptions;
+﻿using ApplicationLayer.Exceptions;
 using ApplicationLayer.Interfaces.Infrastructure;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace ApplicationLayer.Interactors
 {

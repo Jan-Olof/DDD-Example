@@ -1,16 +1,16 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using ApplicationLayer.Exceptions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ApplicationLayer.Interfaces.Interactors;
 using API.Controllers;
+using ApplicationLayer.Exceptions;
+using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayerTests.TestObjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace InterfacesTests.ApiTests
 {

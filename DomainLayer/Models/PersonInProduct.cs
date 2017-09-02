@@ -1,6 +1,6 @@
-﻿using System;
-using DomainLayer.Enums;
+﻿using DomainLayer.Enums;
 using DomainLayer.Interfaces;
+using System;
 
 namespace DomainLayer.Models
 {
