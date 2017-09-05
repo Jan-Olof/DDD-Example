@@ -1,14 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace InfrastructureLayer.Logging
+namespace InfrastructureLayer.Helpers.Extensions
 {
-    public static class LogHelper
+    /// <summary>
+    /// Extends the ILogger interface.
+    /// </summary>
+    public static class LoggerExtensions
     {
         /// <summary>
-        /// Log an exception and include all inner exception.
+        /// Log an exception as error and include all inner exceptions.
         /// </summary>
-        public static void LogExceptionWithInnerExceptions(Exception ex, ILogger logger)
+        public static void LogErrorWithInnerExceptions(this ILogger logger, Exception ex)
         {
             logger.LogError(ex.Message, ex);
 

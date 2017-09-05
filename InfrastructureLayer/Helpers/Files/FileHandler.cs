@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 
-namespace InfrastructureLayer.Files
+namespace InfrastructureLayer.Helpers.Files
 {
     /// <summary>
     /// The file handler class.

@@ -2,7 +2,7 @@
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.Configure;
-using InfrastructureLayer.Files;
+using InfrastructureLayer.Helpers.Files;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
@@ -26,9 +26,7 @@ namespace InfrastructureLayerTests.Files
 
         [TestCleanup]
         public void TearDown()
-        {
-            RestoreFileContent();
-        }
+            => RestoreFileContent();
 
         [TestMethod]
         public void TestShouldReadAllProducts()
@@ -69,9 +67,7 @@ namespace InfrastructureLayerTests.Files
         }
 
         private IFileHandler<IList<Product>> CreateFileHandler()
-        {
-            return new FileHandler<IList<Product>>(_dataFile, new JsonSerialization());
-        }
+            => new FileHandler<IList<Product>>(_dataFile, new JsonSerialization());
 
         private void RestoreFileContent()
         {

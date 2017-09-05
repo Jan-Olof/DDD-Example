@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace InfrastructureLayer.Files
+namespace InfrastructureLayer.Helpers.Files
 {
     /// <summary>
     /// The JsonSerialization class.

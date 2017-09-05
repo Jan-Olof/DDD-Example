@@ -3,7 +3,7 @@
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.DataAccess.Repositories;
-using InfrastructureLayer.Files;
+using InfrastructureLayer.Helpers.Files;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
@@ -27,9 +27,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
 
         [TestCleanup]
         public void TearDown()
-        {
-            RestoreFileContent();
-        }
+            => RestoreFileContent();
 
         [TestMethod]
         public void TestShouldDeleteProduct()
@@ -144,11 +142,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
         }
 
         private InMemoryRepository CreateInMemoryRepository()
-        {
-            return new InMemoryRepository(
-                new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()),
-                _logger);
-        }
+            => new InMemoryRepository(new FileHandler<IList<Product>>(CreateDatafileOptions(), new JsonSerialization()), _logger);
 
         private InMemoryRepository CreateInMemoryRepository(IList<Product> products)
         {

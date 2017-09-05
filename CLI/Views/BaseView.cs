@@ -1,6 +1,6 @@
 ﻿using ApplicationLayer.Factories;
 using CLI.Interfaces;
-using InfrastructureLayer.Logging;
+using InfrastructureLayer.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -49,7 +49,7 @@ namespace CLI.Views
             }
             catch (Exception e)
             {
-                LogHelper.LogExceptionWithInnerExceptions(e, _logger);
+                _logger.LogErrorWithInnerExceptions(e);
                 Console.WriteLine();
                 Console.WriteLine($"A command failed with the following error meassage: {e.Message}");
                 Console.ReadLine();

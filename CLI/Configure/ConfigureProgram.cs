@@ -8,7 +8,7 @@ using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;
 using InfrastructureLayer.DataAccess.SqlServer;
-using InfrastructureLayer.Files;
+using InfrastructureLayer.Helpers.Files;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

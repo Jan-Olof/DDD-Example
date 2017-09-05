@@ -4,7 +4,7 @@ using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayer.Configure;
 using InfrastructureLayer.DataAccess.SqlServer;
-using InfrastructureLayer.Files;
+using InfrastructureLayer.Helpers.Files;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
@@ -15,14 +15,10 @@ namespace InfrastructureLayerTests.TestObjects
     public static class TestFactory
     {
         public static Datafile CreateDatafile()
-        {
-            return new Datafile { FileName = @"..\..\..\Products.json" };
-        }
+            => new Datafile { FileName = @"..\..\..\Products.json" };
 
         public static IOptions<Datafile> CreateDatafileOptions()
-        {
-            return Options.Create(CreateDatafile());
-        }
+            => Options.Create(CreateDatafile());
 
         public static IFileHandler<IList<Product>> CreateFileHandler()
         {
