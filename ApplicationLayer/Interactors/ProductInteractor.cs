@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static ApplicationLayer.Factories.EventIdFactory;
 
 namespace ApplicationLayer.Interactors
 {
@@ -48,11 +47,6 @@ namespace ApplicationLayer.Interactors
                 Logger.LogWarning($"AddPersonToProduct failed: {ex.Message}");
                 throw;
             }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
         }
 
         /// <summary>
@@ -60,82 +54,34 @@ namespace ApplicationLayer.Interactors
         /// </summary>
         public Product CreateProduct(string name, string description = "")
         {
-            try
-            {
-                var product = ProductFactory.CreateProduct(name, description);
+            var product = ProductFactory.CreateProduct(name, description);
 
-                return Repository.AddProduct(product);
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
+            return Repository.AddProduct(product);
         }
 
         /// <summary>
         /// Delete a product.
         /// </summary>
         public void DeleteProduct(int id)
-        {
-            try
-            {
-                Repository.RemoveProduct(id);
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
+            => Repository.RemoveProduct(id);
 
         /// <summary>
         /// Get product by id.
         /// </summary>
         public Product GetProduct(int id)
-        {
-            try
-            {
-                return Repository.GetProduct(id);
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
+            => Repository.GetProduct(id);
 
         /// <summary>
         /// Get all products.
         /// </summary>
         public List<Product> GetProducts()
-        {
-            try
-            {
-                return Repository.GetProducts().ToList();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
+            => Repository.GetProducts().ToList();
 
         /// <summary>
         /// Get product by name.
         /// </summary>
         public List<Product> GetProducts(string name)
-        {
-            try
-            {
-                return Repository.GetProducts(name).ToList();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
+            => Repository.GetProducts(name).ToList();
 
         /// <summary>
         /// Remove a person from a product.
@@ -161,47 +107,24 @@ namespace ApplicationLayer.Interactors
                 Logger.LogWarning($"RemovePersonFromProduct failed: {ex.Message}");
                 throw;
             }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
         }
 
         /// <summary>
         /// Search product by name.
         /// </summary>
         public List<Product> SearchProducts(string name)
-        {
-            try
-            {
-                return Repository.GetProducts(name, true).ToList();
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
-        }
+            => Repository.GetProducts(name, true).ToList();
 
         /// <summary>
         /// Update a product.
         /// </summary>
         public Product UpdateProduct(int id, string name, string description = "")
         {
-            try
-            {
-                var product = ProductFactory.CreateProduct(name, description, id);
+            var product = ProductFactory.CreateProduct(name, description, id);
 
-                Repository.UpdateProduct(product);
+            Repository.UpdateProduct(product);
 
-                return Repository.GetProduct(product.Id);
-            }
-            catch (Exception e)
-            {
-                Logger.LogError(ProductEventId(), e, e.Message);
-                throw;
-            }
+            return Repository.GetProduct(product.Id);
         }
     }
 }
