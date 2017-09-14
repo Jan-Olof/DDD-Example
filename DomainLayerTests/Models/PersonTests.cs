@@ -31,7 +31,7 @@ namespace DomainLayerTests.Models
             var persons = SamplePersons.CreatePersons();
 
             // Act
-            var result = Person.Get(2);
+            var result = Entity.Get<Person>(2);
 
             // Assert
             var person = persons.SingleOrDefault(result.Compile());
@@ -47,7 +47,7 @@ namespace DomainLayerTests.Models
             var persons = SamplePersons.CreatePersons();
 
             // Act
-            var result = Person.Get("Second Person");
+            var result = Entity.Get<Person>("Second Person");
 
             // Assert
             var person = persons.SingleOrDefault(result.Compile());
@@ -79,7 +79,7 @@ namespace DomainLayerTests.Models
             var allPersons = SamplePersons.CreatePersons();
 
             // Act
-            var result = Person.Search("Sec");
+            var result = Entity.Search<Person>("Sec");
 
             // Assert
             var persons = allPersons.Where(result.Compile());

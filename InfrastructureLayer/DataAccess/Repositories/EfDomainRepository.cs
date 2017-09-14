@@ -13,7 +13,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// The entity framwork implementation of the domain repository.
     /// </summary>
-    public class EfDomainRepository : EfRepositoryBase, IDomainRepository
+    public class EfDomainRepository : EfRepositoryBase, ICommands, IQueries
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EfDomainRepository"/> class.
@@ -60,21 +60,24 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all persons.
         /// </summary>
-        public IEnumerable<Person> GetPersons()
+        public List<Person> GetPersons()
         {
             var personDaos = Get(PersonDao.IncludeMembers());
 
-            return personDaos.Select(PersonFactory.CreatePerson);
+            return personDaos.AsEnumerable().Select(PersonFactory.CreatePerson).ToList();
         }
 
         /// <summary>
         /// Get persons based on a condition.
         /// </summary>
-        public IEnumerable<Person> GetPersons(string name, bool isSearch = false)
+        public List<Person> GetPersons(string name, bool isSearch = false)
         {
-            var personDaos = Get(isSearch ? PersonDao.Search(name) : PersonDao.Get(name), PersonDao.IncludeMembers());
+            var personDaos = Get(isSearch ? Entity.Search<PersonDao>(name) : Entity.Get<PersonDao>(name), PersonDao.IncludeMembers());
 
-            return personDaos.Select(PersonFactory.CreatePerson);
+            return personDaos
+                .AsEnumerable()
+                .Select(PersonFactory.CreatePerson)
+                .ToList();
         }
 
         /// <summary>
@@ -90,21 +93,24 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// <summary>
         /// Get all products.
         /// </summary>
-        public IEnumerable<Product> GetProducts()
+        public List<Product> GetProducts()
         {
             var productDaos = Get(ProductDao.IncludeMembers());
 
-            return productDaos.Select(ProductFactory.CreateProduct);
+            return productDaos
+                .AsEnumerable()
+                .Select(ProductFactory.CreateProduct)
+                .ToList();
         }
 
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
-        public IEnumerable<Product> GetProducts(string name, bool isSearch = false)
+        public List<Product> GetProducts(string name, bool isSearch = false)
         {
-            var productDaos = Get(isSearch ? ProductDao.Search(name) : ProductDao.Get(name), ProductDao.IncludeMembers());
+            var productDaos = Get(isSearch ? Entity.Search<ProductDao>(name) : Entity.Get<ProductDao>(name), ProductDao.IncludeMembers());
 
-            return productDaos.Select(ProductFactory.CreateProduct);
+            return productDaos.AsEnumerable().Select(ProductFactory.CreateProduct).ToList();
         }
 
         /// <summary>

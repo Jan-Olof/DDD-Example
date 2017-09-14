@@ -46,7 +46,8 @@ namespace CLI.Configure
             services.AddTransient<IFileHandler<IList<Product>>, FileHandler<IList<Product>>>();
 
             services.AddTransient<DbContext, ExampleContext>();
-            services.AddTransient<IDomainRepository, EfDomainRepository>();
+            services.AddTransient<ICommands, EfDomainRepository>();
+            services.AddTransient<IQueries, EfDomainRepository>();
             //services.AddTransient<IDomainRepository, InMemoryRepository>();
 
             services.AddTransient<IProductView, ProductView>();

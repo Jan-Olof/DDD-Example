@@ -1,7 +1,7 @@
-﻿using ApplicationLayer.Exceptions;
-using ApplicationLayer.Interactors;
+﻿using ApplicationLayer.Interactors;
 using ApplicationLayer.Interfaces.Infrastructure;
 using DomainLayer.Enums;
+using DomainLayer.Exceptions;
 using DomainLayerTests.TestObjects;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,12 +15,14 @@ namespace ApplicationLayerTests.Services
     public class ProductInteractorTests
     {
         private ILogger<ProductInteractor> _logger;
-        private IDomainRepository _repository;
+        private IQueries _queries;
+        private ICommands _repository;
 
         [TestInitialize]
         public void SetUp()
         {
-            _repository = Substitute.For<IDomainRepository>();
+            _repository = Substitute.For<ICommands>();
+            _queries = Substitute.For<IQueries>();
             _logger = Substitute.For<ILogger<ProductInteractor>>();
         }
 
@@ -33,10 +35,10 @@ namespace ApplicationLayerTests.Services
         public void TestShouldAddPersonToProduct()
         {
             // Arrange
-            _repository.GetPerson(1)
+            _queries.GetPerson(1)
                 .Returns(SamplePersons.CreatePerson(1));
 
-            _repository.GetProduct(1)
+            _queries.GetProduct(1)
                 .Returns(SampleProducts.CreateProduct(1));
 
             _repository.UpdateProduct(SampleProducts.CreateProduct(1));
@@ -63,7 +65,7 @@ namespace ApplicationLayerTests.Services
         [TestMethod]
         public void TestShouldAddPersonToProductAndNotFindProduct()
         {
-            _repository.GetPerson(1)
+            _queries.GetPerson(1)
                 .Returns(SamplePersons.CreatePerson(1));
 
             // Arrange
@@ -76,10 +78,10 @@ namespace ApplicationLayerTests.Services
         [TestMethod]
         public void TestShouldAddPersonToProductAndPersonAlreadyExist()
         {
-            _repository.GetPerson(1)
+            _queries.GetPerson(1)
                 .Returns(SamplePersons.CreatePerson(1));
 
-            _repository.GetProduct(1)
+            _queries.GetProduct(1)
                 .Returns(SampleProducts.CreateProductWithPersons(1, "", "", 1));
 
             // Arrange
@@ -125,7 +127,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetAllProducts()
         {
             // Arrange
-            _repository.GetProducts()
+            _queries.GetProducts()
                 .Returns(SampleProducts.CreateProducts());
 
             var sut = CreateProductInteractor();
@@ -141,7 +143,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetProductFromId()
         {
             // Arrange
-            _repository.GetProduct(3)
+            _queries.GetProduct(3)
                 .ReturnsForAnyArgs(SampleProducts.CreateProduct(3, "ThirdProduct"));
 
             var sut = CreateProductInteractor();
@@ -157,7 +159,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldGetProductFromName()
         {
             // Arrange
-            _repository.GetProducts("ThirdProduct")
+            _queries.GetProducts("ThirdProduct")
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -173,7 +175,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldRemovePersonFromProduct()
         {
             // Arrange
-            _repository.GetProduct(1)
+            _queries.GetProduct(1)
                 .Returns(SampleProducts.CreateProductWithPersons(1, "", "", 1));
 
             _repository.UpdateProduct(SampleProducts.CreateProductWithPersons(1, "", "", 1));
@@ -190,7 +192,7 @@ namespace ApplicationLayerTests.Services
         [TestMethod]
         public void TestShouldRemovePersonFromProductAndNotFindPersonInProduct()
         {
-            _repository.GetProduct(1)
+            _queries.GetProduct(1)
                 .Returns(SampleProducts.CreateProduct(1));
 
             _repository.UpdateProduct(SampleProducts.CreateProduct(1));
@@ -216,7 +218,7 @@ namespace ApplicationLayerTests.Services
         public void TestShouldSearchProductFromName()
         {
             // Arrange
-            _repository.GetProducts("Third", true)
+            _queries.GetProducts("Third", true)
                 .ReturnsForAnyArgs(SampleProducts.CreateProducts3());
 
             var sut = CreateProductInteractor();
@@ -233,7 +235,7 @@ namespace ApplicationLayerTests.Services
         {
             // Arrange
             _repository.UpdateProduct(SampleProducts.CreateProduct(3));
-            _repository.GetProduct(3).ReturnsForAnyArgs(SampleProducts.CreateProduct(3));
+            _queries.GetProduct(3).ReturnsForAnyArgs(SampleProducts.CreateProduct(3));
 
             var sut = CreateProductInteractor();
 
@@ -245,6 +247,6 @@ namespace ApplicationLayerTests.Services
         }
 
         private ProductInteractor CreateProductInteractor()
-            => new ProductInteractor(_repository, _logger);
+            => new ProductInteractor(_queries, _repository, _logger);
     }
 }

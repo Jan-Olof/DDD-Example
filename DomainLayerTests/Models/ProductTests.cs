@@ -17,7 +17,7 @@ namespace DomainLayerTests.Models
             var products = SampleProducts.CreateProducts();
 
             // Act
-            var result = Product.Get(2);
+            var result = Entity.Get<Product>(2);
 
             // Assert
             var product = products.SingleOrDefault(result.Compile());
@@ -33,7 +33,7 @@ namespace DomainLayerTests.Models
             var products = SampleProducts.CreateProducts();
 
             // Act
-            var result = Product.Get("SecondProduct");
+            var result = Entity.Get<Product>("SecondProduct");
 
             // Assert
             var product = products.SingleOrDefault(result.Compile());
@@ -64,7 +64,7 @@ namespace DomainLayerTests.Models
             var allProducts = SampleProducts.CreateProducts();
 
             // Act
-            var result = Product.Search("Second");
+            var result = Entity.Search<Product>("Second");
 
             // Assert
             var products = allProducts.Where(result.Compile());
@@ -73,8 +73,6 @@ namespace DomainLayerTests.Models
         }
 
         private static IProduct CreateProduct()
-        {
-            return new Product();
-        }
+            => new Product();
     }
 }

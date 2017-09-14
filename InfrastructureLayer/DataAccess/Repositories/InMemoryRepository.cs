@@ -14,7 +14,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
     /// <summary>
     /// A simple in memory repository.
     /// </summary>
-    public class InMemoryRepository : IDomainRepository // TODO: Fix NotImplementedException and remove not used!.
+    public class InMemoryRepository : ICommands, IQueries // TODO: Fix NotImplementedException and remove not used!.
     {
         private readonly IFileHandler<IList<Product>> _fileHandler;
         private readonly ILogger _logger;
@@ -31,9 +31,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         public Person AddPerson(Person person)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Insert a product.
@@ -52,76 +50,52 @@ namespace InfrastructureLayer.DataAccess.Repositories
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
-        {
-            _products = new List<Product>();
-        }
+            => _products = new List<Product>();
 
         /// <summary>
         /// Fill the data set with data from the data store.
         /// </summary>
         public void FillDataSet()
-        {
-            _products = _fileHandler.Read();
-        }
+            => _products = _fileHandler.Read();
 
         public Person GetPerson(int id)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
-        public IEnumerable<Person> GetPersons()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Person> GetPersons()
+            => throw new NotImplementedException();
 
-        public IEnumerable<Person> GetPersons(string name, bool isSearch = false)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Person> GetPersons(string name, bool isSearch = false)
+            => throw new NotImplementedException();
 
         public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         public Product GetProduct(int id)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
-        public IEnumerable<Product> GetProducts(string name, bool isSearch = false)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Product> GetProducts(string name, bool isSearch = false)
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Get all products.
         /// </summary>
-        public IEnumerable<Product> GetProducts()
-        {
-            return _products;
-        }
+        public List<Product> GetProducts()
+            => _products.ToList();
 
         /// <summary>
         /// Get products based on a condition.
         /// </summary>
         public IEnumerable<Product> GetProducts(Expression<Func<Product, bool>> condition)
-        {
-            return _products.Where(condition.Compile());
-        }
+            => _products.Where(condition.Compile());
 
         /// <summary>
         /// Persist data to the data store.
         /// </summary>
         public void PersistData()
-        {
-            _fileHandler.Write(_products);
-        }
+            => _fileHandler.Write(_products);
 
         public void RemovePerson(int id)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Delete a product.
@@ -136,16 +110,14 @@ namespace InfrastructureLayer.DataAccess.Repositories
         }
 
         public void UpdatePerson(Person person)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Update a product. This is based on a condition defining how to find the object.
         /// </summary>
         public void UpdateProduct(Product product)
         {
-            var toUpdate = _products.SingleOrDefault(Product.Get(product.Id).Compile());
+            var toUpdate = _products.SingleOrDefault(Entity.Get<Product>(product.Id).Compile());
 
             product.MapUpdate(product, toUpdate);
 

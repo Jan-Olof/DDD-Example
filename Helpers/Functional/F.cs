@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InfrastructureLayer.Helpers.Functional
+namespace Helpers.Functional
 {
     /// <summary>
     /// Contains widly reusable functions.

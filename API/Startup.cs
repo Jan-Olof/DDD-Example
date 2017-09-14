@@ -103,7 +103,8 @@ namespace API
 
             // Dependency injection
             services.AddTransient<DbContext, ExampleContext>();
-            services.AddTransient<IDomainRepository, EfDomainRepository>();
+            services.AddTransient<ICommands, EfDomainRepository>();
+            services.AddTransient<IQueries, EfDomainRepository>();
             services.AddTransient<IProduct, Product>();
             services.AddTransient<IProductInteractor, ProductInteractor>();
 

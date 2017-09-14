@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApplicationLayer.Exceptions
+namespace DomainLayer.Exceptions
 {
     public class TooManyFoundException : Exception
     {

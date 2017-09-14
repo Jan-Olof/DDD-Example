@@ -1,40 +1,53 @@
-﻿using DomainLayer.Interfaces;
+﻿using DomainLayer.Exceptions;
+using DomainLayer.Interfaces;
 using System;
 using System.Linq.Expressions;
 
 namespace DomainLayer.Models
 {
     /// <summary>
-    /// The base class for the domain models.
+    /// The common class for the domain models.
     /// </summary>
-    public abstract class Entity<T> where T : IIdentifier, IName
+    public static class Entity
     {
         /// <summary>
-        /// Gets or sets the id. The primary key.
+        /// Throw TooManyFoundException if the object is not null.
         /// </summary>
-        public int Id { get; set; }
+        public static void CheckNotNull<T>(T entity)
+        {
+            if (entity != null)
+            {
+                throw new TooManyFoundException($"The {nameof(entity)} object is not null.");
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the name. This is the name of the entity.
+        /// Throw ArgumentNullException if the object is null.
         /// </summary>
-        public abstract string Name { get; set; }
+        public static void CheckNull<T>(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+        }
 
         /// <summary>
         /// Defines how to get entities by id.
         /// </summary>
-        public static Expression<Func<T, bool>> Get(int id)
+        public static Expression<Func<T, bool>> Get<T>(int id) where T : IIdentifier
             => entity => entity.Id == id;
 
         /// <summary>
         /// Defines how to get entities by name.
         /// </summary>
-        public static Expression<Func<T, bool>> Get(string name)
+        public static Expression<Func<T, bool>> Get<T>(string name) where T : IName
             => entity => entity.Name == name;
 
         /// <summary>
         /// Defines how to search entities by name.
         /// </summary>
-        public static Expression<Func<T, bool>> Search(string name)
+        public static Expression<Func<T, bool>> Search<T>(string name) where T : IName
             => entity => entity.Name.ToLower().Contains(name.ToLower());
     }
 }

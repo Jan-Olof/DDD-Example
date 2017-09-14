@@ -19,11 +19,6 @@ namespace DomainLayer.Models
         }
 
         /// <summary>
-        /// Gets or sets the name. This is the name of the entity.
-        /// </summary>
-        public sealed override string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the persons belonging to the product.
         /// </summary>
         public List<PersonInProduct> Persons { get; set; }

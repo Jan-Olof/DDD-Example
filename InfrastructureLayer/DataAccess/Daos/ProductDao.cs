@@ -17,8 +17,6 @@ namespace InfrastructureLayer.DataAccess.Daos
         public ProductDao()
             => ProductPersons = new List<ProductPerson>();
 
-        public override string Name { get; set; }
-
         /// <summary>
         /// Gets or sets the ProductPersons.
         /// </summary>

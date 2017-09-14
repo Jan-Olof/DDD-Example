@@ -6,7 +6,7 @@ namespace DomainLayer.Models
     /// <summary>
     /// This is the person domain model.
     /// </summary>
-    public abstract class PersonBase<T> : Entity<T>, IPersonBase<T> where T : IPersonBase<T>
+    public abstract class PersonBase<T> : IPersonBase<T> where T : IPersonBase<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonBase{T}"/> class.
@@ -23,6 +23,11 @@ namespace DomainLayer.Models
         public string FirstName { get; set; }
 
         /// <summary>
+        /// Gets or sets the id. The primary key.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Gets or sets the last name of the person.
         /// </summary>
         public string LastName { get; set; }
@@ -30,7 +35,7 @@ namespace DomainLayer.Models
         /// <summary>
         /// Gets the name of the person. Gets first and last name.
         /// </summary>
-        public sealed override string Name
+        public string Name
         {
             get => $"{FirstName} {LastName}"; set => SetName(value);
         }

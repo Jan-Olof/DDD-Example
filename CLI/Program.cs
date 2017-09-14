@@ -2,7 +2,7 @@
 // ReSharper disable  UnusedParameter.Local
 
 using CLI.Configure;
-using static InfrastructureLayer.Helpers.Functional.F;
+using static Helpers.Functional.F;
 
 namespace CLI
 {

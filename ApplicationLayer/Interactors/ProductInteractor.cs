@@ -1,7 +1,7 @@
-﻿using ApplicationLayer.Exceptions;
-using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Interfaces.Infrastructure;
 using ApplicationLayer.Interfaces.Interactors;
 using DomainLayer.Enums;
+using DomainLayer.Exceptions;
 using DomainLayer.Factories;
 using DomainLayer.Models;
 using Microsoft.Extensions.Logging;
@@ -14,14 +14,21 @@ namespace ApplicationLayer.Interactors
     /// <summary>
     /// The product interactor class. Handles the stories/tasks concerning products.
     /// </summary>
-    public class ProductInteractor : BaseInteractor, IProductInteractor
+    public class ProductInteractor : IProductInteractor
     {
+        private readonly ICommands _commands;
+        private readonly ILogger _logger;
+        private readonly IQueries _queries;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductInteractor"/> class.
         /// </summary>
-        public ProductInteractor(IDomainRepository repository, ILogger<ProductInteractor> logger)
-            : base(logger, repository)
-        { }
+        public ProductInteractor(IQueries queries, ICommands commands, ILogger<ProductInteractor> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _commands = commands ?? throw new ArgumentNullException(nameof(commands));
+            _queries = queries ?? throw new ArgumentNullException(nameof(queries));
+        }
 
         /// <summary>
         /// Add a person to a product.
@@ -30,21 +37,21 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                var person = Repository.GetPerson(personId);
-                CheckNull(person);
+                var person = _queries.GetPerson(personId);
+                Entity.CheckNull(person);
 
-                var product = Repository.GetProduct(productId);
-                CheckNull(product);
+                var product = _queries.GetProduct(productId);
+                Entity.CheckNull(product);
 
                 var personInProduct = product.Persons.SingleOrDefault(PersonInProduct.Get(personId, role));
-                CheckNotNull(personInProduct);
+                Entity.CheckNotNull(personInProduct);
 
                 product.Persons.Add(PersonFactory.CreatePersonInProduct(personId, person.Name, role));
-                Repository.UpdateProduct(product);
+                _commands.UpdateProduct(product);
             }
             catch (Exception ex) when (ex is ArgumentNullException || ex is TooManyFoundException)
             {
-                Logger.LogWarning($"AddPersonToProduct failed: {ex.Message}");
+                _logger.LogWarning($"AddPersonToProduct failed: {ex.Message}");
                 throw;
             }
         }
@@ -56,32 +63,41 @@ namespace ApplicationLayer.Interactors
         {
             var product = ProductFactory.CreateProduct(name, description);
 
-            return Repository.AddProduct(product);
+            return _commands.AddProduct(product);
         }
 
         /// <summary>
         /// Delete a product.
         /// </summary>
         public void DeleteProduct(int id)
-            => Repository.RemoveProduct(id);
+            => _commands.RemoveProduct(id);
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _commands?.Dispose();
+            _queries?.Dispose();
+        }
 
         /// <summary>
         /// Get product by id.
         /// </summary>
         public Product GetProduct(int id)
-            => Repository.GetProduct(id);
+            => _queries.GetProduct(id);
 
         /// <summary>
         /// Get all products.
         /// </summary>
         public List<Product> GetProducts()
-            => Repository.GetProducts().ToList();
+            => _queries.GetProducts();
 
         /// <summary>
         /// Get product by name.
         /// </summary>
         public List<Product> GetProducts(string name)
-            => Repository.GetProducts(name).ToList();
+            => _queries.GetProducts(name);
 
         /// <summary>
         /// Remove a person from a product.
@@ -90,21 +106,19 @@ namespace ApplicationLayer.Interactors
         {
             try
             {
-                var product = Repository.GetProduct(productId);
-
-                CheckNull(product);
+                var product = _queries.GetProduct(productId);
+                Entity.CheckNull(product);
 
                 var personInProduct = product.Persons.SingleOrDefault(PersonInProduct.Get(personId, role));
-
-                CheckNull(personInProduct);
+                Entity.CheckNull(personInProduct);
 
                 product.Persons.Remove(personInProduct);
 
-                Repository.UpdateProduct(product);
+                _commands.UpdateProduct(product);
             }
             catch (ArgumentNullException ex)
             {
-                Logger.LogWarning($"RemovePersonFromProduct failed: {ex.Message}");
+                _logger.LogWarning($"RemovePersonFromProduct failed: {ex.Message}");
                 throw;
             }
         }
@@ -113,7 +127,7 @@ namespace ApplicationLayer.Interactors
         /// Search product by name.
         /// </summary>
         public List<Product> SearchProducts(string name)
-            => Repository.GetProducts(name, true).ToList();
+            => _queries.GetProducts(name, true);
 
         /// <summary>
         /// Update a product.
@@ -122,9 +136,9 @@ namespace ApplicationLayer.Interactors
         {
             var product = ProductFactory.CreateProduct(name, description, id);
 
-            Repository.UpdateProduct(product);
+            _commands.UpdateProduct(product);
 
-            return Repository.GetProduct(product.Id);
+            return _queries.GetProduct(product.Id);
         }
     }
 }
