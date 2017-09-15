@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.EventLogging
+﻿namespace InfrastructureLayer.EventLogging
 {
     /// <summary>
     /// Defines the type of an event.

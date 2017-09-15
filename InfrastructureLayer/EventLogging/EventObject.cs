@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.EventLogging
+﻿namespace InfrastructureLayer.EventLogging
 {
     public class EventObject
     {

@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Infrastructure;
 using InfrastructureLayer.Configure;
 using Microsoft.Extensions.Options;
 using System;

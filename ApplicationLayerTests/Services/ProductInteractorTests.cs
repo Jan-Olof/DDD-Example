@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Interactors;
-using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Infrastructure;
+using ApplicationLayer.Products;
 using DomainLayer.Enums;
 using DomainLayer.Exceptions;
 using DomainLayerTests.TestObjects;

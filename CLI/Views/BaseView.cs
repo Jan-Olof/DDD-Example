@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Factories;
-using CLI.Interfaces;
+﻿using CLI.Interfaces;
+using InfrastructureLayer.EventLogging;
 using InfrastructureLayer.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
 using System;

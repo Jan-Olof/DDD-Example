@@ -1,6 +1,4 @@
-﻿using ApplicationLayer.EventLogging;
-
-namespace ApplicationLayer.Factories
+﻿namespace InfrastructureLayer.EventLogging
 {
     /// <summary>
     /// Builds event objects used in event logging.

@@ -1,6 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-using ApplicationLayer.Factories;
+using InfrastructureLayer.EventLogging;
 using InfrastructureLayer.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;

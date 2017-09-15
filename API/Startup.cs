@@ -4,9 +4,8 @@
 // ReSharper disable UnusedParameter.Global
 
 using API.Middleware;
-using ApplicationLayer.Interactors;
-using ApplicationLayer.Interfaces.Infrastructure;
-using ApplicationLayer.Interfaces.Interactors;
+using ApplicationLayer.Infrastructure;
+using ApplicationLayer.Products;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Repositories;

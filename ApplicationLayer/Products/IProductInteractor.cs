@@ -3,7 +3,7 @@ using DomainLayer.Models;
 using System;
 using System.Collections.Generic;
 
-namespace ApplicationLayer.Interfaces.Interactors
+namespace ApplicationLayer.Products
 {
     /// <summary>
     /// The product interactor interface.

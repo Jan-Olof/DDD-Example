@@ -1,8 +1,6 @@
-﻿using ApplicationLayer.EventLogging;
-using ApplicationLayer.Exceptions;
-using ApplicationLayer.Factories;
-using DomainLayer.Exceptions;
+﻿using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
+using InfrastructureLayer.EventLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

@@ -1,7 +1,7 @@
-﻿using ApplicationLayer.EventLogging;
-using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Infrastructure;
 using DomainLayer.Models;
 using InfrastructureLayer.DataAccess.Daos;
+using InfrastructureLayer.EventLogging;
 using InfrastructureLayer.Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

@@ -1,4 +1,4 @@
-﻿using ApplicationLayer.Interfaces.Interactors;
+﻿using ApplicationLayer.Products;
 using CLI.Interfaces;
 using DomainLayer.Factories;
 using DomainLayer.Models;

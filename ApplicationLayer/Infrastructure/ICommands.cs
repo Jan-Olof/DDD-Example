@@ -1,7 +1,7 @@
 ﻿using DomainLayer.Models;
 using System;
 
-namespace ApplicationLayer.Interfaces.Infrastructure
+namespace ApplicationLayer.Infrastructure
 {
     /// <summary>
     /// The commands interface. Handles CUD operations.

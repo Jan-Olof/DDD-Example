@@ -1,6 +1,6 @@
 using API.Controllers;
-using ApplicationLayer.Exceptions;
-using ApplicationLayer.Interfaces.Interactors;
+using ApplicationLayer.Products;
+using DomainLayer.Exceptions;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
 using InfrastructureLayerTests.TestObjects;

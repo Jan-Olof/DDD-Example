@@ -1,7 +1,6 @@
-﻿using ApplicationLayer.EventLogging;
-using ApplicationLayer.Factories;
-using ApplicationLayer.Interfaces.Infrastructure;
+﻿using ApplicationLayer.Infrastructure;
 using DomainLayer.Models;
+using InfrastructureLayer.EventLogging;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;

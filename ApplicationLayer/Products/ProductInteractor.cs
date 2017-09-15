@@ -1,5 +1,4 @@
-﻿using ApplicationLayer.Interfaces.Infrastructure;
-using ApplicationLayer.Interfaces.Interactors;
+﻿using ApplicationLayer.Infrastructure;
 using DomainLayer.Enums;
 using DomainLayer.Exceptions;
 using DomainLayer.Factories;
@@ -9,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ApplicationLayer.Interactors
+namespace ApplicationLayer.Products
 {
     /// <summary>
     /// The product interactor class. Handles the stories/tasks concerning products.

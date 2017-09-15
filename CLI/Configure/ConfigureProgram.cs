@@ -1,6 +1,5 @@
-﻿using ApplicationLayer.Interactors;
-using ApplicationLayer.Interfaces.Infrastructure;
-using ApplicationLayer.Interfaces.Interactors;
+﻿using ApplicationLayer.Infrastructure;
+using ApplicationLayer.Products;
 using CLI.Controllers;
 using CLI.Interfaces;
 using CLI.Views;

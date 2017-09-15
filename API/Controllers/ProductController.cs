@@ -1,5 +1,5 @@
-﻿using ApplicationLayer.Exceptions;
-using ApplicationLayer.Interfaces.Interactors;
+﻿using ApplicationLayer.Products;
+using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using InfrastructureLayer.Dtos;
 using Microsoft.AspNetCore.Mvc;

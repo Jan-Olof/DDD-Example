@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Interfaces.Infrastructure
+﻿namespace ApplicationLayer.Infrastructure
 {
     /// <summary>
     /// The file handler interface.

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace ApplicationLayer.Factories
+namespace InfrastructureLayer.EventLogging
 {
     /// <summary>
     /// Builds EventIds for use in logging.
