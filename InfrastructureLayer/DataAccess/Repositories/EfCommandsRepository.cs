@@ -11,14 +11,14 @@ using System.Linq;
 namespace InfrastructureLayer.DataAccess.Repositories
 {
     /// <summary>
-    /// The entity framwork implementation of the domain repository.
+    /// The entity framwork implementation of the domain commands repository.
     /// </summary>
-    public class EfDomainRepository : EfRepositoryBase, ICommands, IQueries
+    public class EfCommandsRepository : EfRepositoryBase, ICommands
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EfDomainRepository"/> class.
+        /// Initializes a new instance of the <see cref="EfCommandsRepository"/> class.
         /// </summary>
-        public EfDomainRepository(DbContext dataContext, ILogger<EfDomainRepository> logger)
+        public EfCommandsRepository(DbContext dataContext, ILogger<EfCommandsRepository> logger)
             : base(dataContext, logger)
         {
         }
@@ -45,72 +45,6 @@ namespace InfrastructureLayer.DataAccess.Repositories
             productDao = Insert(productDao);
 
             return ProductFactory.CreateProduct(productDao);
-        }
-
-        /// <summary>
-        /// Get a person from Id.
-        /// </summary>
-        public Person GetPerson(int id)
-        {
-            var personDao = Get(id, PersonDao.IncludeMembers());
-
-            return PersonFactory.CreatePerson(personDao);
-        }
-
-        /// <summary>
-        /// Get all persons.
-        /// </summary>
-        public List<Person> GetPersons()
-        {
-            var personDaos = Get(PersonDao.IncludeMembers());
-
-            return personDaos.AsEnumerable().Select(PersonFactory.CreatePerson).ToList();
-        }
-
-        /// <summary>
-        /// Get persons based on a condition.
-        /// </summary>
-        public List<Person> GetPersons(string name, bool isSearch = false)
-        {
-            var personDaos = Get(isSearch ? Entity.Search<PersonDao>(name) : Entity.Get<PersonDao>(name), PersonDao.IncludeMembers());
-
-            return personDaos
-                .AsEnumerable()
-                .Select(PersonFactory.CreatePerson)
-                .ToList();
-        }
-
-        /// <summary>
-        /// Get a product from Id.
-        /// </summary>
-        public Product GetProduct(int id)
-        {
-            var productDao = Get(id, ProductDao.IncludeMembers());
-
-            return ProductFactory.CreateProduct(productDao);
-        }
-
-        /// <summary>
-        /// Get all products.
-        /// </summary>
-        public List<Product> GetProducts()
-        {
-            var productDaos = Get(ProductDao.IncludeMembers());
-
-            return productDaos
-                .AsEnumerable()
-                .Select(ProductFactory.CreateProduct)
-                .ToList();
-        }
-
-        /// <summary>
-        /// Get products based on a condition.
-        /// </summary>
-        public List<Product> GetProducts(string name, bool isSearch = false)
-        {
-            var productDaos = Get(isSearch ? Entity.Search<ProductDao>(name) : Entity.Get<ProductDao>(name), ProductDao.IncludeMembers());
-
-            return productDaos.AsEnumerable().Select(ProductFactory.CreateProduct).ToList();
         }
 
         /// <summary>

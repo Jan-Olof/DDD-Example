@@ -76,46 +76,10 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (InvalidOperationException ex)
             {
-                LogExceptionWithInnerExceptions(ex);
+                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw new TooManyFoundException(ex.Message, ex);
             }
         }
-
-        /// <summary>
-        /// Get entity from primary key.
-        /// </summary>
-        protected T Get<T>(int id) where T : class, IIdentifier
-            => FindEntity<T>(id);
-
-        /// <summary>
-        /// Get entity from primary key.
-        /// </summary>
-        protected T Get<T>(int id, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class, IIdentifier
-            => FindEntity(id, includeMembers);
-
-        /// <summary>
-        /// Get all entities of a certain type.
-        /// </summary>
-        protected IQueryable<T> Get<T>() where T : class
-            => _context.Set<T>();
-
-        /// <summary>
-        /// Get all entities of a certain type.
-        /// </summary>
-        protected IQueryable<T> Get<T>(Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
-            => includeMembers(_context.Set<T>());
-
-        /// <summary>
-        /// Get all entities of a certain type based on a condition.
-        /// </summary>
-        protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition) where T : class
-            => _context.Set<T>().Where(condition);
-
-        /// <summary>
-        /// Get all entities of a certain type based on a condition.
-        /// </summary>
-        protected IQueryable<T> Get<T>(Expression<Func<T, bool>> condition, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : class
-            => includeMembers(_context.Set<T>().Where(condition));
 
         /// <summary>
         /// Insert a new entity.
@@ -149,7 +113,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (DbUpdateException ex)
             {
-                LogExceptionWithInnerExceptions(ex);
+                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw;
             }
         }
@@ -232,23 +196,8 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (InvalidOperationException ex)
             {
-                LogExceptionWithInnerExceptions(ex);
+                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw new TooManyFoundException(ex.Message, ex);
-            }
-        }
-
-        /// <summary>
-        /// Log an exception and include all inner exception.
-        /// </summary>
-        private void LogExceptionWithInnerExceptions(Exception ex)
-        {
-            _logger.LogError(EventIdFactory.PersistenceEventId(), ex, ex.Message);
-
-            var iex = ex.InnerException;
-            while (iex != null)
-            {
-                _logger.LogError(EventIdFactory.PersistenceEventId(), iex, $"Inner exception message: {iex.Message}");
-                iex = iex.InnerException;
             }
         }
     }

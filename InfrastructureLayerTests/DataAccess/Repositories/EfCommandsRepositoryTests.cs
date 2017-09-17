@@ -13,9 +13,9 @@ using static InfrastructureLayerTests.TestObjects.TestFactory;
 namespace InfrastructureLayerTests.DataAccess.Repositories
 {
     [TestClass]
-    public class EfDomainRepositoryTests
+    public class EfCommandsRepositoryTests
     {
-        private ILogger<EfDomainRepository> _logger;
+        private ILogger<EfCommandsRepository> _logger;
         private DbContextOptions<ExampleContext> _options;
 
         [TestInitialize]
@@ -25,7 +25,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
-            _logger = Substitute.For<ILogger<EfDomainRepository>>();
+            _logger = Substitute.For<ILogger<EfCommandsRepository>>();
         }
 
         [TestCleanup]
@@ -43,7 +43,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var person = sut.GetPersons("First", true).Single();
+                var person = CreateEfQueries(context).GetPersons("First", true).Single();
 
                 // Act
                 sut.RemovePerson(person.Id);
@@ -70,7 +70,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var product = sut.GetProducts("No2").Single();
+                var product = CreateEfQueries(context).GetProducts("No2").Single();
 
                 // Act
                 sut.RemoveProduct(product.Id);
@@ -84,124 +84,6 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
                 Assert.AreEqual(2, result.Count);
                 Assert.AreEqual("Desc1", result.Single(p => p.Name == "No1").Description);
                 Assert.AreEqual("Desc3", result.Single(p => p.Name == "No3").Description);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetAllPersons()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                // Act
-                var result = sut.GetPersons().ToList();
-
-                // Assert
-                Assert.AreEqual(3, result.Count);
-                Assert.AreEqual("First Person", result.Single(p => p.FirstName == "First").Name);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetAllProducts()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                // Act
-                var result = sut.GetProducts().ToList();
-
-                // Assert
-                Assert.AreEqual(3, result.Count);
-                Assert.AreEqual("No1", result.Single(p => p.Description == "Desc1").Name);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetPerson()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                var person = sut.GetPersons("First", true).Single();
-
-                // Act
-                var result = sut.GetPerson(person.Id);
-
-                // Assert
-                Assert.AreEqual("First Person", result.Name);
-                Assert.AreEqual(2, result.Products.Count);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetPersons()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                // Act
-                var result = sut.GetPersons("Second", true).ToList();
-
-                // Assert
-                Assert.AreEqual(1, result.Count);
-                Assert.AreEqual("Second Person", result.Single().Name);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetProduct()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                var product = sut.GetProducts("No1").Single();
-
-                // Act
-                var result = sut.GetProduct(product.Id);
-
-                // Assert
-                Assert.AreEqual("No1", result.Name);
-                Assert.AreEqual(1, result.Persons.Count);
-            }
-        }
-
-        [TestMethod]
-        public void TestShouldGetProducts()
-        {
-            // Arrange
-            SeedDatabase(_options);
-
-            using (var context = new ExampleContext(_options))
-            {
-                var sut = CreateEfRepository(context);
-
-                // Act
-                var result = sut.GetProducts("No2").ToList();
-
-                // Assert
-                Assert.AreEqual(1, result.Count);
-                Assert.AreEqual("No2", result.Single().Name);
             }
         }
 
@@ -321,7 +203,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                var person = sut.GetPersons("Second", true).Single();
+                var person = CreateEfQueries(context).GetPersons("Second", true).Single();
                 id = person.Id;
 
                 // Act
@@ -331,8 +213,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var sut = CreateEfRepository(context);
-                var result = sut.GetPersons().ToList();
+                var result = CreateEfQueries(context).GetPersons().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated Human", result.Single(p => p.Id == id).Name);
@@ -352,8 +233,8 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                id = sut.GetPersons("Second", true).Single().Id;
-                int productid = sut.GetProducts("No2").Single().Id;
+                id = CreateEfQueries(context).GetPersons("Second", true).Single().Id;
+                int productid = CreateEfQueries(context).GetProducts("No2").Single().Id;
 
                 // Act
                 sut.UpdatePerson(SamplePersons.CreatePersonWithProducts(id, "Updated", "Human", productid, Role.Producer));
@@ -362,8 +243,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var sut = CreateEfRepository(context);
-                var result = sut.GetPersons().ToList();
+                var result = CreateEfQueries(context).GetPersons().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated Human", result.Single(p => p.Id == id).Name);
@@ -382,7 +262,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                int id = sut.GetProducts("No2").Single().Id;
+                int id = CreateEfQueries(context).GetProducts("No2").Single().Id;
 
                 // Act
                 sut.UpdateProduct(SampleProducts.CreateProduct(id, "No2", "Updated description."));
@@ -391,8 +271,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var sut = CreateEfRepository(context);
-                var result = sut.GetProducts().ToList();
+                var result = CreateEfQueries(context).GetProducts().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated description.", result.Single(p => p.Name == "No2").Description);
@@ -410,8 +289,8 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             {
                 var sut = CreateEfRepository(context);
 
-                int id = sut.GetProducts("No2").Single().Id;
-                int personid = sut.GetPersons("Second", true).Single().Id;
+                int id = CreateEfQueries(context).GetProducts("No2").Single().Id;
+                int personid = CreateEfQueries(context).GetPersons("Second", true).Single().Id;
 
                 // Act
                 sut.UpdateProduct(SampleProducts.CreateProductWithPersons(id, "No2", "Updated description.", personid, Role.Writer));
@@ -420,8 +299,7 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             // Assert
             using (var context = new ExampleContext(_options))
             {
-                var sut = CreateEfRepository(context);
-                var result = sut.GetProducts().ToList();
+                var result = CreateEfQueries(context).GetProducts().ToList();
 
                 Assert.AreEqual(3, result.Count);
                 Assert.AreEqual("Updated description.", result.Single(p => p.Name == "No2").Description);
@@ -430,9 +308,10 @@ namespace InfrastructureLayerTests.DataAccess.Repositories
             }
         }
 
-        private EfDomainRepository CreateEfRepository(ExampleContext context)
-        {
-            return new EfDomainRepository(context, _logger);
-        }
+        private EfQueries CreateEfQueries(ExampleContext context)
+            => new EfQueries(context, _logger);
+
+        private EfCommandsRepository CreateEfRepository(ExampleContext context)
+            => new EfCommandsRepository(context, _logger);
     }
 }

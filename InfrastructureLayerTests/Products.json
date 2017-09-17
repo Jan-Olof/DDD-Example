@@ -1,1 +1,1 @@
-[{"Name":"FirstProduct","Persons":[],"Description":"This is the first product.","Id":1},{"Name":"SecondProduct","Persons":[],"Description":"This is the second product.","Id":2}]
+[{"Persons":[],"Description":"This is the first product.","Id":1,"Name":"FirstProduct"},{"Persons":[],"Description":"This is the second product.","Id":2,"Name":"SecondProduct"}]

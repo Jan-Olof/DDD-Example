@@ -9,31 +9,31 @@ namespace ApplicationLayer.Infrastructure
         /// <summary>
         /// Get person from primary key.
         /// </summary>
-        Person GetPerson(int id);
+        Person GetPerson(int id, bool includeMembers = true);
 
         /// <summary>
         /// Get all persons.
         /// </summary>
-        List<Person> GetPersons();
+        List<Person> GetPersons(bool includeMembers = true);
 
         /// <summary>
         /// Get or search persons from name.
         /// </summary>
-        List<Person> GetPersons(string name, bool isSearch = false);
+        List<Person> GetPersons(string name, bool isSearch = false, bool includeMembers = true);
 
         /// <summary>
         /// Get product from primary key.
         /// </summary>
-        Product GetProduct(int id);
+        Product GetProduct(int id, bool includeMembers = true);
 
         /// <summary>
         /// Get all products.
         /// </summary>
-        List<Product> GetProducts();
+        List<Product> GetProducts(bool includeMembers = true);
 
         /// <summary>
         /// Get products from name.
         /// </summary>
-        List<Product> GetProducts(string name, bool isSearch = false);
+        List<Product> GetProducts(string name, bool isSearch = false, bool includeMembers = true);
     }
 }

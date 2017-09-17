@@ -57,28 +57,25 @@ namespace InfrastructureLayer.DataAccess.Repositories
         public void FillDataSet()
             => _products = _fileHandler.Read();
 
-        public Person GetPerson(int id)
+        public Person GetPerson(int id, bool includeMembers = true)
             => throw new NotImplementedException();
 
-        public List<Person> GetPersons()
+        public List<Person> GetPersons(bool includeMembers = true)
             => throw new NotImplementedException();
 
-        public List<Person> GetPersons(string name, bool isSearch = false)
+        public List<Person> GetPersons(string name, bool isSearch = false, bool includeMembers = true)
             => throw new NotImplementedException();
 
-        public IEnumerable<Person> GetPersons(Expression<Func<Person, bool>> condition)
+        public Product GetProduct(int id, bool includeMembers = true)
             => throw new NotImplementedException();
 
-        public Product GetProduct(int id)
-            => throw new NotImplementedException();
-
-        public List<Product> GetProducts(string name, bool isSearch = false)
+        public List<Product> GetProducts(string name, bool isSearch = false, bool includeMembers = true)
             => throw new NotImplementedException();
 
         /// <summary>
         /// Get all products.
         /// </summary>
-        public List<Product> GetProducts()
+        public List<Product> GetProducts(bool includeMembers = true)
             => _products.ToList();
 
         /// <summary>
