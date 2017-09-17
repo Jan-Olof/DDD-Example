@@ -2,8 +2,9 @@
 
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
+using Helpers.Files;
 using InfrastructureLayer.DataAccess.Repositories;
-using InfrastructureLayer.Helpers.Files;
+using InfrastructureLayer.Files;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;

@@ -1,8 +1,9 @@
 ﻿using ApplicationLayer.Infrastructure;
 using DomainLayer.Models;
 using DomainLayerTests.TestObjects;
+using Helpers.Files;
 using InfrastructureLayer.Configure;
-using InfrastructureLayer.Helpers.Files;
+using InfrastructureLayer.Files;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;

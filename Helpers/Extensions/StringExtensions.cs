@@ -1,4 +1,4 @@
-﻿namespace InfrastructureLayer.Helpers.Extensions
+﻿namespace Helpers.Extensions
 {
     /// <summary>
     /// Extensions to the string class.

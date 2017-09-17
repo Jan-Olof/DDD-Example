@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace InfrastructureLayer.Helpers.Extensions
+namespace Helpers.Extensions
 {
     /// <summary>
     /// Extends the ILogger interface.

@@ -1,7 +1,7 @@
 ﻿using CLI.Interfaces;
 using DomainLayer.Interfaces;
 using DomainLayer.Models;
-using InfrastructureLayer.Helpers.Extensions;
+using Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 

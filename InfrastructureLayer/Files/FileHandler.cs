@@ -1,10 +1,11 @@
 ﻿using ApplicationLayer.Infrastructure;
+using Helpers.Files;
 using InfrastructureLayer.Configure;
 using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 
-namespace InfrastructureLayer.Helpers.Files
+namespace InfrastructureLayer.Files
 {
     /// <summary>
     /// The file handler class.

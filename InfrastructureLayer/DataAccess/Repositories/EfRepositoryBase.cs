@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using LoggerExtensions = Helpers.Extensions.LoggerExtensions;
 
 namespace InfrastructureLayer.DataAccess.Repositories
 {
@@ -76,7 +77,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (InvalidOperationException ex)
             {
-                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
+                LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw new TooManyFoundException(ex.Message, ex);
             }
         }
@@ -113,7 +114,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (DbUpdateException ex)
             {
-                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
+                LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw;
             }
         }
@@ -196,7 +197,7 @@ namespace InfrastructureLayer.DataAccess.Repositories
             }
             catch (InvalidOperationException ex)
             {
-                Helpers.Extensions.LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
+                LoggerExtensions.LogErrorWithInnerExceptions(_logger, ex);
                 throw new TooManyFoundException(ex.Message, ex);
             }
         }

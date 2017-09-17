@@ -1,6 +1,6 @@
 ﻿using CLI.Interfaces;
+using Helpers.Extensions;
 using InfrastructureLayer.EventLogging;
-using InfrastructureLayer.Helpers.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 
