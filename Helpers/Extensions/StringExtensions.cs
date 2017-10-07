@@ -14,5 +14,7 @@
 
             return (isSuccess, parsedValue);
         }
+
+        public static string ToSentenceCase(this string str) => $"{str.ToUpper()[0]}{str.ToLower().Substring(1)}";
     }
 }
