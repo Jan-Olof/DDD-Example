@@ -2,6 +2,6 @@
 {
     public interface IValidator<T>
     {
-        bool IsValid(T t);
+        bool IsValid(T cmd);
     }
 }
